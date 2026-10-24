@@ -56,9 +56,9 @@ export function PatientBillReceiptDrawer({
 		try {
 			const safePatientName = patientDisplayName.replace(/[^a-zA-Z0-9_-]/g, '_')
 			const opt = {
-				margin: [8, 8, 8, 8] as [number, number, number, number],
+				margin: [8, 8, 8, 8],
 				filename: `Bill_${safePatientName}_${invoice.refNo}.pdf`,
-				image: { type: 'jpeg' as const, quality: 0.98 },
+				image: { type: 'jpeg', quality: 0.98 },
 				html2canvas: { scale: 2, useCORS: true, logging: false },
 				jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
 			}

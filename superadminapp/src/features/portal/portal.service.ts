@@ -7,7 +7,7 @@ import type {
 } from './portal.types'
 import { getPortalToken, clearPortalSession, findProvisionedPortalUser, getPortalAccount } from './portalStorage'
 
-const BASE_URL = import.meta.env?.VITE_API_URL || 'https://erp-uec-backend.onrender.com/api/v1'
+const BASE_URL = import.meta.env?.VITE_API_URL || 'http://127.0.0.1:4000/api/v1'
 
 const portalClient = axios.create({
 	baseURL: `${BASE_URL}/patient-portal`,

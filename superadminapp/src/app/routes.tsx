@@ -16,6 +16,7 @@ import { FinanceWorkspace } from '../features/finance/FinanceWorkspace'
 import { HrOperationsWorkspace } from '../features/hr-operations/HrOperationsWorkspace'
 import { AmbulanceWorkspace } from '../features/ambulance/AmbulanceWorkspace'
 import { CentralReportsWorkspace } from '../features/reports/CentralReportsWorkspace'
+import { CRMWorkspace } from '../features/crm/CRMWorkspace'
 import { ProtectedRoute } from './ProtectedRoute'
 import { DomainGuard } from './DomainGuard'
 import { useAuth } from '../features/auth/useAuth'
@@ -117,6 +118,7 @@ export function AppRoutes() {
 				<Route element={<SuperAdminLayout />}>
 					<Route index element={<IndexRedirect />} />
 					<Route path="dashboard" element={<DashboardGuard><Dashboard /></DashboardGuard>} />
+					<Route path="crm/*" element={<DomainGuard domainId="crm"><CRMWorkspace /></DomainGuard>} />
 					<Route path="inventory/*" element={<DomainGuard domainId="inventory"><InventoryWorkspace /></DomainGuard>} />
 					<Route path="admission/*" element={<DomainGuard domainId="admission"><AdmissionWorkspace /></DomainGuard>} />
 					<Route path="inhouse-care/*" element={<DomainGuard domainId="inhouse-care"><CareWorkspace /></DomainGuard>} />
@@ -132,6 +134,7 @@ export function AppRoutes() {
 					{domainModules
 						.filter(
 							(domain) =>
+								domain.id !== 'crm' &&
 								domain.id !== 'inventory' &&
 								domain.id !== 'admission' &&
 								domain.id !== 'inhouse-care' &&

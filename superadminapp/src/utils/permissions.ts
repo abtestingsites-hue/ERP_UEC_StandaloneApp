@@ -44,6 +44,7 @@ export function getPermittedDomainsForUser(user: AuthUser | null | undefined): s
 
 	if (isSuperAdmin(user)) {
 		return [
+			'crm',
 			'inventory',
 			'admission',
 			'inhouse-care',
@@ -132,13 +133,17 @@ export function getPermittedDomainsForUser(user: AuthUser | null | undefined): s
 		return ['ambulance']
 	}
 
-	// 9. Dedicated Admission / CRM / Enquiry Officers: Admission ONLY
+	// 9. Dedicated Admission / CRM / Enquiry Officers: Admission & CRM
 	if (
-		roleName.includes('ADMISSION') ||
-		roleName.includes('ENQUIRY') ||
 		roleName.includes('CRM')
 	) {
-		return ['admission']
+		return ['crm', 'admission']
+	}
+	if (
+		roleName.includes('ADMISSION') ||
+		roleName.includes('ENQUIRY')
+	) {
+		return ['admission', 'crm']
 	}
 
 	// 10. Security Supervisor & Staff / Front Desk: Visitor & Security ONLY

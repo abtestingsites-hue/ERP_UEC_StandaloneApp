@@ -72,11 +72,11 @@ export function Login() {
 				<p className="auth-form__success" role="status">Password updated. Sign in with your new password.</p>
 			)}
 			<label>
-				<span>Username / Mobile or Email</span>
+				<span>Username, Email or Mobile</span>
 				<input
 					autoComplete="username"
 					type="text"
-					placeholder="Staff email or Guardian mobile / username"
+					placeholder="Enter staff email, username, or portal mobile"
 					value={identifier}
 					onChange={(event) => setIdentifier(event.target.value)}
 					required
@@ -95,10 +95,10 @@ export function Login() {
 			</label>
 			{error && <p className="auth-form__error" role="alert">{error}</p>}
 			<button className="auth-form__submit" type="submit" disabled={submitting}>
-				{submitting ? 'Signing in…' : 'Sign in to Workspace'}
+				{submitting ? 'Authenticating…' : 'Sign In to Workspace'}
 			</button>
 			<p className="auth-form__note">
-				Staff accounts route to departmental workspaces. Admitted resident families route to the Care & Vitals Portal.
+				Single sign-on automatically directs you to your authorized workspace: Super Admin Dashboard, CRM, Inhouse Care, Home Care, Finance, HR, Inventory, Ambulance, Security, or the Family Portal.
 			</p>
 
 			<div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid #e2e9e2', textAlign: 'center' }}>

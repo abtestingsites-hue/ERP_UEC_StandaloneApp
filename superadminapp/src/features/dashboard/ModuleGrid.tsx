@@ -8,7 +8,7 @@ export function ModuleGrid() {
 		<section className="module-section" aria-labelledby="module-heading">
 			<div className="section-heading">
 				<div>
-					<span className="section-kicker">NINE BUSINESS DOMAINS</span>
+					<span className="section-kicker">ENTERPRISE BUSINESS DOMAINS</span>
 					<h2 id="module-heading">Your workspaces</h2>
 				</div>
 				<Link className="text-link" to="/reports">

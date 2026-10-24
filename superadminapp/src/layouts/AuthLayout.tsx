@@ -50,14 +50,14 @@ export function AuthLayout() {
 					</div>
 				</div>
 				<div className="auth-panel__intro">
-					<span className="section-kicker">CENTRAL OPERATIONS</span>
-					<h1>Sign in to your workspace</h1>
-					<p>Sign in with your ERP account or registered family credentials.</p>
+					<span className="section-kicker">UNIFIED ENTERPRISE GATEWAY</span>
+					<h1>Sign in to UNCF ERP</h1>
+					<p>Sign in with your credentials to access your authorized domain, workspace, or portal.</p>
 				</div>
 				<Outlet />
 				<div className="auth-panel__footnote">
 					<Activity size={14} />
-					<span>Shared ERP authentication · Local preview</span>
+					<span>Universal Role-Based Routing & Session Gateway</span>
 				</div>
 			</section>
 		</main>

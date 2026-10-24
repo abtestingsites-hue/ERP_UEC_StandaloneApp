@@ -3,6 +3,7 @@ import {
 	Ambulance,
 	BarChart3,
 	BriefcaseBusiness,
+	Headset,
 	HeartPulse,
 	PackageCheck,
 	ShieldCheck,
@@ -22,6 +23,16 @@ export type DomainModule = {
 }
 
 export const domainModules: DomainModule[] = [
+	{
+		id: 'crm',
+		path: '/crm',
+		label: 'CRM & Client Communications',
+		shortLabel: 'CRM',
+		description: 'Lead generation, omnichannel communications, call center, and client relations.',
+		status: 'Active',
+		accent: 'plum',
+		Icon: Headset,
+	},
 	{
 		id: 'inventory',
 		path: '/inventory',
