@@ -1,6 +1,6 @@
 // TypeScript definitions for Home Care Domain (SuperAdminApp Integration)
 
-export type ContractStatus = 'DRAFT' | 'ACTIVE' | 'SUSPENDED' | 'TERMINATED' | 'COMPLETED';
+export type ContractStatus = 'DRAFT' | 'ACTIVE' | 'SUSPENDED' | 'TERMINATED' | 'COMPLETED' | 'CANCELLED';
 export type AllocationStatus = 'PENDING' | 'ALLOCATED' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
 export type VisitStatus = 'PENDING' | 'ASSIGNED' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
 export type EnquiryStatus = 'Open' | 'In Progress' | 'Converted' | 'Lost' | 'Emergency' | 'Important' | 'Just Enquiry';
@@ -21,6 +21,7 @@ export interface ServiceContract {
     billingCycle?: string | null;
     careRequirements?: string | Record<string, unknown> | null;
     specialInstructions?: string | null;
+    termsSnapshot?: Record<string, unknown> | null;
     termsAcceptedAt?: string | null;
     termsAcceptedById?: string | null;
     termsAcceptedBy?: {
@@ -73,12 +74,14 @@ export interface HomeCareAdmission {
 
 export interface HomeCareAllocation {
     id: string;
+    unitId?: string;
     allocationRef?: string;
     refNo?: string;
     type: 'HOME_CARE';
     status: AllocationStatus;
     enquiryId?: string;
     staffId?: string;
+    patientId?: string;
     startDate?: string;
     endDate?: string | null;
     clientName?: string;
@@ -225,6 +228,12 @@ export interface VisitTask {
     enquiry?: {
         id: string;
         clientName?: string;
+        client?: {
+            id?: string;
+            name?: string;
+            mobile?: string;
+            address?: string;
+        };
         patientName?: string;
         mobile?: string;
         address?: string;
@@ -260,7 +269,7 @@ export interface CaregiverStaff {
 
 export interface SaveVitalsPayload {
     patientId: string;
-    shift?: 'MORNING' | 'EVENING';
+    shift?: 'MORNING' | 'EVENING' | 'AFTERNOON' | 'NIGHT' | string;
     systolic?: number;
     diastolic?: number;
     pulse?: number;

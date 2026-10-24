@@ -205,10 +205,10 @@ export function CentralReportsWorkspace() {
 						: Promise.resolve([]),
 					canSeeFinance
 						? Promise.all([
-								reportsService.finance.getInvoices({ unitId: uId, scope: isAll ? 'all' : undefined }).catch(() => [] as Invoice[]),
+								reportsService.finance.getInvoices({ unitId: uId, scope: isAll ? 'all' : undefined }).catch(() => [] as AccountTransaction[]),
 								reportsService.finance.getCashbox({ unitId: uId, scope: isAll ? 'all' : undefined }).catch(() => [] as CashboxTransaction[]),
 						  ]).then(([invRes, cbRes]) => ({ invRes, cbRes }))
-						: Promise.resolve({ invRes: [] as Invoice[], cbRes: [] as CashboxTransaction[] }),
+						: Promise.resolve({ invRes: [] as AccountTransaction[], cbRes: [] as CashboxTransaction[] }),
 					canSeeInventory
 						? Promise.all([
 								reportsService.inventory.getStockValuation({ unitId: uId, allUnits: isAll }).catch(() => null),
