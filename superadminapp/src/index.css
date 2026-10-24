@@ -1,0 +1,165 @@
+:root {
+  /* ==========================================================================
+     UNCF ENTERPRISE B2B DESIGN SYSTEM TOKENS (WHITE-FIRST MINIMALIST THEME)
+     ========================================================================== */
+
+  /* 1. Core Surfaces & Neutral Canvas */
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #FAFCFA;
+  --surface-page: #F5F7F5;
+  --surface-elevated: #FFFFFF;
+  --surface-card: #FFFFFF;
+  --surface-muted: #EFF3EF;
+
+  /* 2. Brand Palette */
+  --brand-green: #039A01;             /* Company Principal Brand Accent */
+  --brand-green-hover: #028001;       /* Accessible Darker Companion */
+  --brand-green-active: #026601;
+  --brand-green-surface: #E7F4E8;     /* Pale Green Surface */
+  --brand-green-subtle: #F0F8F1;
+  --brand-green-border: #C8E6CA;
+  --brand-green-text: #026601;
+
+  --accent-root: #633B32;             /* Tree-Root Brown / Maroon Accent */
+  --accent-root-hover: #502E27;
+  --accent-root-surface: #F3E8E3;     /* Pale Earthy Surface */
+  --accent-root-border: #E0CFC8;
+  --accent-root-text: #633B32;
+
+  --accent-yellow: #FDFE02;           /* Supporting Brand Yellow (Restrained Highlights) */
+  --accent-yellow-surface: #FEFDE6;
+  --accent-yellow-border: #F3EE7B;
+  --accent-yellow-text: #736902;
+
+  /* 3. Typography & Text */
+  --text-primary: #202020;            /* Black / Charcoal Primary Text */
+  --text-secondary: #5F6962;          /* Secondary Muted Metadata */
+  --text-tertiary: #849389;           /* Placeholders, disabled text */
+  --text-inverse: #FFFFFF;            /* White text on dark/green buttons */
+
+  /* 4. Structural Dividers & Borders */
+  --border-light: #E1E6E1;
+  --border-default: #E1E6E1;
+  --border-subtle: #EDF1ED;
+  --border-focus: #039A01;
+  --focus-ring: rgba(3, 154, 1, 0.18);
+
+  /* 5. Functional Status Tokens */
+  --status-success-bg: #E7F4E8;
+  --status-success-border: #C8E6CA;
+  --status-success-text: #026601;
+
+  --status-warning-bg: #FFF8E6;
+  --status-warning-border: #FBE5AC;
+  --status-warning-text: #8C5E05;
+
+  --status-error-bg: #FDF2F2;
+  --status-error-border: #F8C8C8;
+  --status-error-text: #B91C1C;
+
+  --status-info-bg: #F0F7FF;
+  --status-info-border: #CBE2FE;
+  --status-info-text: #1D4ED8;
+
+  --status-neutral-bg: #F1F4F2;
+  --status-neutral-border: #DDE2DE;
+  --status-neutral-text: #4A5650;
+
+  /* 6. Sidebar Tokens (White-First Enterprise Shell) */
+  --sidebar-bg: #FFFFFF;
+  --sidebar-border: #E1E6E1;
+  --sidebar-text: #202020;
+  --sidebar-text-muted: #5F6962;
+  --sidebar-item-hover: #F5F7F5;
+  --sidebar-item-active-bg: #E7F4E8;
+  --sidebar-item-active-text: #026601;
+  --sidebar-item-active-border: #039A01;
+
+  /* 7. Header & Topbar */
+  --topbar-bg: #FFFFFF;
+  --topbar-border: #E1E6E1;
+  --topbar-text: #202020;
+
+  /* 8. Shadows & Radius Scale */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-dropdown: 0 12px 28px -4px rgba(0, 0, 0, 0.10), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* 9. Typography Families & Sizing */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+  background: var(--surface-page);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+
+  /* Backward Compatibility Aliases */
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --line: var(--border-default);
+  --canvas: var(--surface-page);
+  --paper: var(--surface-primary);
+  --forest: var(--sidebar-bg);
+  --forest-deep: var(--sidebar-item-active-bg);
+  --green: var(--brand-green);
+  --surface-color: var(--surface-primary);
+  --border-color: var(--border-default);
+  --bg-main: var(--surface-page);
+  --brand-primary: var(--brand-green);
+  --brand-primary-hover: var(--brand-green-hover);
+  --brand-accent: var(--brand-green);
+  --shadow-soft: var(--shadow-card);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 360px;
+  min-height: 100%;
+  background: var(--surface-page);
+  color: var(--text-primary);
+}
+
+body {
+  min-width: 360px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  color: #FFFFFF;
+  background: var(--brand-green);
+}

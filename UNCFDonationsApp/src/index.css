@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* UNCF Teal & Cyan theme scale */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #0F969C;
+  --color-primary-600: #0d8287;
+  --color-primary-700: #0a666a;
+  --color-primary-800: #294D61;
+  --color-primary-900: #1a3342;
+
+  --color-accent: #6DA5C0;
+  --color-success: #0C7075;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .app-scrollbar {
+    scrollbar-color: rgba(148, 163, 184, 0.75) transparent;
+    scrollbar-width: thin;
+  }
+
+  .app-scrollbar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  .app-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .app-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.75);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    body {
+      font-size: 13px;
+    }
+
+    button, [role="button"], input, select, textarea {
+      min-height: 44px;
+    }
+  }
+}

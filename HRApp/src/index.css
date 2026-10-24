@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply bg-slate-50 dark:bg-[#041619] text-slate-900 dark:text-slate-100 font-sans antialiased;
+  }
+}
