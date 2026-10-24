@@ -4,7 +4,8 @@ import { PageHeader } from '../../components/PageHeader';
 import { readAuthSession } from '../auth/authStorage';
 
 export function CRMWorkspace() {
-    const rawCrmAppUrl = (import.meta as any).env?.VITE_CRM_APP_URL || 'http://127.0.0.1:5181';
+    const isRender = typeof window !== 'undefined' && window.location.hostname.includes('render.com');
+    const rawCrmAppUrl = (import.meta as any).env?.VITE_CRM_APP_URL || (isRender ? window.location.origin : 'http://127.0.0.1:5181');
     const liveBackendUrl = 'https://crm-uec-backend.onrender.com';
     const [iframeKey, setIframeKey] = useState(0);
 
