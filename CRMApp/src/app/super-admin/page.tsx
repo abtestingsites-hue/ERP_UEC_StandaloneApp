@@ -88,8 +88,7 @@ export default function SuperAdminConsolePage() {
       const stored = localStorage.getItem('crm_user');
       if (stored) {
         const parsed = JSON.parse(stored);
-        const normalizedRole = String(parsed.role || '').toUpperCase();
-        if (normalizedRole === 'SUPER_ADMIN' || normalizedRole === 'ADMIN' || normalizedRole.includes('ADMIN')) {
+        if (parsed.role === 'SUPER_ADMIN') {
           setIsSuperAdmin(true);
         }
       }

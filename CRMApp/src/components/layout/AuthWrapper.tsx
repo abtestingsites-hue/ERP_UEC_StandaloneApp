@@ -23,34 +23,6 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const userRole = useAuthStore((state) => state.user?.role);
 
   useEffect(() => {
-    // Check if token was passed via URL hash / params from ERP SuperAdmin Universal Gateway
-    if (typeof window !== "undefined") {
-      const hash = window.location.hash;
-      const params = new URLSearchParams(window.location.search);
-      let ssoToken = params.get("sso_token");
-      let ssoUserStr = params.get("sso_user");
-
-      if (!ssoToken && hash.includes("sso_token=")) {
-        const hashParams = new URLSearchParams(hash.replace(/^#/, ""));
-        ssoToken = hashParams.get("sso_token");
-        ssoUserStr = hashParams.get("sso_user");
-      }
-
-      if (ssoToken) {
-        localStorage.setItem("crm_token", ssoToken);
-        localStorage.setItem("paramantra_access_token", ssoToken);
-        if (ssoUserStr) {
-          try {
-            const parsed = JSON.parse(decodeURIComponent(ssoUserStr));
-            localStorage.setItem("crm_user", JSON.stringify(parsed));
-            localStorage.setItem("paramantra_user", JSON.stringify(parsed));
-          } catch (_) {}
-        }
-        // Clean URL without full reload
-        window.history.replaceState(null, "", window.location.pathname);
-      }
-    }
-
     const token = localStorage.getItem("crm_token");
     const userStr = localStorage.getItem("crm_user");
     
@@ -72,19 +44,6 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
       }
       
-      if (role === 'AGENT') {
-        router.push("/agent/dashboard");
-      } else {
-        router.push("/dashboard");
-      }
-    } else if (token && pathname === "/") {
-      let role = 'ADMIN';
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          role = user.role || 'ADMIN';
-        } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
-      }
       if (role === 'AGENT') {
         router.push("/agent/dashboard");
       } else {
