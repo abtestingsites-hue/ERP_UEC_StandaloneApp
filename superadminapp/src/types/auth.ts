@@ -12,6 +12,7 @@ export type AuthUser = {
 	unitId: string | null
 	staffId?: string | null
 	unit?: { id: string; name: string; code?: string | null } | null
+	provider?: 'erp' | 'crm' | 'portal'
 }
 
 export type AuthSession = {

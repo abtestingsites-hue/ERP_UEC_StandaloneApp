@@ -42,6 +42,16 @@ export function ActiveUnitProvider({ children }: { children: ReactNode }) {
                 return;
             }
 
+            // CRM-only sessions do not query ERP inventory unit authorized APIs
+            if (user?.provider === 'crm') {
+                if (isMounted) {
+                    setUnits([]);
+                    setActiveUnitIdState(null);
+                    setIsLoadingUnits(false);
+                }
+                return;
+            }
+
             setIsLoadingUnits(true);
             try {
                 const loadedUnits = await inventoryService.getAuthorizedUnits();

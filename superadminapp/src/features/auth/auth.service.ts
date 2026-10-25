@@ -33,6 +33,7 @@ export async function loginWithCredentials(email: string, password: string): Pro
 		unitId: sourceUser.unitId || null,
 		staffId: (sourceUser as { staffId?: string | null })?.staffId || null,
 		unit: sourceUser.unit || null,
+		provider: 'erp',
 	}
 
 	return { user, accessToken }
@@ -83,6 +84,7 @@ export async function loginWithCrmCredentials(email: string, password: string): 
 		unitId: null,
 		staffId: session.agentId || null,
 		unit: null,
+		provider: 'crm',
 	}
 
 	return { user, accessToken, refreshToken }
