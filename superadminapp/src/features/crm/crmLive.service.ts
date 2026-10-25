@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { readAuthSession } from '../auth/authStorage';
 
 const CRM_LIVE_BACKEND = 'https://crm-uec-backend.onrender.com';
 
@@ -12,7 +13,10 @@ const crmApi = axios.create({
 
 crmApi.interceptors.request.use((config) => {
     if (typeof window !== 'undefined') {
-        const token = localStorage.getItem('paramantra_access_token') || localStorage.getItem('crm_token');
+        const token =
+            localStorage.getItem('paramantra_access_token') ||
+            localStorage.getItem('crm_token') ||
+            readAuthSession()?.accessToken;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
