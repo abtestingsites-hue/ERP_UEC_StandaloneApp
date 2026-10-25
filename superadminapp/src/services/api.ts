@@ -1,8 +1,21 @@
 import axios from 'axios'
 import { AUTH_SESSION_EXPIRED_EVENT, clearAuthSession, readAuthSession } from '../features/auth/authStorage'
 
+export function getApiBaseUrl(): string {
+	if (import.meta.env?.VITE_API_URL) {
+		return import.meta.env.VITE_API_URL
+	}
+	if (typeof window !== 'undefined') {
+		const host = window.location.hostname
+		if (host.includes('render.com') || host !== 'localhost' && host !== '127.0.0.1') {
+			return 'https://backend-erp-jp2x.onrender.com/api/v1'
+		}
+	}
+	return 'http://127.0.0.1:4000/api/v1'
+}
+
 const api = axios.create({
-	baseURL: import.meta.env?.VITE_API_URL || 'http://127.0.0.1:4000/api/v1',
+	baseURL: getApiBaseUrl(),
 	timeout: 15000,
 	headers: { 'Content-Type': 'application/json' },
 })

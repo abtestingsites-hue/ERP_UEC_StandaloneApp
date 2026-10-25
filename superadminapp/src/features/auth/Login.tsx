@@ -44,16 +44,21 @@ export function Login() {
 			navigate(destination, { replace: true })
 			return
 		} catch (staffError) {
-			// 2. Second attempt: Check if identifier matches a registered Family / Guardian Portal account
-			try {
-				const portalRes = await PortalService.login(cleanIdentifier, password)
-				if (portalRes && portalRes.token && portalRes.account) {
-					setPortalSession(portalRes.token, portalRes.account)
-					navigate('/portal/dashboard', { replace: true })
-					return
+			const isStaffEmail = cleanIdentifier.includes('@')
+			const isPhoneNumber = /^[0-9+\-\s()]{7,15}$/.test(cleanIdentifier)
+
+			// 2. Second attempt: Check if identifier matches a registered Family / Guardian Portal account (phone number or non-email username)
+			if (!isStaffEmail || isPhoneNumber) {
+				try {
+					const portalRes = await PortalService.login(cleanIdentifier, password)
+					if (portalRes && portalRes.token && portalRes.account) {
+						setPortalSession(portalRes.token, portalRes.account)
+						navigate('/portal/dashboard', { replace: true })
+						return
+					}
+				} catch {
+					// Portal attempt failed
 				}
-			} catch {
-				// Both staff and portal attempts failed
 			}
 
 			setError(

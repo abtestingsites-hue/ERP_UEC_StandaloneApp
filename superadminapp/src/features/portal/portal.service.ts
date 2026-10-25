@@ -6,11 +6,10 @@ import type {
 	PortalDashboardData,
 } from './portal.types'
 import { getPortalToken, clearPortalSession, findProvisionedPortalUser, getPortalAccount } from './portalStorage'
-
-const BASE_URL = import.meta.env?.VITE_API_URL || 'http://127.0.0.1:4000/api/v1'
+import { getApiBaseUrl } from '../../services/api'
 
 const portalClient = axios.create({
-	baseURL: `${BASE_URL}/patient-portal`,
+	baseURL: `${getApiBaseUrl()}/patient-portal`,
 	timeout: 15000,
 	headers: {
 		'Content-Type': 'application/json',
