@@ -39,25 +39,25 @@ export function BuilderPanel() {
   return (
     <div className="space-y-6">
       {/* 1. Builder Toolbar */}
-      <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="bg-[#FFFFFF] border border-[#E1E6E1] p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-xs">
         <form onSubmit={handleAddWidget} className="flex-1 flex flex-wrap items-end gap-4">
           <div className="flex flex-col">
-            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Widget Title</span>
+            <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Widget Title</span>
             <input aria-label="Widget Title" 
               type="text" 
               value={widgetTitle}
               onChange={(e) => setWidgetTitle(e.target.value)}
               placeholder="e.g. Conversion Funnel"
-              className="bg-[#141414] border border-[#222] rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-600 outline-none focus:border-orange-500 w-56"
+              className="bg-[#FAFCFA] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] placeholder-[#849389] outline-none focus:border-[#039A01] w-56"
             />
           </div>
 
           <div className="flex flex-col">
-            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Chart Type</span>
+            <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Chart Type</span>
             <select 
               aria-label="Widget Type" value={widgetType}
               onChange={(e) => setWidgetType(e.target.value as any)}
-              className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-orange-500"
+              className="bg-[#FAFCFA] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
             >
               <option value="kpi">KPI Summary Metric Card</option>
               <option value="bar">Bar Chart</option>
@@ -67,11 +67,11 @@ export function BuilderPanel() {
           </div>
 
           <div className="flex flex-col">
-            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Grid Column Span</span>
+            <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Grid Column Span</span>
             <select 
               aria-label="Widget Width" value={widgetWidth}
               onChange={(e) => setWidgetWidth(Number(e.target.value) as any)}
-              className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-orange-500"
+              className="bg-[#FAFCFA] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
             >
               <option value={1}>1 Column Width (Normal)</option>
               <option value={2}>2 Columns Width (Wide)</option>
@@ -80,7 +80,7 @@ export function BuilderPanel() {
 
           <button 
             type="submit"
-            className="flex items-center gap-1 px-4 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all shadow-[0_0_15px_rgba(234,88,12,0.1)]"
+            className="flex items-center gap-1 px-4 py-1.5 bg-[#039A01] hover:bg-[#028001] text-white rounded-lg text-xs font-bold transition-all shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Widget</span>
@@ -89,7 +89,7 @@ export function BuilderPanel() {
 
         <button 
           onClick={resetCustomWidgets}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all self-end lg:self-auto"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FAFCFA] hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#5F6962] hover:text-[#202020] transition-all self-end lg:self-auto"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset Grid</span>
@@ -106,7 +106,7 @@ export function BuilderPanel() {
               {/* Trash Hover overlay trigger */}
               <button 
                 onClick={() => removeCustomWidget(w.id)}
-                className="absolute top-4 right-4 z-20 p-1.5 bg-rose-950/20 hover:bg-rose-600 border border-rose-900/40 text-rose-500 hover:text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-4 right-4 z-20 p-1.5 bg-[#FDF2F2] hover:bg-[#B91C1C] border border-[#F8C8C8] text-[#B91C1C] hover:text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                 title="Remove widget"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -129,7 +129,7 @@ export function BuilderPanel() {
         })}
       </div>
       {customWidgets.length === 0 && (
-        <div className="text-center py-20 bg-[#0b0b0b] border border-[#1e1e1e] border-dashed rounded-2xl text-slate-500 text-xs">
+        <div className="text-center py-20 bg-[#FFFFFF] border border-[#E1E6E1] border-dashed rounded-2xl text-[#5F6962] text-xs">
           Your dashboard canvas is empty. Use the form above to add customized analytical widgets.
         </div>
       )}
