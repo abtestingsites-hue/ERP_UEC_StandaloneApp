@@ -68,10 +68,10 @@ export const crmLiveService = {
 
     async getOmnichannelStats(): Promise<any> {
         try {
-            const res = await crmApi.get('/api/v1/omnichannel/conversations');
-            return res.data || {};
+            const res = await crmApi.get('/api/v1/conversations');
+            return Array.isArray(res.data) ? res.data : [];
         } catch {
-            return {};
+            return [];
         }
     },
 };

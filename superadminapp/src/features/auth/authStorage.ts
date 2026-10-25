@@ -30,5 +30,10 @@ export function writeAuthSession(session: AuthSession): void {
 export function clearAuthSession(): void {
 	if (typeof window !== 'undefined') {
 		window.sessionStorage.removeItem(AUTH_STORAGE_KEY)
+		localStorage.removeItem('paramantra_access_token')
+		localStorage.removeItem('paramantra_refresh_token')
+		localStorage.removeItem('paramantra_user')
+		localStorage.removeItem('crm_token')
+		localStorage.removeItem('crm_user')
 	}
 }

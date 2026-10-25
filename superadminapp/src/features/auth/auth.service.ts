@@ -38,6 +38,56 @@ export async function loginWithCredentials(email: string, password: string): Pro
 	return { user, accessToken }
 }
 
+export async function loginWithCrmCredentials(email: string, password: string): Promise<LoginResponse> {
+	const crmHost = 'https://crm-uec-backend.onrender.com'
+	const response = await fetch(`${crmHost}/api/v1/auth/login`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ email, password }),
+	})
+
+	const data = await response.json()
+	if (!response.ok || !data.accessToken) {
+		throw new Error(data.message || 'Invalid CRM credentials')
+	}
+
+	const session = data.session || {}
+	const accessToken = data.accessToken
+	const refreshToken = data.refreshToken
+
+	if (typeof window !== 'undefined') {
+		localStorage.setItem('paramantra_access_token', accessToken)
+		if (refreshToken) localStorage.setItem('paramantra_refresh_token', refreshToken)
+		localStorage.setItem('crm_token', accessToken)
+		const userObj = {
+			id: session.userId || session.id || 'crm-agent',
+			email: session.email || email,
+			name: session.name || 'CRM Agent',
+			role: session.role || 'AGENT',
+			agentId: session.agentId || session.userId || session.id,
+			department: session.department || 'CRM',
+		}
+		localStorage.setItem('paramantra_user', JSON.stringify(userObj))
+		localStorage.setItem('crm_user', JSON.stringify(userObj))
+	}
+
+	const user: AuthUser = {
+		id: session.userId || session.id || 'crm-agent',
+		name: session.name || 'CRM Agent',
+		email: session.email || email,
+		role: session.role || 'AGENT',
+		permissions: ['crm:access', 'leads:read', 'telephony:access'],
+		unitAccess: [],
+		mustChangePassword: false,
+		tenantId: session.orgId || '',
+		unitId: null,
+		staffId: session.agentId || null,
+		unit: null,
+	}
+
+	return { user, accessToken, refreshToken }
+}
+
 export async function changeTemporaryPassword(
 	currentPassword: string,
 	newPassword: string,

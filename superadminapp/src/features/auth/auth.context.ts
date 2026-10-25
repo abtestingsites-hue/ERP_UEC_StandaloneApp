@@ -3,7 +3,7 @@ import type { AuthSession } from '../../types/auth'
 
 export type AuthContextValue = {
 	session: AuthSession | null
-	login: (email: string, password: string) => Promise<AuthSession>
+	login: (email: string, password: string, provider?: 'erp' | 'crm') => Promise<AuthSession>
 	logout: () => void
 }
 

@@ -135,9 +135,14 @@ export function getPermittedDomainsForUser(user: AuthUser | null | undefined): s
 		return ['ambulance']
 	}
 
-	// 9. Dedicated Admission / CRM / Enquiry Officers: Admission & CRM
+	// 9. Dedicated Admission / CRM / Enquiry Officers / CRM Agents: Admission & CRM
 	if (
-		roleName.includes('CRM')
+		roleName.includes('CRM') ||
+		roleName === 'AGENT' ||
+		roleName.includes('AGENT') ||
+		roleName.includes('SUPERVISOR') ||
+		roleName.includes('CUSTOMERCARE') ||
+		roleName.includes('CUSTOMER_CARE')
 	) {
 		return ['crm', 'admission']
 	}
