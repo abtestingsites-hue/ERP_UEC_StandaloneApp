@@ -89,16 +89,16 @@ export function Navbar() {
   const mockNotifications: any[] = [];
 
   return (
-    <header className="h-14 bg-white border-b border-[#E1E6E1] flex items-center justify-between px-6 z-50 sticky top-0">
+    <header className="h-14 bg-[#000] border-b border-[#222] flex items-center justify-between px-6 z-50 sticky top-0">
       {/* Global Search */}
       <div className="max-w-md w-full relative group">
-        <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#849389] group-focus-within:text-[#039A01] transition-colors" />
+        <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#039A01] transition-colors" />
         <input aria-label="Global search" 
           type="text" 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search customers, cases, or tickets (Press /)" 
-          className="w-full bg-[#F5F7F5] border border-[#E1E6E1] focus:border-[#039A01] focus:bg-white rounded-full pl-9 pr-4 py-1.5 text-xs outline-none transition-all text-[#202020] placeholder-[#849389]"
+          className="w-full bg-[#111] border border-[#222] focus:border-[#039A01] focus:bg-[#1a1a1a] rounded-full pl-9 pr-4 py-1.5 text-xs outline-none transition-all text-white placeholder-slate-500"
         />
       </div>
 
@@ -199,14 +199,14 @@ export function Navbar() {
         <div className="relative" ref={profileRef}>
           <div 
             onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-            className="flex items-center gap-2.5 ml-2 border-l border-[#E1E6E1] pl-5 cursor-pointer group"
+            className="flex items-center gap-3 ml-2 border-l border-[#333] pl-6 cursor-pointer group"
           >
-            <div className="w-8 h-8 rounded-full bg-[#039A01] flex items-center justify-center text-white font-bold text-xs shadow-sm group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 rounded-full bg-[#039A01] flex items-center justify-center text-white font-bold text-xs shadow-sm group-hover:scale-105 transition-transform">
               {userInitials}
             </div>
             <div className="text-left hidden md:block">
-              <p className="text-xs font-bold text-[#202020] leading-tight group-hover:text-[#039A01] transition-colors">{userName}</p>
-              <p className="text-[10px] text-[#5F6962] leading-tight">{userRole}</p>
+              <p className="text-sm font-bold text-white leading-tight group-hover:text-[#039A01] transition-colors">{userName}</p>
+              <p className="text-[10px] text-slate-400 leading-tight">{userRole}</p>
             </div>
           </div>
           
@@ -216,19 +216,19 @@ export function Navbar() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute right-0 mt-3 w-52 bg-white border border-[#E1E6E1] rounded-xl shadow-xl overflow-hidden z-50 py-1"
+                className="absolute right-0 mt-3 w-48 bg-[#111] border border-[#222] rounded-xl shadow-2xl overflow-hidden z-50 py-1"
               >
                 <Link 
                   href="/agent/profile" 
                   onClick={() => setShowProfileDropdown(false)}
-                  className="block px-4 py-2 text-xs font-semibold text-[#5F6962] hover:text-[#202020] hover:bg-[#F5F7F5] transition-colors"
+                  className="block px-4 py-2.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-[#1a1a1a] transition-colors"
                 >
                   My Profile
                 </Link>
                 <a 
                   href="/dashboard"
                   onClick={() => setShowProfileDropdown(false)}
-                  className="block px-4 py-2 text-xs font-semibold text-[#039A01] hover:bg-[#E7F4E8] transition-colors border-t border-[#E1E6E1]"
+                  className="block px-4 py-2.5 text-sm font-medium text-emerald-400 hover:text-emerald-300 hover:bg-[#1a1a1a] transition-colors border-t border-[#222]"
                 >
                   Return to ERP Workspace →
                 </a>
@@ -242,7 +242,7 @@ export function Navbar() {
                     sessionStorage.removeItem('superadmin-erp-session');
                     window.location.href = '/login';
                   }}
-                  className="w-full text-left px-4 py-2 text-xs font-semibold text-[#B91C1C] hover:bg-[#FDF2F2] transition-colors border-t border-[#E1E6E1]"
+                  className="w-full text-left px-4 py-2.5 text-sm font-medium text-rose-500 hover:bg-rose-500/10 transition-colors border-t border-[#222]"
                 >
                   Logout
                 </button>

@@ -97,64 +97,7 @@ export function CRMWorkspace() {
 
     if (viewMode === 'native-crm') {
         return (
-            <div className="crm-workspace-native" style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-                {/* Admin Switcher Bar (only for admins/superadmins to toggle to Telemetry Dashboard) */}
-                {!isCrmUser && (
-                    <div
-                        style={{
-                            background: '#FAFCFA',
-                            borderBottom: '1px solid #E1E6E1',
-                            padding: '8px 16px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            fontSize: '12px',
-                            color: '#5F6962',
-                            zIndex: 40,
-                        }}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#039A01' }}></span>
-                            <span style={{ fontWeight: 600, color: '#202020' }}>Integrated Real ElderCare CRM Workspace</span>
-                            <span style={{ color: '#849389' }}>· Live Backend: {liveBackendUrl.replace('https://', '')}</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <a
-                                href="/dashboard"
-                                style={{
-                                    background: '#FFFFFF',
-                                    border: '1px solid #E1E6E1',
-                                    color: '#039A01',
-                                    padding: '4px 10px',
-                                    borderRadius: '6px',
-                                    fontSize: '11px',
-                                    fontWeight: 600,
-                                    textDecoration: 'none',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                ← Return to ERP Sidebar
-                            </a>
-                            <button
-                                type="button"
-                                onClick={() => setViewMode('telemetry-dashboard')}
-                                style={{
-                                    background: '#FFFFFF',
-                                    border: '1px solid #E1E6E1',
-                                    color: '#5F6962',
-                                    padding: '4px 10px',
-                                    borderRadius: '6px',
-                                    fontSize: '11px',
-                                    fontWeight: 600,
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                View ERP Telemetry Summary →
-                            </button>
-                        </div>
-                    </div>
-                )}
+            <div className="crm-workspace-native" style={{ width: '100%', height: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#000000' }}>
                 <div style={{ flex: 1, position: 'relative' }}>
                     <CRMApp />
                 </div>

@@ -47,48 +47,42 @@ export function AgentSidebar() {
   }, []);
 
   return (
-    <div className="w-[240px] h-screen border-r border-[#E1E6E1] bg-[#FFFFFF] flex flex-col pt-5 pb-5 shrink-0 relative z-20">
+    <div className="w-[240px] h-screen border-r border-[#222] bg-[#050505] flex flex-col pt-5 pb-5 shrink-0 relative z-20">
       {/* Brand */}
-      <div className="px-5 flex items-center gap-3 mb-6">
-        <img
-          src="/logo.png"
-          alt="UNCF Logo"
-          className="w-8 h-8 rounded-lg object-contain shadow-sm border border-[#E1E6E1] p-0.5 bg-white"
-          onError={(e) => {
-            // Fallback icon if logo image not found
-            (e.target as HTMLElement).style.display = 'none';
-          }}
-        />
+      <div className="px-6 flex items-center gap-3 mb-8">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#039A01] to-[#026601] flex items-center justify-center shadow-lg shadow-emerald-900/30 shrink-0">
+          <Phone className="text-white w-4 h-4" />
+        </div>
         <div>
-          <h1 className="font-bold text-base tracking-tight text-[#202020] leading-none">ElderCare</h1>
+          <h1 className="font-bold text-lg tracking-tight text-white leading-none">ElderCare</h1>
           <p className="text-[10px] text-[#039A01] font-bold uppercase tracking-widest mt-1">Agent Portal</p>
         </div>
       </div>
 
-      <div className="px-4 mb-3">
-        <p className="text-[11px] font-bold text-[#849389] uppercase tracking-wider pl-2">Menu</p>
+      <div className="px-4 mb-4">
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider pl-2">Menu</p>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar">
+      <nav className="flex-1 overflow-y-auto px-4 space-y-1 custom-scrollbar">
         {navItems.map((item, i) => {
           const isActive = pathname.startsWith(item.href);
           
           return (
             <Link href={item.href} key={i}>
               <div
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${
                   isActive 
-                  ? 'bg-[#E7F4E8] border border-[#C8E6CA] text-[#026601] shadow-sm font-semibold' 
-                  : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020] border border-transparent'
+                  ? 'bg-[#111] border border-[#333] shadow-md' 
+                  : 'text-slate-400 hover:bg-[#111]/50 hover:text-white border border-transparent'
                 }`}
               >
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-                  isActive ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E1E6E1] group-hover:text-[#202020]'
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                  isActive ? 'bg-[#039A01]/20 text-[#039A01]' : 'bg-[#1a1a1a] text-slate-500 group-hover:bg-[#222] group-hover:text-slate-300'
                 }`}>
-                  <item.icon className="w-3.5 h-3.5" />
+                  <item.icon className="w-4 h-4" />
                 </div>
-                <span className="font-medium text-xs">{item.label}</span>
+                <span className={`font-medium text-sm ${isActive ? 'text-white' : ''}`}>{item.label}</span>
               </div>
             </Link>
           );
@@ -98,18 +92,12 @@ export function AgentSidebar() {
         <div className="pt-2">
           <button 
             onClick={() => setIsLeadsOpen(!isLeadsOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
-              pathname.startsWith('/agent/leads') 
-              ? 'bg-[#E7F4E8] border border-[#C8E6CA] text-[#026601] shadow-sm font-semibold' 
-              : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020] border border-transparent'
-            }`}
+            className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${pathname.startsWith('/agent/leads') ? 'bg-[#111] border border-[#333] shadow-md text-white' : 'text-slate-400 hover:bg-[#111]/50 hover:text-white border border-transparent'}`}
           >
-            <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-              pathname.startsWith('/agent/leads') ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E1E6E1] group-hover:text-[#202020]'
-            }`}>
-              <Target className="w-3.5 h-3.5" />
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${pathname.startsWith('/agent/leads') ? 'bg-[#039A01]/20 text-[#039A01]' : 'bg-[#1a1a1a] text-slate-500 group-hover:bg-[#222] group-hover:text-slate-300'}`}>
+              <Target className="w-4 h-4" />
             </div>
-            <span className="font-medium text-xs">Leads</span>
+            <span className="font-medium text-sm">Leads</span>
             <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
           </button>
           
@@ -117,11 +105,11 @@ export function AgentSidebar() {
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              className="pl-11 pr-3 py-1 space-y-1"
+              className="pl-[3.25rem] pr-3 py-1 space-y-1"
             >
               {leadItems.map((item, idx) => (
                 <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
+                  <div className={`text-xs py-2 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-slate-500 hover:text-slate-300'}`}>
                     {item.label}
                   </div>
                 </Link>
@@ -131,11 +119,11 @@ export function AgentSidebar() {
         </div>
       </nav>
 
-      {/* Footer Navigation: Return to ERP Workspace & Logout */}
-      <div className="px-3 mt-auto pt-3 border-t border-[#E1E6E1] space-y-2">
+      {/* Footer Navigation */}
+      <div className="px-4 mt-auto pt-4 border-t border-[#1c1c1c] space-y-2">
         <a 
           href="/dashboard"
-          className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#5F6962] hover:text-[#026601] border border-[#E1E6E1] hover:border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs no-underline"
+          className="w-full flex justify-center items-center gap-2 bg-[#111] hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 border border-[#222] hover:border-emerald-500/20 py-2.5 rounded-xl transition-colors font-medium text-xs no-underline"
         >
           Return to ERP Workspace →
         </a>
@@ -148,9 +136,9 @@ export function AgentSidebar() {
             sessionStorage.removeItem('superadmin-erp-session');
             window.location.href = '/login';
           }}
-          className="w-full flex justify-center items-center gap-2 bg-[#FFFFFF] hover:bg-[#FDF2F2] text-[#849389] hover:text-[#B91C1C] border border-[#E1E6E1] hover:border-[#F8C8C8] py-2 rounded-lg transition-colors font-medium text-xs"
+          className="w-full flex justify-center items-center gap-2 bg-[#111] hover:bg-rose-500/10 text-slate-400 hover:text-rose-500 border border-[#222] hover:border-rose-500/20 py-2.5 rounded-xl transition-colors font-medium text-xs"
         >
-          <LogOut className="w-3.5 h-3.5" />
+          <LogOut className="w-4 h-4" />
           Logout
         </button>
       </div>

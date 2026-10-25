@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  /* UEC ERP Visual Design System Tokens */
-  --background: #F5F7F5;
-  --foreground: #202020;
-  --primary: #039A01; /* UEC Brand Green */
+  /* ElderCare CRM Dark Visual Theme with UEC Brand Green Accent */
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #039A01; /* UEC Brand Green Accent */
   --primary-foreground: #ffffff;
-  --card: #FFFFFF;
-  --card-foreground: #202020;
-  --border: #E1E6E1;
-  --sidebar: #FFFFFF;
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --border: #222222;
+  --sidebar: #050505;
 }
 
 @theme inline {
@@ -28,10 +28,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   @apply antialiased selection:bg-primary/30;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
-/* Custom Scrollbar for UEC clean theme */
+/* Custom Scrollbar for dark theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -40,7 +40,7 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #333333;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {

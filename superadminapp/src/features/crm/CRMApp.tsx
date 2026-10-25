@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthWrapper } from './modules/components/layout/AuthWrapper';
+import './modules/pages/globals.css';
 
 // Lazy load CRM page components
 const DashboardPage = lazy(() => import('./modules/pages/dashboard/page'));
@@ -35,10 +36,10 @@ const AiSummaryPage = lazy(() => import('./modules/pages/ai-summary/page'));
 
 function CrmLoadingFallback() {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: '400px', background: '#F5F7F5', color: '#039A01' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: '400px', background: '#000000', color: '#039A01' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
         <span style={{ width: '32px', height: '32px', border: '3px solid rgba(3, 154, 1, 0.2)', borderTopColor: '#039A01', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}></span>
-        <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', color: '#5F6962' }}>LOADING ELDERCARE CRM WORKSPACE...</span>
+        <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', color: '#94a3b8' }}>LOADING ELDERCARE CRM WORKSPACE...</span>
       </div>
     </div>
   );
@@ -46,7 +47,7 @@ function CrmLoadingFallback() {
 
 export function CRMApp() {
   return (
-    <div className="crm-root" style={{ width: '100%', height: '100%', background: '#F5F7F5', color: '#202020', minHeight: '100vh', position: 'relative' }}>
+    <div className="crm-root" style={{ width: '100%', height: '100%', background: '#000000', color: '#ffffff', minHeight: '100vh', position: 'relative' }}>
       <AuthWrapper>
         <Suspense fallback={<CrmLoadingFallback />}>
           <Routes>
