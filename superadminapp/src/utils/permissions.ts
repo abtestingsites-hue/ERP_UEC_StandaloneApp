@@ -76,7 +76,9 @@ export function getPermittedDomainsForUser(user: AuthUser | null | undefined): s
 	// 2. Nursing Staff: Inhouse Care staff workspace ONLY
 	if (
 		roleName === 'NURSING_CARE_STAFF' ||
-		roleName === 'NURSING_STAFF'
+		roleName === 'NURSING_STAFF' ||
+		roleName === 'NURSE' ||
+		roleName === 'STAFF_NURSE'
 	) {
 		return ['inhouse-care']
 	}
