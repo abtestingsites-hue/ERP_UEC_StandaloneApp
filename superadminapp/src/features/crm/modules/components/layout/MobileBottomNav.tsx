@@ -20,7 +20,7 @@ export function MobileBottomNav({ shouldShowAgentShell }: MobileBottomNavProps) 
   const isTabActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <nav className="h-16 fixed bottom-0 left-0 right-0 z-40 bg-[#090909]/95 backdrop-blur-md border-t border-[#1e1e1e] px-4 flex items-center justify-between pb-safe">
+    <nav className="md:hidden h-16 fixed bottom-0 left-0 right-0 z-40 bg-[#090909]/95 backdrop-blur-md border-t border-[#1e1e1e] px-4 flex items-center justify-between pb-safe">
       {/* Dashboard */}
       <Link href={getDashboardHref()} className="flex-1 flex flex-col items-center justify-center py-1">
         <div className={`p-1 rounded-xl transition-colors ${isTabActive(getDashboardHref()) ? "text-primary" : "text-slate-400 hover:text-white"}`}>
