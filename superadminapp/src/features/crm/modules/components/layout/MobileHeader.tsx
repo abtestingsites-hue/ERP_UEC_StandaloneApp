@@ -52,7 +52,7 @@ export function MobileHeader({ shouldShowAgentShell, onOpenMenu }: MobileHeaderP
   };
 
   return (
-    <header className="h-14 bg-[#090909]/95 backdrop-blur-md border-b border-[#1e1e1e] px-4 flex items-center justify-between shrink-0 text-white">
+    <header className="h-14 bg-[#090909]/95 backdrop-blur-md border-b border-[#1e1e1e] px-4 flex md:hidden items-center justify-between shrink-0 text-white">
       {isSearchOpen ? (
         <div className="flex-1 flex items-center gap-2 animate-in fade-in duration-150">
           <Search className="w-4 h-4 text-slate-400 shrink-0" />

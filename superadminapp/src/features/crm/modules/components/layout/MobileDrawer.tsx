@@ -114,7 +114,7 @@ export function MobileDrawer({ isOpen, onClose, shouldShowAgentShell }: MobileDr
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-[#0F172A]/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-[#0F172A]/40 backdrop-blur-sm md:hidden"
           />
 
           {/* Drawer content */}
@@ -123,7 +123,7 @@ export function MobileDrawer({ isOpen, onClose, shouldShowAgentShell }: MobileDr
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "tween", duration: 0.2 }}
-            className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#0a0a0a] flex flex-col pt-5 pb-5 shadow-2xl border-r border-[#222]"
+            className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#0a0a0a] flex md:hidden flex-col pt-5 pb-5 shadow-2xl border-r border-[#222]"
           >
             {/* Header / Brand */}
             <div className="px-5 flex items-center justify-between mb-5 shrink-0">
