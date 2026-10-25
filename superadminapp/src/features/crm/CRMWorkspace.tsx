@@ -23,12 +23,18 @@ import {
 import { PageHeader } from '../../components/PageHeader';
 import { readAuthSession } from '../auth/authStorage';
 import { crmLiveService } from './crmLive.service';
+import { CRMApp } from './CRMApp';
 
 export function CRMWorkspace() {
     const isRender = typeof window !== 'undefined' && window.location.hostname.includes('render.com');
     const rawCrmAppUrl = (import.meta as any).env?.VITE_CRM_APP_URL || (isRender ? '' : 'http://127.0.0.1:5181');
     const liveBackendUrl = 'https://crm-uec-backend.onrender.com';
 
+    const session = readAuthSession();
+    const isCrmUser = session?.user?.provider === 'crm' || (session?.user?.role === 'AGENT' || session?.user?.role === 'CRM');
+
+    // Default CRM users directly to the native CRM application workspace
+    const [viewMode, setViewMode] = useState<'native-crm' | 'telemetry-dashboard'>('native-crm');
     const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'telephony' | 'omnichannel' | 'live-app'>('overview');
     const [backendStatus, setBackendStatus] = useState<{ status: string; latencyMs?: number }>({ status: 'CHECKING...' });
     const [callData, setCallData] = useState<{ activeCalls: any[]; queuedCalls: any[]; missedCalls: any[] }>({
@@ -41,7 +47,6 @@ export function CRMWorkspace() {
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [iframeKey, setIframeKey] = useState(0);
 
-    const session = readAuthSession();
     const token = session?.accessToken || '';
     const userPayload = session?.user
         ? encodeURIComponent(
@@ -90,6 +95,56 @@ export function CRMWorkspace() {
         );
     });
 
+    if (viewMode === 'native-crm') {
+        return (
+            <div className="crm-workspace-native" style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+                {/* Admin Switcher Bar (only for admins/superadmins to toggle to Telemetry Dashboard) */}
+                {!isCrmUser && (
+                    <div
+                        style={{
+                            background: '#090909',
+                            borderBottom: '1px solid #1e1e1e',
+                            padding: '6px 16px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            fontSize: '12px',
+                            color: '#94a3b8',
+                            zIndex: 40,
+                        }}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#16a34a' }}></span>
+                            <span style={{ fontWeight: 600, color: '#f8fafc' }}>Integrated Real ElderCare CRM Application</span>
+                            <span style={{ color: '#64748b' }}>· Live Backend: {liveBackendUrl.replace('https://', '')}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <button
+                                type="button"
+                                onClick={() => setViewMode('telemetry-dashboard')}
+                                style={{
+                                    background: '#141414',
+                                    border: '1px solid #262626',
+                                    color: '#cbd5e1',
+                                    padding: '4px 10px',
+                                    borderRadius: '6px',
+                                    fontSize: '11px',
+                                    fontWeight: 600,
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                View ERP Telemetry Summary →
+                            </button>
+                        </div>
+                    </div>
+                )}
+                <div style={{ flex: 1, position: 'relative' }}>
+                    <CRMApp />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="crm-workspace" style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '18px' }}>
             <PageHeader
@@ -98,6 +153,27 @@ export function CRMWorkspace() {
                 description="Client relationship lifecycle, omnichannel communications, AI-assisted lead management, and telephony."
                 action={
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                        <button
+                            type="button"
+                            onClick={() => setViewMode('native-crm')}
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '7px 14px',
+                                borderRadius: '8px',
+                                fontSize: '12px',
+                                fontWeight: 700,
+                                background: '#f97316',
+                                border: 'none',
+                                color: '#ffffff',
+                                cursor: 'pointer',
+                                boxShadow: '0 2px 8px rgba(249, 115, 22, 0.3)',
+                            }}
+                        >
+                            <Shield size={14} />
+                            <span>Open Full CRM Workspace →</span>
+                        </button>
                         <div
                             style={{
                                 display: 'inline-flex',
