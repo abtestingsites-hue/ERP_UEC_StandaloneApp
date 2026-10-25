@@ -173,7 +173,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         {shouldShowAgentShell ? <AgentSidebar /> : <Sidebar />}
         <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
           {shouldShowAgentShell ? <AgentNavbar /> : <Navbar />}
-          <main className="flex-1 overflow-y-auto bg-[#F5F7F5] relative text-[#202020]">
+          <main className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] relative text-[#202020]">
             {children}
           </main>
         </div>
