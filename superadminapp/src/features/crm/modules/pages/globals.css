@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --primary: #f97316; /* orange-500 */
+  /* UEC ERP Visual Design System Tokens */
+  --background: #F5F7F5;
+  --foreground: #202020;
+  --primary: #039A01; /* UEC Brand Green */
   --primary-foreground: #ffffff;
-  --card: #111111;
-  --card-foreground: #ffffff;
-  --border: #222222;
-  --sidebar: #050505;
+  --card: #FFFFFF;
+  --card-foreground: #202020;
+  --border: #E1E6E1;
+  --sidebar: #FFFFFF;
 }
 
 @theme inline {
@@ -27,10 +28,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   @apply antialiased selection:bg-primary/30;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-/* Custom Scrollbar for dark theme */
+/* Custom Scrollbar for UEC clean theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -39,7 +40,7 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {

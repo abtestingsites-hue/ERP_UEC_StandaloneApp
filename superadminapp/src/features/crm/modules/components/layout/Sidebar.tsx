@@ -102,13 +102,20 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="w-[220px] h-screen border-r border-[#222] bg-[#050505] flex flex-col pt-5 pb-5 shrink-0 relative z-20">
+    <div className="w-[220px] h-screen border-r border-[#E1E6E1] bg-[#FFFFFF] flex flex-col pt-5 pb-5 shrink-0 relative z-20">
       {/* Brand */}
-      <div className="px-4 flex items-center gap-2 mb-6">
-        <HeartPulse className="text-primary w-6 h-6" />
+      <div className="px-4 flex items-center gap-2.5 mb-6">
+        <img
+          src="/logo.png"
+          alt="UNCF Logo"
+          className="w-7 h-7 rounded-lg object-contain shadow-sm border border-[#E1E6E1] p-0.5 bg-white"
+          onError={(e) => {
+            (e.target as HTMLElement).style.display = 'none';
+          }}
+        />
         <div>
-          <h1 className="font-bold text-base tracking-tight text-white">ElderCare</h1>
-          <p className="text-[8px] text-slate-500 font-medium uppercase tracking-wider">CRM Platform</p>
+          <h1 className="font-bold text-base tracking-tight text-[#202020]">ElderCare</h1>
+          <p className="text-[9px] text-[#039A01] font-semibold uppercase tracking-wider">Enterprise CRM</p>
         </div>
       </div>
 
@@ -120,12 +127,16 @@ export function Sidebar() {
           return (
             <Link href={item.href} key={i}>
               <div
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive ? 'bg-gradient-to-r from-primary/20 to-transparent border-l-2 border-primary text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-150 group ${
+                  isActive 
+                  ? 'bg-[#E7F4E8] border-l-2 border-[#039A01] text-[#026601] font-semibold' 
+                  : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'
+                }`}
               >
-                <item.icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'text-slate-500 group-hover:text-slate-300 transition-colors'}`} />
-                <span className="font-medium text-sm">{item.label}</span>
+                <item.icon className={`w-4 h-4 ${isActive ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#202020] transition-colors'}`} />
+                <span className="font-medium text-xs">{item.label}</span>
                 {item.badge && (
-                  <span className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-primary text-white' : 'border border-primary text-primary'}`}>
+                  <span className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-[#039A01] text-white' : 'border border-[#C8E6CA] text-[#026601]'}`}>
                     {item.badge}
                   </span>
                 )}
@@ -138,10 +149,10 @@ export function Sidebar() {
         <div className="pt-2">
           <button 
             onClick={() => setIsSopOpen(!isSopOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${pathname.startsWith('/sop') ? 'bg-gradient-to-r from-emerald-500/20 to-transparent border-l-2 border-emerald-500 text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
+            className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-150 group ${pathname.startsWith('/sop') ? 'bg-[#E7F4E8] border-l-2 border-[#039A01] text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
           >
-            <CheckSquare className={`w-4 h-4 ${pathname.startsWith('/sop') ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
-            <span className="font-medium text-sm">SOP & Daily Ops</span>
+            <CheckSquare className={`w-4 h-4 ${pathname.startsWith('/sop') ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#202020]'}`} />
+            <span className="font-medium text-xs">SOP & Daily Ops</span>
             <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isSopOpen ? 'rotate-180' : ''}`} />
           </button>
           
@@ -149,11 +160,11 @@ export function Sidebar() {
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              className="pl-9 pr-3 py-1 space-y-1"
+              className="pl-8 pr-2 py-1 space-y-1"
             >
               {sopItems.map((item, idx) => (
                 <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-emerald-400 font-semibold' : 'text-slate-500 hover:text-slate-300'}`}>
+                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
                     {item.label}
                   </div>
                 </Link>
@@ -166,10 +177,10 @@ export function Sidebar() {
         <div className="pt-2">
           <button 
             onClick={() => setIsLeadsOpen(!isLeadsOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${pathname.startsWith('/leads') ? 'bg-gradient-to-r from-primary/20 to-transparent border-l-2 border-primary text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
+            className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-150 group ${pathname.startsWith('/leads') ? 'bg-[#E7F4E8] border-l-2 border-[#039A01] text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
           >
-            <Target className={`w-4 h-4 ${pathname.startsWith('/leads') ? 'text-primary' : 'text-slate-500 group-hover:text-slate-300'}`} />
-            <span className="font-medium text-sm">Leads</span>
+            <Target className={`w-4 h-4 ${pathname.startsWith('/leads') ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#202020]'}`} />
+            <span className="font-medium text-xs">Leads</span>
             <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
           </button>
           
@@ -177,11 +188,11 @@ export function Sidebar() {
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              className="pl-9 pr-3 py-1 space-y-1"
+              className="pl-8 pr-2 py-1 space-y-1"
             >
               {leadItems.map((item, idx) => (
                 <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-2 transition-colors ${pathname === item.href ? 'text-primary font-semibold' : 'text-slate-500 hover:text-slate-300'}`}>
+                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
                     {item.label}
                   </div>
                 </Link>
@@ -197,10 +208,10 @@ export function Sidebar() {
             return (
               <Link href={item.href} key={i}>
                 <div
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive ? 'bg-gradient-to-r from-primary/20 to-transparent border-l-2 border-primary text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-150 group ${isActive ? 'bg-[#E7F4E8] border-l-2 border-[#039A01] text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
                 >
-                  <item.icon className={`w-4 h-4 ${isActive ? 'text-primary' : 'text-slate-500 group-hover:text-slate-300 transition-colors'}`} />
-                  <span className="font-medium text-sm">{item.label}</span>
+                  <item.icon className={`w-4 h-4 ${isActive ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#202020] transition-colors'}`} />
+                  <span className="font-medium text-xs">{item.label}</span>
                 </div>
               </Link>
             );
@@ -210,10 +221,10 @@ export function Sidebar() {
       </nav>
       
       {/* Return to ERP & Logout Buttons */}
-      <div className="px-3 mt-auto pt-4 border-t border-[#222] space-y-2">
+      <div className="px-3 mt-auto pt-3 border-t border-[#E1E6E1] space-y-2">
         <a 
           href="/dashboard"
-          className="w-full flex justify-center items-center gap-2 bg-[#111] hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 border border-[#222] hover:border-emerald-500/20 py-2.5 rounded-xl transition-colors font-medium text-xs no-underline"
+          className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#5F6962] hover:text-[#026601] border border-[#E1E6E1] hover:border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs no-underline"
         >
           Return to ERP Workspace →
         </a>
@@ -226,9 +237,9 @@ export function Sidebar() {
             sessionStorage.removeItem('superadmin-erp-session');
             window.location.href = '/login';
           }}
-          className="w-full flex justify-center items-center gap-2 bg-[#111] hover:bg-rose-500/10 text-slate-400 hover:text-rose-500 border border-[#222] hover:border-rose-500/20 py-2.5 rounded-xl transition-colors font-medium text-xs"
+          className="w-full flex justify-center items-center gap-2 bg-[#FFFFFF] hover:bg-[#FDF2F2] text-[#849389] hover:text-[#B91C1C] border border-[#E1E6E1] hover:border-[#F8C8C8] py-2 rounded-lg transition-colors font-medium text-xs"
         >
-          <LogOut className="w-4 h-4" />
+          <LogOut className="w-3.5 h-3.5" />
           Logout Session
         </button>
       </div>

@@ -102,30 +102,47 @@ export function CRMWorkspace() {
                 {!isCrmUser && (
                     <div
                         style={{
-                            background: '#090909',
-                            borderBottom: '1px solid #1e1e1e',
-                            padding: '6px 16px',
+                            background: '#FAFCFA',
+                            borderBottom: '1px solid #E1E6E1',
+                            padding: '8px 16px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
                             fontSize: '12px',
-                            color: '#94a3b8',
+                            color: '#5F6962',
                             zIndex: 40,
                         }}
                     >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#16a34a' }}></span>
-                            <span style={{ fontWeight: 600, color: '#f8fafc' }}>Integrated Real ElderCare CRM Application</span>
-                            <span style={{ color: '#64748b' }}>· Live Backend: {liveBackendUrl.replace('https://', '')}</span>
+                            <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#039A01' }}></span>
+                            <span style={{ fontWeight: 600, color: '#202020' }}>Integrated Real ElderCare CRM Workspace</span>
+                            <span style={{ color: '#849389' }}>· Live Backend: {liveBackendUrl.replace('https://', '')}</span>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <a
+                                href="/dashboard"
+                                style={{
+                                    background: '#FFFFFF',
+                                    border: '1px solid #E1E6E1',
+                                    color: '#039A01',
+                                    padding: '4px 10px',
+                                    borderRadius: '6px',
+                                    fontSize: '11px',
+                                    fontWeight: 600,
+                                    textDecoration: 'none',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                ← Return to ERP Sidebar
+                            </a>
                             <button
                                 type="button"
                                 onClick={() => setViewMode('telemetry-dashboard')}
                                 style={{
-                                    background: '#141414',
-                                    border: '1px solid #262626',
-                                    color: '#cbd5e1',
+                                    background: '#FFFFFF',
+                                    border: '1px solid #E1E6E1',
+                                    color: '#5F6962',
                                     padding: '4px 10px',
                                     borderRadius: '6px',
                                     fontSize: '11px',

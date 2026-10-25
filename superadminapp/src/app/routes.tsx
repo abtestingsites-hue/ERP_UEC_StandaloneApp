@@ -115,10 +115,13 @@ export function AppRoutes() {
 				<Route element={<AuthLayout />}>
 					<Route path="change-temporary-password" element={<TemporaryPasswordChange />} />
 				</Route>
+
+				{/* Standalone CRM Workspace: Renders single CRM shell without nested ERP sidebar */}
+				<Route path="crm/*" element={<DomainGuard domainId="crm"><CRMWorkspace /></DomainGuard>} />
+
 				<Route element={<SuperAdminLayout />}>
 					<Route index element={<IndexRedirect />} />
 					<Route path="dashboard" element={<DashboardGuard><Dashboard /></DashboardGuard>} />
-					<Route path="crm/*" element={<DomainGuard domainId="crm"><CRMWorkspace /></DomainGuard>} />
 					<Route path="inventory/*" element={<DomainGuard domainId="inventory"><InventoryWorkspace /></DomainGuard>} />
 					<Route path="admission/*" element={<DomainGuard domainId="admission"><AdmissionWorkspace /></DomainGuard>} />
 					<Route path="inhouse-care/*" element={<DomainGuard domainId="inhouse-care"><CareWorkspace /></DomainGuard>} />

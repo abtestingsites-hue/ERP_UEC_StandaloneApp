@@ -195,8 +195,19 @@ export function getDefaultRouteForUser(user: AuthUser | null | undefined): strin
 		return '/portal/dashboard'
 	}
 
+	// CRM users landing resolution
+	if (user.provider === 'crm' || roleName === 'AGENT' || roleName.includes('AGENT')) {
+		return '/crm/agent/dashboard'
+	}
+	if (roleName.includes('CRM') || roleName.includes('CUSTOMERCARE') || roleName.includes('CUSTOMER_CARE')) {
+		return '/crm/agent/dashboard'
+	}
+
 	const permitted = getPermittedDomainsForUser(user)
 	if (permitted.length > 0) {
+		if (permitted[0] === 'crm') {
+			return '/crm/agent/dashboard'
+		}
 		return `/${permitted[0]}`
 	}
 
