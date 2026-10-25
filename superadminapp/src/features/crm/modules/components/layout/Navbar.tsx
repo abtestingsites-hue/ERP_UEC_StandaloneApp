@@ -96,7 +96,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="h-[60px] bg-[#FFFFFF] border-b border-[#E1E6E1] flex items-center justify-between px-6 z-50 sticky top-0 text-[#202020]">
+    <header className="h-[60px] bg-[#FFFFFF] border-b border-[#E1E6E1] flex items-center justify-between px-6 shrink-0 relative z-50 text-[#202020]">
       {/* Global Search */}
       <div className="max-w-md w-full relative group">
         <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5F6962] group-focus-within:text-[#039A01] transition-colors" />

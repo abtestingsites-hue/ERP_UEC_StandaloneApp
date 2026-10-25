@@ -135,7 +135,7 @@ export function AgentDashboard({ metrics: initialMetrics }: AgentDashboardProps)
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto p-2 md:p-4 bg-[#F5F7F5] text-[#202020] min-h-screen">
+    <div className="space-y-6 max-w-7xl mx-auto p-2 md:p-4 bg-[#F5F7F5] text-[#202020] min-h-full">
       {/* 4.2 HEADER / AGENT WORK STATUS */}
       <div className="p-5 bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative overflow-hidden">
         {/* Agent Info & Live Working Time */}
