@@ -180,7 +180,10 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Mobile Shell */}
-      <div className="flex md:hidden flex-col h-screen overflow-hidden bg-[#F5F7F5] text-[#202020] relative">
+      <div 
+        data-crm-mobile-shell="true"
+        className="crm-mobile-shell flex md:hidden flex-col h-screen overflow-hidden bg-[#F5F7F5] text-[#202020] relative"
+      >
         <MobileHeader 
           shouldShowAgentShell={shouldShowAgentShell} 
           onOpenMenu={() => setIsDrawerOpen(true)} 

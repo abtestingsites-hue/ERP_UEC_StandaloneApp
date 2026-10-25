@@ -32,7 +32,9 @@ const ApprovalsPage = lazy(() => import('./modules/pages/approvals/page'));
 const MarketingPage = lazy(() => import('./modules/pages/marketing/page'));
 const AgentsDirectoryPage = lazy(() => import('./modules/pages/agents/page'));
 const AiRecordsPage = lazy(() => import('./modules/pages/ai-records/page'));
+const AgentAiRecordsPage = lazy(() => import('./modules/pages/agent/ai-records/page'));
 const AiSummaryPage = lazy(() => import('./modules/pages/ai-summary/page'));
+const AgentAiSummaryPage = lazy(() => import('./modules/pages/agent/ai-summary/page'));
 
 function CrmLoadingFallback() {
   return (
@@ -96,9 +98,9 @@ export function CRMApp() {
             
             {/* AI Intelligence & Records */}
             <Route path="ai-records" element={<AiRecordsPage />} />
-            <Route path="agent/ai-records" element={<AiRecordsPage />} />
+            <Route path="agent/ai-records" element={<AgentAiRecordsPage />} />
             <Route path="ai-summary" element={<AiSummaryPage />} />
-            <Route path="agent/ai-summary" element={<AiSummaryPage />} />
+            <Route path="agent/ai-summary" element={<AgentAiSummaryPage />} />
             
             {/* Team Directory & Administration */}
             <Route path="agents" element={<AgentsDirectoryPage />} />

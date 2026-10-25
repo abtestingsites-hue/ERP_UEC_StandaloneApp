@@ -51,7 +51,10 @@ export function MobileHeader({ shouldShowAgentShell, onOpenMenu }: MobileHeaderP
   };
 
   return (
-    <header className="h-14 bg-[#FFFFFF] border-b border-[#E1E6E1] px-4 flex md:hidden items-center justify-between shrink-0 text-[#202020] shadow-2xs">
+    <header 
+      data-crm-mobile-header="true"
+      className="crm-mobile-header h-14 bg-[#FFFFFF] border-b border-[#E1E6E1] px-4 flex md:hidden items-center justify-between shrink-0 text-[#202020] shadow-2xs"
+    >
       {isSearchOpen ? (
         <div className="flex-1 flex items-center gap-2 animate-in fade-in duration-150">
           <Search className="w-4 h-4 text-[#5F6962] shrink-0" />

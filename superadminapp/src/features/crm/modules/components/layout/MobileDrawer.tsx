@@ -87,20 +87,22 @@ export function MobileDrawer({ isOpen, onClose, shouldShowAgentShell }: MobileDr
         <>
           {/* Backdrop overlay */}
           <motion.div
+            data-crm-mobile-drawer="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-[#0F172A]/40 backdrop-blur-xs md:hidden"
+            className="crm-mobile-drawer fixed inset-0 z-50 bg-[#0F172A]/40 backdrop-blur-xs md:hidden"
           />
 
           {/* Drawer content */}
           <motion.aside
+            data-crm-mobile-drawer="true"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "tween", duration: 0.2 }}
-            className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#FFFFFF] flex md:hidden flex-col pt-5 pb-5 shadow-2xl border-r border-[#E1E6E1] text-[#202020]"
+            className="crm-mobile-drawer fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#FFFFFF] flex md:hidden flex-col pt-5 pb-5 shadow-2xl border-r border-[#E1E6E1] text-[#202020]"
           >
             {/* Header / Brand */}
             <div className="px-5 flex items-center justify-between mb-5 shrink-0">

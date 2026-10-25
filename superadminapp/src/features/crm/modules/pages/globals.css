@@ -149,3 +149,28 @@ body {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ==========================================================================
+   RESPONSIVE NAVIGATION RULES (DESKTOP & TABLET VS MOBILE CONTRACT)
+   Guarantees mobile bottom navigation and drawer overlays are NEVER rendered
+   on desktop (>= 1280px) or tablet (768px - 1279px) viewports under any CSS
+   specificity or hydration condition.
+   ========================================================================== */
+@media screen and (min-width: 768px) {
+  .crm-mobile-bottom-nav,
+  [data-crm-mobile-bottom-nav],
+  .crm-mobile-header,
+  .crm-mobile-drawer,
+  .crm-mobile-shell {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    max-height: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
