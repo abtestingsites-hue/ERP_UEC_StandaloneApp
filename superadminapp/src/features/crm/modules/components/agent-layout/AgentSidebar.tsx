@@ -31,7 +31,7 @@ export function AgentSidebar() {
     { label: 'Lead Data', href: '/agent/leads/pool' },
     { label: 'Conversion Board', href: '/agent/leads/conversion' },
     { label: 'Follow Ups', href: '/agent/leads/follow-ups' },
-    { label: 'Leads Timeline', href: '/agent/customers' },
+    { label: 'Leads Timeline', href: '/customers' },
   ];
 
   const [user, setUser] = useState<{name: string, department: string} | null>(null);

@@ -54,10 +54,13 @@ export const LeadHistoryPanel = ({ entityId, type = 'lead' }: { entityId: string
     if (!entityId) return;
     const fetchTimeline = async () => {
       try {
-        const response = await apiFetch(`${API_URL}/timeline/${entityId}?type=${type}`);
+        const endpoint = type === 'customer' 
+          ? `${API_URL}/api/v1/customers/${entityId}/timeline` 
+          : `${API_URL}/api/v1/leads/${entityId}/timeline`;
+        const response = await apiFetch(endpoint);
         if (response.ok) {
           const data = await response.json();
-          setEvents(data);
+          setEvents(Array.isArray(data) ? data : (data.timeline || data.events || []));
         }
       } catch (error) {
         console.error("Failed to fetch timeline:", error);

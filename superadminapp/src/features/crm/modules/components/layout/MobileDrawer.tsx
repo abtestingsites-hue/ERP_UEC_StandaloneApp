@@ -66,7 +66,7 @@ export function MobileDrawer({ isOpen, onClose, shouldShowAgentShell }: MobileDr
     { label: "Lead Data", href: "/agent/leads/pool" },
     { label: "Conversion Board", href: "/agent/leads/conversion" },
     { label: "Follow Ups", href: "/agent/leads/follow-ups" },
-    { label: "Leads Timeline", href: "/agent/customers" },
+    { label: "Leads Timeline", href: "/customers" },
   ];
 
   const navItems = shouldShowAgentShell ? agentNavItems : adminNavItems;

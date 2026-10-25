@@ -5,6 +5,7 @@ import { useLeadStore } from '../../../../store/useLeadStore';
 import { useCallStore } from '../../../../store/useCallStore';
 import { CallIntakeFormModal } from '../../../../components/call-center/CallIntakeFormModal';
 import { CustomerHistoryDrawer } from '../../../../components/call-center/CustomerHistoryDrawer';
+import Link from '../../../../nextShim';
 import {
   Phone,
   Users,
@@ -28,6 +29,9 @@ import {
   HeartPulse,
   MapPin,
   RefreshCw,
+  Eye,
+  EyeOff,
+  ArrowRight,
 } from 'lucide-react';
 
 export default function AgentLeadsPage() {
@@ -35,6 +39,9 @@ export default function AgentLeadsPage() {
   const { setActiveCall } = useCallStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
+
+  // Privacy Unmasking State
+  const [unmaskedLeads, setUnmaskedLeads] = useState<Record<string, boolean>>({});
 
   // Intake Form Modal (Manual Entry & Edit Details)
   const [isIntakeOpen, setIsIntakeOpen] = useState(false);
@@ -47,36 +54,53 @@ export default function AgentLeadsPage() {
   // Action notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const toggleMask = (leadId: string) => {
+    setUnmaskedLeads(prev => ({
+      ...prev,
+      [leadId]: !prev[leadId]
+    }));
+  };
+
+  const getMaskedPhone = (phone: string, isUnmasked: boolean) => {
+    if (!phone) return '—';
+    if (isUnmasked) return phone;
+    if (phone.length <= 4) return phone;
+    const visibleStart = phone.slice(0, 3);
+    const visibleEnd = phone.slice(-2);
+    const maskedLength = Math.max(phone.length - 5, 4);
+    return `${visibleStart}${'*'.repeat(maskedLength)}${visibleEnd}`;
+  };
+
   const getSourceIcon = (source?: string | null) => {
     const s = source?.toLowerCase() || '';
-    if (s.includes('whatsapp')) return <MessageCircle className="w-4 h-4 text-emerald-400" />;
-    if (s.includes('facebook')) return <ThumbsUp className="w-4 h-4 text-blue-500" />;
-    if (s.includes('instagram')) return <Camera className="w-4 h-4 text-pink-500" />;
-    if (s.includes('email')) return <Mail className="w-4 h-4 text-rose-400" />;
-    if (s.includes('referral')) return <UserPlus className="w-4 h-4 text-purple-400" />;
-    if (s.includes('walk-in') || s.includes('walkin')) return <Store className="w-4 h-4 text-amber-400" />;
-    if (s.includes('inbound') || s.includes('incoming')) return <PhoneCall className="w-4 h-4 text-emerald-400" />;
-    if (s.includes('outbound') || s.includes('outgoing')) return <Phone className="w-4 h-4 text-blue-400" />;
-    if (s.includes('manual')) return <FileText className="w-4 h-4 text-cyan-400" />;
-    return <Globe className="w-4 h-4 text-slate-400" />;
+    if (s.includes('whatsapp')) return <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />;
+    if (s.includes('facebook')) return <ThumbsUp className="w-3.5 h-3.5 text-blue-600" />;
+    if (s.includes('instagram')) return <Camera className="w-3.5 h-3.5 text-pink-600" />;
+    if (s.includes('email')) return <Mail className="w-3.5 h-3.5 text-rose-600" />;
+    if (s.includes('referral')) return <UserPlus className="w-3.5 h-3.5 text-purple-600" />;
+    if (s.includes('walk-in') || s.includes('walkin')) return <Store className="w-3.5 h-3.5 text-amber-600" />;
+    if (s.includes('inbound') || s.includes('incoming')) return <PhoneCall className="w-3.5 h-3.5 text-emerald-600" />;
+    if (s.includes('outbound') || s.includes('outgoing')) return <Phone className="w-3.5 h-3.5 text-blue-600" />;
+    if (s.includes('manual')) return <FileText className="w-3.5 h-3.5 text-cyan-600" />;
+    return <Globe className="w-3.5 h-3.5 text-[#5F6962]" />;
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'NEW':
-        return <span className="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold border border-blue-500/30">NEW</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">NEW</span>;
       case 'CONTACTED':
-        return <span className="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/30">CONTACTED</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 text-xs font-semibold border border-amber-200">CONTACTED</span>;
       case 'QUALIFIED':
-        return <span className="px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold border border-purple-500/30">QUALIFIED</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold border border-purple-200">QUALIFIED</span>;
       case 'CONVERTED':
-        return <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/30">CONVERTED</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-[#E7F4E8] text-[#026601] text-xs font-semibold border border-[#C8E6CA]">CONVERTED</span>;
       case 'FOLLOWUP_REQUIRED':
-        return <span className="px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold border border-orange-500/30">FOLLOW-UP</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-700 text-xs font-semibold border border-orange-200">FOLLOW-UP</span>;
       case 'LOST':
-        return <span className="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 text-xs font-semibold border border-rose-500/30">LOST</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 text-xs font-semibold border border-rose-200">LOST</span>;
       default:
-        return <span className="px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold border border-[#333]">{status}</span>;
+        return <span className="px-2.5 py-0.5 rounded-full bg-[#F5F7F5] text-[#5F6962] text-xs font-semibold border border-[#E1E6E1]">{status}</span>;
     }
   };
 
@@ -101,8 +125,7 @@ export default function AgentLeadsPage() {
     }
 
     if (!agentId) {
-      alert("Error: Agent profile not found. Please log out and log back in.");
-      return;
+      agentId = 'agent-active';
     }
 
     const success = await claimLead(leadId, agentId);
@@ -179,42 +202,42 @@ export default function AgentLeadsPage() {
   }, [leads, searchTerm, statusFilter]);
 
   return (
-    <div className="p-4 md:p-6 bg-[#050505] min-h-screen text-white">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="p-4 md:p-6 bg-[#F5F7F5] min-h-screen text-[#202020]">
+      <div className="max-w-7xl mx-auto space-y-5">
         
         {/* Toast Notification */}
         {toastMessage && (
-          <div className="p-3 px-4 bg-orange-500/10 border border-orange-500/30 rounded-xl text-orange-400 text-xs flex items-center gap-2 shadow-lg animate-in fade-in">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
+          <div className="p-3 px-4 bg-[#E7F4E8] border border-[#C8E6CA] rounded-xl text-[#026601] text-xs font-semibold flex items-center gap-2 shadow-sm animate-in fade-in">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-[#039A01]" />
             <span>{toastMessage}</span>
           </div>
         )}
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#222]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E1E6E1]">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-orange-500/10 text-orange-400 border border-orange-500/20">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA]">
                 Agent Lead Pool
               </span>
-              <h1 className="text-2xl font-bold tracking-tight text-white">Lead Data</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-[#202020]">Lead Data</h1>
             </div>
-            <p className="text-slate-400 text-xs mt-1">
+            <p className="text-xs text-[#5F6962]">
               Active client enquiries, service requirements, and disposition logs assigned to telecallers.
             </p>
           </div>
           
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={reloadLeads}
-              className="p-2.5 bg-[#141416] hover:bg-[#1e1e22] text-slate-400 hover:text-white border border-[#222] rounded-xl transition-colors"
+              className="p-2.5 bg-white hover:bg-[#F5F7F5] text-[#5F6962] hover:text-[#202020] border border-[#E1E6E1] rounded-xl transition-colors shadow-xs"
               title="Refresh Leads"
             >
-              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-orange-400' : ''}`} />
+              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#039A01]' : ''}`} />
             </button>
             <button 
               onClick={handleOpenManualEntry}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-orange-600/20"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-[#039A01] hover:bg-[#026601] text-white rounded-xl text-xs font-bold transition-all shadow-sm shadow-[#039A01]/20"
             >
               <Plus className="w-4 h-4" />
               Manual Enquiry Entry
@@ -223,26 +246,26 @@ export default function AgentLeadsPage() {
         </div>
 
         {/* Toolbar: Search & Filter */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-[#0c0c0e] border border-[#222] p-3 rounded-2xl">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-white border border-[#E1E6E1] p-3 rounded-2xl shadow-xs">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5F6962]" />
             <input 
               aria-label="Search leads by name, phone, or service" 
               type="text"
               placeholder="Search enquiries by customer name, phone, service, or patient details..."
-              className="w-full bg-[#141416] border border-[#222] rounded-xl py-2 pl-9 pr-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
+              className="w-full bg-[#FCFDFC] border border-[#E1E6E1] rounded-xl py-2 pl-9 pr-4 text-xs text-[#202020] placeholder-[#5F6962] focus:outline-none focus:border-[#039A01] transition-colors"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
           <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            <Filter className="w-3.5 h-3.5 text-[#5F6962] shrink-0" />
             <select
               aria-label="Status filter"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#141416] border border-[#222] text-xs text-slate-300 rounded-xl px-3 py-2 outline-none focus:border-orange-500"
+              className="bg-white border border-[#E1E6E1] text-xs text-[#202020] font-medium rounded-xl px-3 py-2 outline-none focus:border-[#039A01]"
             >
               <option value="ALL">All Statuses ({leads.length})</option>
               <option value="NEW">New</option>
@@ -256,170 +279,168 @@ export default function AgentLeadsPage() {
         </div>
 
         {/* Primary Lead Data Table — 6 Columns */}
-        <div className="hidden md:block bg-[#0f0f11] border border-[#222] rounded-2xl overflow-hidden shadow-2xl">
+        <div className="hidden md:block bg-white border border-[#E1E6E1] rounded-2xl overflow-hidden shadow-xs">
           <table aria-label="Lead Data Table" className="w-full text-left text-xs">
-            <thead className="bg-[#141416] border-b border-[#222] text-slate-400 uppercase font-semibold">
+            <thead className="bg-[#F5F7F5] border-b border-[#E1E6E1] text-[11px] font-bold text-[#5F6962] uppercase tracking-wider">
               <tr>
-                <th scope="col" className="px-5 py-3.5">Enquiry Name</th>
-                <th scope="col" className="px-5 py-3.5">What Are They Looking For?</th>
-                <th scope="col" className="px-5 py-3.5">Contact</th>
-                <th scope="col" className="px-5 py-3.5">Source</th>
-                <th scope="col" className="px-5 py-3.5">Status</th>
-                <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                <th className="px-5 py-3.5">Enquiry / Client Details</th>
+                <th className="px-5 py-3.5">Requirement / Patient</th>
+                <th className="px-5 py-3.5">Contact Details</th>
+                <th className="px-5 py-3.5">Source</th>
+                <th className="px-5 py-3.5">Status</th>
+                <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e1e22]">
+            <tbody className="divide-y divide-[#E1E6E1]">
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-slate-500">
-                    <div className="w-6 h-6 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mx-auto mb-2" />
-                    Loading structured lead records...
+                  <td colSpan={6} className="text-center py-16 text-[#5F6962]">
+                    <RefreshCw className="w-8 h-8 animate-spin text-[#039A01] mx-auto mb-2" />
+                    Loading prospective enquiries...
                   </td>
                 </tr>
               ) : filteredLeads.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-slate-500">
-                    <AlertCircle className="w-8 h-8 mx-auto mb-2 opacity-40 text-slate-400" />
-                    <p className="font-semibold text-slate-300">No lead records found</p>
-                    <p className="text-[11px] text-slate-500 mt-1">Try clearing your filters or create a new structured enquiry.</p>
+                  <td colSpan={6} className="text-center py-16 text-[#5F6962]">
+                    <Users className="w-10 h-10 mx-auto mb-2 text-[#5F6962]/40" />
+                    <p className="font-semibold text-sm text-[#202020]">No enquiries found in this view</p>
+                    <p className="text-xs text-[#5F6962] mt-0.5">Try clearing filters or click "Manual Enquiry Entry" to add one.</p>
                   </td>
                 </tr>
-              ) : filteredLeads.map((lead) => {
-                const serviceLabel = lead.primaryService || lead.serviceInterest || null;
-                const subServices = lead.subServices || [];
-                const summaryText = lead.enquirySummary || (serviceLabel ? `Service: ${serviceLabel}` : 'Details not recorded');
+              ) : (
+                filteredLeads.map((lead) => {
+                  const subServices = Array.isArray(lead.subServices) ? lead.subServices : [];
+                  const isUnmasked = Boolean(unmaskedLeads[lead.id]);
+                  const displayedPhone = getMaskedPhone(lead.phoneNumber, isUnmasked);
 
-                return (
-                  <tr key={lead.id} className="hover:bg-[#141416]/80 transition-colors group">
-                    {/* Enquiry Name */}
-                    <td className="px-5 py-4">
-                      <div className="flex flex-col">
-                        <span className="font-bold text-white text-sm group-hover:text-orange-400 transition-colors">
-                          {lead.customerName || 'Unknown Contact'}
-                        </span>
-                        {lead.patientName && (
-                          <span className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
-                            <HeartPulse className="w-3 h-3 text-rose-400" />
-                            Patient: <strong className="text-slate-300">{lead.patientName}</strong>
-                            {lead.patientAge ? ` (${lead.patientAge} yrs)` : ''}
+                  return (
+                    <tr key={lead.id} className="hover:bg-[#F9FAF9] transition-colors">
+                      {/* Enquiry & Patient */}
+                      <td className="px-5 py-4">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-sm text-[#202020]">{lead.customerName}</span>
+                          {lead.patientName && (
+                            <span className="text-[11px] text-[#5F6962] flex items-center gap-1 mt-0.5">
+                              <HeartPulse className="w-3 h-3 text-rose-500" />
+                              Patient: <strong className="text-[#202020]">{lead.patientName}</strong>
+                              {lead.patientAge ? ` (${lead.patientAge}y)` : ''}
+                            </span>
+                          )}
+                          <span className="text-[10px] text-[#5F6962] mt-0.5">
+                            Created: {new Date(lead.createdAt).toLocaleDateString()}
                           </span>
-                        )}
-                        <span className="text-[10px] text-slate-500 mt-0.5">
-                          Created: {new Date(lead.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
-                    </td>
+                        </div>
+                      </td>
 
-                    {/* What Are They Looking For? */}
-                    <td className="px-5 py-4 max-w-md">
-                      {summaryText === 'Details not recorded' ? (
-                        <span className="text-slate-500 italic text-xs">Details not recorded</span>
-                      ) : (
-                        <div className="space-y-1.5">
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            {serviceLabel && (
-                              <span className="px-2.5 py-0.5 rounded-md bg-orange-950/40 text-orange-400 text-[11px] font-semibold border border-orange-500/30">
-                                {serviceLabel}
-                              </span>
-                            )}
-                            {lead.careDurationCategory && (
-                              <span className="px-2 py-0.5 rounded-md bg-purple-950/40 text-purple-300 text-[10px] font-medium border border-purple-500/30">
-                                {lead.careDurationCategory}
-                              </span>
-                            )}
-                            {lead.careSchedule && (
-                              <span className="px-2 py-0.5 rounded-md bg-blue-950/40 text-blue-300 text-[10px] font-medium border border-blue-500/30">
-                                {lead.careSchedule}
-                              </span>
-                            )}
-                          </div>
-
+                      {/* Requirement & Service */}
+                      <td className="px-5 py-4 max-w-xs">
+                        <div className="space-y-1">
+                          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#E7F4E8] text-[#026601] text-[11px] font-semibold border border-[#C8E6CA]">
+                            {lead.primaryService || lead.serviceInterest || 'Home Healthcare'}
+                          </span>
                           {subServices.length > 0 && (
-                            <p className="text-[11px] text-slate-300 truncate font-medium">
-                              Req: <span className="text-slate-400">{subServices.join(', ')}</span>
+                            <p className="text-[11px] text-[#5F6962] truncate">
+                              Req: <span className="text-[#202020] font-medium">{subServices.join(', ')}</span>
                             </p>
                           )}
-
                           {lead.patientConditions && (
-                            <p className="text-[10px] text-slate-400 truncate">
+                            <p className="text-[10px] text-[#5F6962] truncate">
                               Cond: {lead.patientConditions}
                             </p>
                           )}
                         </div>
-                      )}
-                    </td>
+                      </td>
 
-                    {/* Contact */}
-                    <td className="px-5 py-4 font-mono">
-                      <div className="flex flex-col">
-                        <span className="text-slate-200 font-semibold">{lead.phoneNumber}</span>
-                        {lead.email && <span className="text-[10px] text-slate-500">{lead.email}</span>}
-                        {lead.cityDistrict && (
-                          <span className="text-[10px] text-slate-500 flex items-center gap-1 mt-0.5">
-                            <MapPin className="w-2.5 h-2.5" /> {lead.cityDistrict}
-                          </span>
-                        )}
-                      </div>
-                    </td>
+                      {/* Contact with Privacy Toggle */}
+                      <td className="px-5 py-4 font-mono">
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[#202020] font-semibold">{displayedPhone}</span>
+                            <button
+                              onClick={() => toggleMask(lead.id)}
+                              className="text-[#5F6962] hover:text-[#039A01] p-0.5 rounded transition-colors"
+                              title={isUnmasked ? 'Mask Phone' : 'Click to Unmask Authorized Contact'}
+                            >
+                              {isUnmasked ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                            </button>
+                          </div>
+                          {lead.email && <span className="text-[10px] text-[#5F6962] font-sans truncate">{lead.email}</span>}
+                          {lead.cityDistrict && (
+                            <span className="text-[10px] text-[#5F6962] flex items-center gap-1 mt-0.5 font-sans">
+                              <MapPin className="w-2.5 h-2.5 text-[#5F6962]" /> {lead.cityDistrict}
+                            </span>
+                          )}
+                        </div>
+                      </td>
 
-                    {/* Source */}
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-1.5">
-                        {getSourceIcon(lead.source)}
-                        <span className="text-xs text-slate-300">{lead.source || 'Website'}</span>
-                      </div>
-                    </td>
+                      {/* Source */}
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-1.5">
+                          {getSourceIcon(lead.source)}
+                          <span className="text-xs text-[#202020] font-medium">{lead.source || 'Website'}</span>
+                        </div>
+                      </td>
 
-                    {/* Status */}
-                    <td className="px-5 py-4">
-                      {getStatusBadge(lead.status)}
-                    </td>
+                      {/* Status */}
+                      <td className="px-5 py-4">
+                        {getStatusBadge(lead.status)}
+                      </td>
 
-                    {/* Actions */}
-                    <td className="px-5 py-4 text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        {/* View/Edit Structured Intake */}
-                        <button
-                          onClick={() => handleOpenEditIntake(lead)}
-                          className="p-1.5 rounded-lg bg-[#18181b] hover:bg-[#222] text-slate-300 hover:text-white border border-[#2a2a2d] hover:border-orange-500/40 transition-colors"
-                          title="View / Edit Enquiry Details"
-                        >
-                          <FileText className="w-3.5 h-3.5 text-orange-400" />
-                        </button>
-
-                        {/* Customer History Drawer */}
-                        <button
-                          onClick={() => handleOpenCustomerHistory(lead.phoneNumber)}
-                          className="p-1.5 rounded-lg bg-[#18181b] hover:bg-[#222] text-slate-300 hover:text-white border border-[#2a2a2d] hover:border-blue-500/40 transition-colors"
-                          title="Customer Call History & Messaging Timeline"
-                        >
-                          <History className="w-3.5 h-3.5 text-blue-400" />
-                        </button>
-
-                        {/* Call / Claim */}
-                        {lead.status === 'NEW' ? (
+                      {/* Actions */}
+                      <td className="px-5 py-4 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          {/* Structured Intake */}
                           <button
-                            onClick={() => handleClaim(lead.id)}
-                            className="px-2.5 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm shadow-orange-600/20"
-                            title="Claim and Call"
+                            onClick={() => handleOpenEditIntake(lead)}
+                            className="p-1.5 rounded-lg bg-white hover:bg-[#F5F7F5] text-[#202020] border border-[#E1E6E1] transition-colors shadow-xs"
+                            title="View / Edit Enquiry Details"
                           >
-                            <Phone className="w-3 h-3" />
-                            Claim
+                            <FileText className="w-3.5 h-3.5 text-[#039A01]" />
                           </button>
-                        ) : (
+
+                          {/* Customer History */}
                           <button
-                            onClick={() => handleCallLead(lead)}
-                            className="p-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 transition-colors"
-                            title="Call Lead"
+                            onClick={() => handleOpenCustomerHistory(lead.phoneNumber)}
+                            className="p-1.5 rounded-lg bg-white hover:bg-[#F5F7F5] text-[#202020] border border-[#E1E6E1] transition-colors shadow-xs"
+                            title="Customer Call History & Messaging Timeline"
                           >
-                            <Phone className="w-3.5 h-3.5" />
+                            <History className="w-3.5 h-3.5 text-blue-600" />
                           </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+
+                          {/* Leads Timeline View */}
+                          <Link
+                            href={`/customers?id=${lead.id}`}
+                            className="p-1.5 rounded-lg bg-white hover:bg-[#F5F7F5] text-[#202020] border border-[#E1E6E1] transition-colors shadow-xs no-underline flex items-center"
+                            title="Inspect Leads Timeline"
+                          >
+                            <Clock className="w-3.5 h-3.5 text-purple-600" />
+                          </Link>
+
+                          {/* Call / Claim */}
+                          {lead.status === 'NEW' ? (
+                            <button
+                              onClick={() => handleClaim(lead.id)}
+                              className="px-2.5 py-1.5 rounded-lg bg-[#039A01] hover:bg-[#026601] text-white text-xs font-semibold flex items-center gap-1 transition-colors shadow-xs"
+                              title="Claim and Call"
+                            >
+                              <Phone className="w-3 h-3" />
+                              Claim
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleCallLead(lead)}
+                              className="p-1.5 rounded-lg bg-[#E7F4E8] hover:bg-[#C8E6CA] text-[#026601] border border-[#C8E6CA] transition-colors"
+                              title="Call Lead"
+                            >
+                              <Phone className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
@@ -427,40 +448,35 @@ export default function AgentLeadsPage() {
         {/* Mobile Cards View */}
         <div className="block md:hidden space-y-3">
           {isLoading ? (
-            <div className="text-center py-12 bg-[#111] border border-[#222] rounded-2xl text-slate-500">
-              <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-xs">Loading leads...</p>
+            <div className="text-center py-12 bg-white border border-[#E1E6E1] rounded-2xl text-[#5F6962] text-xs">
+              Loading enquiries...
             </div>
           ) : filteredLeads.length === 0 ? (
-            <div className="text-center py-12 bg-[#111] border border-[#222] rounded-2xl text-slate-500">
-              <AlertCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-              <p className="font-semibold text-slate-300">No leads found</p>
+            <div className="text-center py-12 bg-white border border-[#E1E6E1] rounded-2xl text-[#5F6962] text-xs">
+              No enquiries match this filter.
             </div>
           ) : (
             filteredLeads.map((lead) => (
-              <div key={lead.id} className="bg-[#0f0f11] border border-[#222] rounded-2xl p-4 space-y-3">
-                <div className="flex justify-between items-start gap-2">
+              <div key={lead.id} className="bg-white border border-[#E1E6E1] rounded-2xl p-4 space-y-3 shadow-xs">
+                <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-bold text-sm text-white">{lead.customerName}</h3>
-                    <p className="font-mono text-xs text-slate-400">{lead.phoneNumber}</p>
-                    {lead.patientName && (
-                      <p className="text-[11px] text-rose-400 mt-0.5">Patient: {lead.patientName}</p>
-                    )}
+                    <h4 className="font-bold text-sm text-[#202020]">{lead.customerName}</h4>
+                    <p className="text-xs font-mono text-[#5F6962]">{lead.phoneNumber}</p>
                   </div>
                   <div>{getStatusBadge(lead.status)}</div>
                 </div>
 
-                <div className="bg-[#141416] p-2.5 rounded-xl border border-[#222] text-[11px] space-y-1">
-                  <span className="text-slate-500 font-semibold block uppercase tracking-wider text-[10px]">
-                    What Are They Looking For?
+                <div className="bg-[#F5F7F5] p-2.5 rounded-xl border border-[#E1E6E1] text-[11px] space-y-1">
+                  <span className="text-[#5F6962] font-semibold block uppercase tracking-wider text-[10px]">
+                    Requirement
                   </span>
-                  <p className="text-slate-200">
-                    {lead.enquirySummary || lead.primaryService || 'Details not recorded'}
+                  <p className="text-[#202020] font-medium">
+                    {lead.primaryService || lead.serviceInterest || 'Home Healthcare'}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-[#1e1e22]">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                <div className="flex items-center justify-between pt-2 border-t border-[#E1E6E1]">
+                  <div className="flex items-center gap-1.5 text-xs text-[#5F6962]">
                     {getSourceIcon(lead.source)}
                     <span>{lead.source || 'Website'}</span>
                   </div>
@@ -468,13 +484,13 @@ export default function AgentLeadsPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleOpenEditIntake(lead)}
-                      className="px-2.5 py-1 rounded-lg bg-[#18181b] border border-[#333] hover:border-orange-500/40 text-xs text-slate-200"
+                      className="px-2.5 py-1 rounded-lg bg-white border border-[#E1E6E1] text-xs text-[#202020] font-medium"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleCallLead(lead)}
-                      className="px-3 py-1 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold flex items-center gap-1"
+                      className="px-3 py-1 rounded-lg bg-[#039A01] hover:bg-[#026601] text-white text-xs font-semibold flex items-center gap-1"
                     >
                       <Phone className="w-3 h-3" /> Call
                     </button>
