@@ -29,19 +29,19 @@ export function RightSidebarPanels() {
       {/* Queue Overview */}
       <div>
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-bold text-white">Queue Overview</h3>
-          <a href="#" className="text-[10px] text-primary font-semibold hover:underline">View All</a>
+          <h3 className="text-sm font-bold text-[#202020]">Queue Overview</h3>
+          <a href="#" className="text-[10px] text-[#039A01] font-semibold hover:underline">View All</a>
         </div>
         <div className="space-y-3">
           {queues.map((q, i) => (
             <div key={i} className="flex flex-col gap-1.5">
               <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-300 font-medium">{q.name}</span>
-                <span className="text-xs font-mono text-white">{q.count}</span>
+                <span className="text-xs text-[#5F6962] font-medium">{q.name}</span>
+                <span className="text-xs font-mono text-[#202020] font-bold">{q.count}</span>
               </div>
-              <div className="h-1.5 w-full bg-[#222] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-[#EFF3EF] rounded-full overflow-hidden">
                 <div 
-                  className={`h-full rounded-full transition-all ${q.count === 0 ? 'bg-transparent' : 'bg-primary'}`}
+                  className={`h-full rounded-full transition-all ${q.count === 0 ? 'bg-transparent' : 'bg-[#039A01]'}`}
                   style={{ width: `${Math.min(100, (q.count / q.max) * 100)}%` }}
                 ></div>
               </div>
@@ -50,13 +50,13 @@ export function RightSidebarPanels() {
         </div>
       </div>
 
-      <div className="h-px bg-[#222] my-1"></div>
+      <div className="h-px bg-[#E1E6E1] my-1"></div>
 
       {/* Live Activity Feed */}
       <div>
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-bold text-white">Live Activity Feed</h3>
-          <a href="#" className="text-[10px] text-primary font-semibold hover:underline">View All</a>
+          <h3 className="text-sm font-bold text-[#202020]">Live Activity Feed</h3>
+          <a href="#" className="text-[10px] text-[#039A01] font-semibold hover:underline">View All</a>
         </div>
         <div className="space-y-3">
           {activityFeed.map((item, i) => {
@@ -67,43 +67,43 @@ export function RightSidebarPanels() {
                   <Icon className={`w-3.5 h-3.5 ${item.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-slate-200 truncate">{item.title}</p>
-                  <p className="text-[10px] text-slate-500 truncate">{item.desc}</p>
+                  <p className="text-xs font-bold text-[#202020] truncate">{item.title}</p>
+                  <p className="text-[10px] text-[#5F6962] truncate">{item.desc}</p>
                 </div>
-                <span className="text-[9px] text-slate-500 font-medium shrink-0 pt-0.5">{item.time}</span>
+                <span className="text-[9px] text-[#5F6962] font-medium shrink-0 pt-0.5">{item.time}</span>
               </div>
             );
           })}
         </div>
       </div>
 
-      <div className="h-px bg-[#222] my-1"></div>
+      <div className="h-px bg-[#E1E6E1] my-1"></div>
 
       {/* Top Performing Agents */}
       <div>
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-bold text-white">Top Performing Agents</h3>
-          <select aria-label="Sidebar metrics timeframe" className="bg-[#111] border border-[#333] text-[9px] text-slate-400 rounded-md px-1 py-0.5 outline-none">
+          <h3 className="text-sm font-bold text-[#202020]">Top Performing Agents</h3>
+          <select aria-label="Sidebar metrics timeframe" className="bg-[#FFFFFF] border border-[#E1E6E1] text-[9px] text-[#5F6962] rounded-md px-1 py-0.5 outline-none">
             <option>This Month</option>
           </select>
         </div>
         
         <div className="grid grid-cols-12 mb-1 px-1">
           <div className="col-span-8"></div>
-          <div className="col-span-2 text-right text-[9px] text-slate-500 uppercase">CSAT</div>
-          <div className="col-span-2 text-right text-[9px] text-slate-500 uppercase">AHT</div>
+          <div className="col-span-2 text-right text-[9px] text-[#5F6962] uppercase font-bold">CSAT</div>
+          <div className="col-span-2 text-right text-[9px] text-[#5F6962] uppercase font-bold">AHT</div>
         </div>
 
         <div className="space-y-2">
           {topAgents.map((agent, i) => (
-            <div key={i} className="grid grid-cols-12 items-center gap-2 hover:bg-[#111] p-1 rounded-md transition-colors cursor-default">
-              <div className="col-span-1 text-[10px] text-slate-500 text-center font-medium">{agent.rank}</div>
+            <div key={i} className="grid grid-cols-12 items-center gap-2 hover:bg-[#F5F7F5] p-1 rounded-md transition-colors cursor-default">
+              <div className="col-span-1 text-[10px] text-[#5F6962] text-center font-bold">{agent.rank}</div>
               <div className="col-span-7 flex items-center gap-2 overflow-hidden">
-                <img src={agent.img} alt={agent.name} className="w-6 h-6 rounded-full border border-[#333]" />
-                <span className="text-[11px] text-slate-300 font-medium truncate">{agent.name}</span>
+                <img src={agent.img} alt={agent.name} className="w-6 h-6 rounded-full border border-[#E1E6E1]" />
+                <span className="text-[11px] text-[#202020] font-medium truncate">{agent.name}</span>
               </div>
-              <div className="col-span-2 text-right text-[11px] text-primary font-bold">{agent.csat}</div>
-              <div className="col-span-2 text-right text-[11px] text-slate-400 font-mono">{agent.aht}</div>
+              <div className="col-span-2 text-right text-[11px] text-[#039A01] font-bold">{agent.csat}</div>
+              <div className="col-span-2 text-right text-[11px] text-[#5F6962] font-mono">{agent.aht}</div>
             </div>
           ))}
         </div>
