@@ -27,7 +27,6 @@ export function MobileHeader({ shouldShowAgentShell, onOpenMenu }: MobileHeaderP
     }
   }, [user]);
 
-  // Dynamic Module Title matching
   const getModuleTitle = (path: string) => {
     if (path.includes("/dashboard")) return "Dashboard";
     if (path.includes("/call-center")) return "Call Center";
@@ -52,15 +51,18 @@ export function MobileHeader({ shouldShowAgentShell, onOpenMenu }: MobileHeaderP
   };
 
   return (
-    <header className="h-14 bg-[#090909]/95 backdrop-blur-md border-b border-[#1e1e1e] px-4 flex md:hidden items-center justify-between shrink-0 text-white">
+    <header className="h-14 bg-[#FFFFFF] border-b border-[#E1E6E1] px-4 flex md:hidden items-center justify-between shrink-0 text-[#202020] shadow-2xs">
       {isSearchOpen ? (
         <div className="flex-1 flex items-center gap-2 animate-in fade-in duration-150">
-          <Search className="w-4 h-4 text-slate-400 shrink-0" />
-          <input aria-label="Search" id="mobile-search-input" type="text"
+          <Search className="w-4 h-4 text-[#5F6962] shrink-0" />
+          <input 
+            aria-label="Search" 
+            id="mobile-search-input" 
+            type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search CRM..."
-            className="flex-1 bg-transparent text-sm text-white outline-none placeholder-slate-500 py-1"
+            className="flex-1 bg-transparent text-xs text-[#202020] outline-none placeholder-[#849389] py-1"
             autoFocus
           />
           <button
@@ -68,9 +70,9 @@ export function MobileHeader({ shouldShowAgentShell, onOpenMenu }: MobileHeaderP
               setIsSearchOpen(false);
               setSearchQuery("");
             }}
-            className="p-1 text-slate-400 hover:text-white"
+            className="p-1 text-[#5F6962] hover:text-[#202020]"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
       ) : (
@@ -78,54 +80,39 @@ export function MobileHeader({ shouldShowAgentShell, onOpenMenu }: MobileHeaderP
           {/* Menu Toggle */}
           <button
             onClick={onOpenMenu}
-            className="p-2 -ml-2 text-white hover:bg-[#1a1a1a] rounded-xl transition-colors shrink-0"
+            className="p-1.5 -ml-1 text-[#202020] hover:bg-[#F5F7F5] rounded-lg transition-colors shrink-0"
             aria-label="Open navigation menu"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-5 h-5 text-[#202020]" />
           </button>
 
           {/* CRM Logo & Title */}
           <div className="flex-1 flex items-center justify-center gap-2">
-            {shouldShowAgentShell ? (
-              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center shadow-sm">
-                <Phone className="text-white w-3 h-3" />
-              </div>
-            ) : (
-              <HeartPulse className="text-primary w-5 h-5 shrink-0" />
-            )}
+            <div className="w-6 h-6 rounded-md bg-white border border-[#E1E6E1] p-0.5 flex items-center justify-center shadow-2xs">
+              <img src="/logo.png" alt="UNCF Logo" className="w-5 h-5 object-contain" />
+            </div>
             <div className="text-center">
-              <h1 className="font-bold text-sm tracking-tight text-white leading-tight">
+              <h1 className="font-bold text-xs tracking-tight text-[#202020] leading-tight">
                 {getModuleTitle(pathname)}
               </h1>
-              <p className="text-[9px] text-slate-400 font-medium uppercase tracking-wider leading-none">
+              <p className="text-[9px] text-[#039A01] font-bold uppercase tracking-wider leading-none">
                 {shouldShowAgentShell ? "Agent Portal" : "ElderCare CRM"}
               </p>
             </div>
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Search */}
+          <div className="flex items-center gap-1 shrink-0">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 text-slate-400 hover:text-white hover:bg-[#1a1a1a] rounded-xl transition-colors"
+              className="p-1.5 text-[#5F6962] hover:text-[#202020] hover:bg-[#F5F7F5] rounded-lg transition-colors"
               aria-label="Search"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
             </button>
 
-            {/* Notifications */}
-            <button
-              className="p-2 text-slate-400 hover:text-white hover:bg-[#1a1a1a] rounded-xl transition-colors relative"
-              aria-label="Notifications"
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border border-[#090909]"></span>
-            </button>
-
-            {/* Profile Avatar */}
             <Link href="/agent/profile" className="ml-1 shrink-0">
-              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs shadow-sm hover:scale-105 transition-transform">
+              <div className="w-6 h-6 rounded-full bg-[#039A01] flex items-center justify-center text-white font-bold text-[10px] shadow-2xs">
                 {userInitials}
               </div>
             </Link>

@@ -3,7 +3,12 @@
 import React, { useState } from 'react';
 import Link from '../../nextShim';
 import { usePathname } from '../../nextShim';
-import { Phone, PhoneCall, History, Users, LayoutDashboard, MessageSquare, FileText, Settings, HeartPulse, Activity, LogOut, ChevronDown, Mic, Target, UploadCloud, Kanban, Calendar as CalendarIcon, Megaphone, Workflow, ClipboardCheck, CalendarCheck, ShieldCheck, CheckSquare } from 'lucide-react';
+import { 
+  Phone, PhoneCall, History, Users, LayoutDashboard, MessageSquare, 
+  FileText, Settings, HeartPulse, Activity, LogOut, ChevronDown, Mic, 
+  Target, UploadCloud, Kanban, Calendar as CalendarIcon, Megaphone, 
+  Workflow, ClipboardCheck, CalendarCheck, ShieldCheck, CheckSquare 
+} from 'lucide-react';
 import { useCallStore } from '../../store/useCallStore';
 import { useAuthStore } from '../../store/authStore';
 import { motion } from 'framer-motion';
@@ -18,7 +23,6 @@ export function Sidebar() {
   const [userRole, setUserRole] = useState<string>('');
 
   React.useEffect(() => {
-    // Fallback if useAuthStore doesn't persist on reload
     if (user?.role) {
       setUserRole(user.role);
     } else {
@@ -37,7 +41,7 @@ export function Sidebar() {
       case 'BUSY': return 'bg-amber-500 shadow-amber-500/50';
       case 'ON_CALL': return 'bg-rose-500 shadow-rose-500/50';
       case 'WRAP_UP': return 'bg-purple-500 shadow-purple-500/50';
-      default: return 'bg-slate-500 shadow-slate-500/50';
+      default: return 'bg-slate-400';
     }
   };
 
@@ -98,90 +102,77 @@ export function Sidebar() {
     { value: 'BUSY', label: 'Busy' },
     { value: 'ON_CALL', label: 'On Call' },
     { value: 'WRAP_UP', label: 'Wrap Up' },
-    { value: 'OFFLINE', label: 'Offline' },
   ];
 
   return (
-    <div className="w-[220px] h-screen border-r border-[#222] bg-[#050505] flex flex-col pt-5 pb-5 shrink-0 relative z-20">
+    <div className="w-[240px] h-screen border-r border-[#E1E6E1] bg-[#FFFFFF] flex flex-col pt-5 pb-5 shrink-0 relative z-20 text-[#202020]">
       {/* Brand */}
-      <div className="px-4 flex items-center gap-2 mb-6">
-        <HeartPulse className="text-[#039A01] w-6 h-6" />
+      <div className="px-5 flex items-center gap-3 mb-6">
+        <div className="w-9 h-9 rounded-lg bg-white border border-[#E1E6E1] p-1 flex items-center justify-center shadow-xs shrink-0">
+          <img src="/logo.png" alt="UNCF Logo" className="w-7 h-7 object-contain" />
+        </div>
         <div>
-          <h1 className="font-bold text-base tracking-tight text-white">ElderCare</h1>
-          <p className="text-[8px] text-slate-500 font-medium uppercase tracking-wider">CRM Platform</p>
+          <h1 className="font-bold text-base tracking-tight text-[#039A01] leading-none">ElderCare</h1>
+          <p className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider mt-1">Enterprise CRM</p>
         </div>
       </div>
 
-      {/* Navigation */}
+      <div className="px-4 mb-2">
+        <p className="text-[11px] font-bold text-[#5F6962] uppercase tracking-wider pl-2">Menu</p>
+      </div>
+
+      {/* Navigation Links */}
       <nav className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar">
         {navItems.map((item, i) => {
-          const isActive = pathname.startsWith(item.href) || (pathname === '/' && item.href === '/dashboard');
-          
+          const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
           return (
             <Link href={item.href} key={i}>
               <div
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive ? 'bg-gradient-to-r from-[#039A01]/20 to-transparent border-l-2 border-[#039A01] text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
+                  isActive 
+                  ? 'bg-[#E7F4E8] text-[#026601] border-l-[3px] border-[#039A01] font-semibold' 
+                  : 'text-[#202020] hover:bg-[#F5F7F5] hover:text-[#039A01] border-l-[3px] border-transparent font-medium'
+                }`}
               >
-                <item.icon className={`w-4 h-4 ${isActive ? 'text-[#039A01]' : 'text-slate-500 group-hover:text-slate-300 transition-colors'}`} />
-                <span className="font-medium text-sm">{item.label}</span>
-                {item.badge && (
-                  <span className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-[#039A01] text-white' : 'border border-[#039A01] text-[#039A01]'}`}>
-                    {item.badge}
-                  </span>
-                )}
+                <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+                  isActive ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
+                }`}>
+                  <item.icon className="w-4 h-4" />
+                </div>
+                <span className="text-xs">{item.label}</span>
               </div>
             </Link>
           );
         })}
 
-        {/* SOP & Daily Operations Collapsible */}
-        <div className="pt-2">
-          <button 
-            onClick={() => setIsSopOpen(!isSopOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${pathname.startsWith('/sop') ? 'bg-gradient-to-r from-emerald-500/20 to-transparent border-l-2 border-emerald-500 text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
-          >
-            <CheckSquare className={`w-4 h-4 ${pathname.startsWith('/sop') ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
-            <span className="font-medium text-sm">SOP & Daily Ops</span>
-            <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isSopOpen ? 'rotate-180' : ''}`} />
-          </button>
-          
-          {isSopOpen && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              className="pl-9 pr-3 py-1 space-y-1"
-            >
-              {sopItems.map((item, idx) => (
-                <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-emerald-400 font-semibold' : 'text-slate-500 hover:text-slate-300'}`}>
-                    {item.label}
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-          )}
-        </div>
-
-        {/* Leads Module Collapsible */}
+        {/* Leads Collapsible */}
         <div className="pt-2">
           <button 
             onClick={() => setIsLeadsOpen(!isLeadsOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${pathname.startsWith('/leads') ? 'bg-gradient-to-r from-[#039A01]/20 to-transparent border-l-2 border-[#039A01] text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
+              pathname.startsWith('/leads') 
+                ? 'bg-[#E7F4E8] text-[#026601] border-l-[3px] border-[#039A01] font-semibold' 
+                : 'text-[#202020] hover:bg-[#F5F7F5] hover:text-[#039A01] border-l-[3px] border-transparent font-medium'
+            }`}
           >
-            <Target className={`w-4 h-4 ${pathname.startsWith('/leads') ? 'text-[#039A01]' : 'text-slate-500 group-hover:text-slate-300'}`} />
-            <span className="font-medium text-sm">Leads</span>
-            <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
+            <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+              pathname.startsWith('/leads') ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
+            }`}>
+              <Target className="w-4 h-4" />
+            </div>
+            <span className="text-xs">Leads</span>
+            <ChevronDown className={`w-3.5 h-3.5 ml-auto text-[#5F6962] transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
           </button>
           
           {isLeadsOpen && (
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              className="pl-9 pr-3 py-1 space-y-1"
+              className="pl-[3rem] pr-3 py-1 space-y-1"
             >
               {leadItems.map((item, idx) => (
                 <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-2 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-slate-500 hover:text-slate-300'}`}>
+                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-bold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
                     {item.label}
                   </div>
                 </Link>
@@ -189,48 +180,16 @@ export function Sidebar() {
             </motion.div>
           )}
         </div>
-
-        {/* Bottom Nav Items (Settings) */}
-        <div className="pt-2">
-          {bottomNavItems.map((item, i) => {
-            const isActive = pathname.startsWith(item.href);
-            return (
-              <Link href={item.href} key={i}>
-                <div
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive ? 'bg-gradient-to-r from-[#039A01]/20 to-transparent border-l-2 border-[#039A01] text-white' : 'text-slate-400 hover:bg-[#1a1a1a] hover:text-white'}`}
-                >
-                  <item.icon className={`w-4 h-4 ${isActive ? 'text-[#039A01]' : 'text-slate-500 group-hover:text-slate-300 transition-colors'}`} />
-                  <span className="font-medium text-sm">{item.label}</span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-
       </nav>
-      
-      {/* Return to ERP & Logout Buttons */}
-      <div className="px-3 mt-auto pt-4 border-t border-[#222] space-y-2">
+
+      {/* Footer Navigation */}
+      <div className="px-3 mt-auto pt-4 border-t border-[#E1E6E1] space-y-2">
         <a 
           href="/dashboard"
-          className="w-full flex justify-center items-center gap-2 bg-[#111] hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 border border-[#222] hover:border-emerald-500/20 py-2.5 rounded-xl transition-colors font-medium text-xs no-underline"
+          className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#202020] hover:text-[#026601] border border-[#E1E6E1] hover:border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs no-underline"
         >
           Return to ERP Workspace →
         </a>
-        <button 
-          onClick={() => {
-            localStorage.removeItem('crm_token');
-            localStorage.removeItem('crm_user');
-            localStorage.removeItem('paramantra_access_token');
-            localStorage.removeItem('paramantra_refresh_token');
-            sessionStorage.removeItem('superadmin-erp-session');
-            window.location.href = '/login';
-          }}
-          className="w-full flex justify-center items-center gap-2 bg-[#111] hover:bg-rose-500/10 text-slate-400 hover:text-rose-500 border border-[#222] hover:border-rose-500/20 py-2.5 rounded-xl transition-colors font-medium text-xs"
-        >
-          <LogOut className="w-4 h-4" />
-          Logout Session
-        </button>
       </div>
     </div>
   );

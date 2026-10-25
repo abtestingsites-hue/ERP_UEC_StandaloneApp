@@ -97,7 +97,7 @@ export function CRMWorkspace() {
 
     if (viewMode === 'native-crm') {
         return (
-            <div className="crm-workspace-native" style={{ width: '100%', height: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#000000' }}>
+            <div className="crm-workspace-native" style={{ width: '100%', height: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--surface-page, #F5F7F5)' }}>
                 <div style={{ flex: 1, position: 'relative' }}>
                     <CRMApp />
                 </div>

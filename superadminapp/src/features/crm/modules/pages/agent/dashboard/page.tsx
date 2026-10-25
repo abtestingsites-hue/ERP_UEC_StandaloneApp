@@ -5,7 +5,7 @@ import { DashboardSwitcher } from '../../../components/dashboard/DashboardSwitch
 
 export default function AgentDashboardPage() {
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#000] text-white h-full">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] text-[#202020] h-full">
       <DashboardSwitcher 
         allowedTypes={['agent_performance']} 
         defaultType="agent_performance" 

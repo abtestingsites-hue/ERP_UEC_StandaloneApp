@@ -169,18 +169,18 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   return (
     <SocketProvider>
       {/* Desktop Shell */}
-      <div className="hidden md:flex h-screen overflow-hidden bg-[#000] text-white">
+      <div className="hidden md:flex h-screen overflow-hidden bg-[#F5F7F5] text-[#202020]">
         {shouldShowAgentShell ? <AgentSidebar /> : <Sidebar />}
         <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
           {shouldShowAgentShell ? <AgentNavbar /> : <Navbar />}
-          <main className="flex-1 overflow-y-auto bg-[#000] relative text-white">
+          <main className="flex-1 overflow-y-auto bg-[#F5F7F5] relative text-[#202020]">
             {children}
           </main>
         </div>
       </div>
 
       {/* Mobile Shell */}
-      <div className="flex md:hidden flex-col h-screen overflow-hidden bg-black text-white relative">
+      <div className="flex md:hidden flex-col h-screen overflow-hidden bg-[#F5F7F5] text-[#202020] relative">
         <MobileHeader 
           shouldShowAgentShell={shouldShowAgentShell} 
           onOpenMenu={() => setIsDrawerOpen(true)} 
@@ -192,7 +192,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
           shouldShowAgentShell={shouldShowAgentShell}
         />
         
-        <main className="flex-1 overflow-y-auto bg-black text-white relative pb-16">
+        <main className="flex-1 overflow-y-auto bg-[#F5F7F5] text-[#202020] relative pb-16">
           {children}
         </main>
 

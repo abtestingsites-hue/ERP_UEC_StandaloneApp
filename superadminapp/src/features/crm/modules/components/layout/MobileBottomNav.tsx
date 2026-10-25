@@ -20,43 +20,43 @@ export function MobileBottomNav({ shouldShowAgentShell }: MobileBottomNavProps) 
   const isTabActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <nav className="h-16 fixed bottom-0 left-0 right-0 z-40 bg-[#090909]/95 backdrop-blur-md border-t border-[#1e1e1e] px-4 flex md:hidden items-center justify-between pb-safe">
+    <nav className="h-16 fixed bottom-0 left-0 right-0 z-40 bg-[#FFFFFF]/95 backdrop-blur-md border-t border-[#E1E6E1] px-4 flex md:hidden items-center justify-between pb-safe shadow-md">
       {/* Dashboard */}
       <Link href={getDashboardHref()} className="flex-1 flex flex-col items-center justify-center py-1">
-        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getDashboardHref()) ? "text-primary" : "text-slate-400 hover:text-white"}`}>
-          <LayoutDashboard className="w-5.5 h-5.5" />
+        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getDashboardHref()) ? "text-[#039A01]" : "text-[#5F6962] hover:text-[#202020]"}`}>
+          <LayoutDashboard className="w-5 h-5" />
         </div>
-        <span className={`text-[10px] font-bold ${isTabActive(getDashboardHref()) ? "text-primary" : "text-slate-400"}`}>
+        <span className={`text-[10px] font-bold ${isTabActive(getDashboardHref()) ? "text-[#039A01]" : "text-[#5F6962]"}`}>
           Dash
         </span>
       </Link>
 
       {/* Calls */}
       <Link href={getCallsHref()} className="flex-1 flex flex-col items-center justify-center py-1">
-        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getCallsHref()) ? "text-primary" : "text-slate-400 hover:text-white"}`}>
-          <Phone className="w-5.5 h-5.5" />
+        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getCallsHref()) ? "text-[#039A01]" : "text-[#5F6962] hover:text-[#202020]"}`}>
+          <Phone className="w-5 h-5" />
         </div>
-        <span className={`text-[10px] font-bold ${isTabActive(getCallsHref()) ? "text-primary" : "text-slate-400"}`}>
+        <span className={`text-[10px] font-bold ${isTabActive(getCallsHref()) ? "text-[#039A01]" : "text-[#5F6962]"}`}>
           Calls
         </span>
       </Link>
 
       {/* Contacts */}
       <Link href={getContactsHref()} className="flex-1 flex flex-col items-center justify-center py-1">
-        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getContactsHref()) ? "text-primary" : "text-slate-400 hover:text-white"}`}>
-          <Users className="w-5.5 h-5.5" />
+        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getContactsHref()) ? "text-[#039A01]" : "text-[#5F6962] hover:text-[#202020]"}`}>
+          <Users className="w-5 h-5" />
         </div>
-        <span className={`text-[10px] font-bold ${isTabActive(getContactsHref()) ? "text-primary" : "text-slate-400"}`}>
+        <span className={`text-[10px] font-bold ${isTabActive(getContactsHref()) ? "text-[#039A01]" : "text-[#5F6962]"}`}>
           Contacts
         </span>
       </Link>
 
       {/* Tasks */}
       <Link href={getTasksHref()} className="flex-1 flex flex-col items-center justify-center py-1">
-        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getTasksHref()) ? "text-primary" : "text-slate-400 hover:text-white"}`}>
-          <Calendar className="w-5.5 h-5.5" />
+        <div className={`p-1 rounded-xl transition-colors ${isTabActive(getTasksHref()) ? "text-[#039A01]" : "text-[#5F6962] hover:text-[#202020]"}`}>
+          <Calendar className="w-5 h-5" />
         </div>
-        <span className={`text-[10px] font-bold ${isTabActive(getTasksHref()) ? "text-primary" : "text-slate-400"}`}>
+        <span className={`text-[10px] font-bold ${isTabActive(getTasksHref()) ? "text-[#039A01]" : "text-[#5F6962]"}`}>
           Tasks
         </span>
       </Link>

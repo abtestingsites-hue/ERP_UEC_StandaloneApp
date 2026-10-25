@@ -80,7 +80,6 @@ export function NumericKeypad({ onCallInitiated }: NumericKeypadProps) {
   // Physical Keyboard Listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't intercept if user is typing in another input element
       const activeEl = document.activeElement;
       if (activeEl && activeEl.tagName === 'INPUT' && activeEl.id !== 'dialpad-input') {
         return;
@@ -107,13 +106,11 @@ export function NumericKeypad({ onCallInitiated }: NumericKeypadProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [phoneNumber, isDialing, activeCall]);
 
-  // E.164 normalization
   const normalizePhoneNumber = (raw: string): string => {
     let cleaned = raw.replace(/[^\d+*#]/g, '');
     if (cleaned.startsWith('00')) {
       cleaned = '+' + cleaned.substring(2);
     } else if (cleaned.length === 10 && !cleaned.startsWith('+')) {
-      // Default standard 10 digit to Indian E.164
       cleaned = '+91' + cleaned;
     } else if (cleaned.length === 11 && cleaned.startsWith('0')) {
       cleaned = '+91' + cleaned.substring(1);
@@ -143,178 +140,88 @@ export function NumericKeypad({ onCallInitiated }: NumericKeypadProps) {
 
     setIsDialing(true);
     setErrorMessage(null);
-    setSuccessNotice(null);
 
     try {
-      let currentAgentId = null;
-      try {
-        const stored = localStorage.getItem('crm_user');
-        if (stored) {
-          currentAgentId = JSON.parse(stored).agentId;
-        }
-      } catch (_) {}
-
-      const res = await apiFetch('/telephony/calls/outbound', {
+      const res = await apiFetch('/telephony/outbound-call', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: normalized,
-          agentId: currentAgentId,
-        }),
+        body: JSON.stringify({ to: normalized })
       });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || 'Call initiation failed. Please verify provider connectivity.');
+      }
 
       const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        setErrorMessage(data.error || data.message || 'Call initiation failed. Please verify provider connectivity.');
-        setIsDialing(false);
-        return;
-      }
-
-      setSuccessNotice(`Connecting outbound call to ${normalized}...`);
-
-      const finalRoomName = data.roomName || data.callSid || `room_${Date.now()}`;
-      setActiveCall({
-        callSid: finalRoomName,
-        roomName: finalRoomName,
-        customerName: 'Customer',
-        phone: normalized,
-        urgency: 'NORMAL',
-        category: 'Outbound',
-        direction: 'OUTBOUND',
-        status: 'DIALING',
-        isCaller: true,
-        accepted: true,
-        token: data.token,
-        serverUrl: data.serverUrl || data.wsUrl
-      });
-
+      setSuccessNotice('Connecting call...');
       if (onCallInitiated) {
-        onCallInitiated(data);
+        onCallInitiated({ ...data, to: normalized });
       }
     } catch (err: any) {
-      console.error('[NumericKeypad] Outbound call error:', err);
-      setErrorMessage('Network error while connecting call to provider.');
+      setErrorMessage(err.message || 'Outbound call failed.');
     } finally {
       setIsDialing(false);
     }
   };
 
-  const isCallDisabled = isDialing || !isValidNumber(phoneNumber) || !!activeCall;
-
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto p-4 select-none">
-      {/* Display Screen */}
-      <div className="w-full bg-[#0a0a0a] border border-[#222] rounded-2xl p-4 mb-5 shadow-inner">
-        <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-          <span className="flex items-center gap-1 font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> WebRTC Secure Dialer
-          </span>
-          {activeCall ? (
-            <span className="text-amber-400 font-bold animate-pulse">Call In Progress</span>
-          ) : (
-            <span className="text-slate-400">Ready</span>
-          )}
-        </div>
-
-        <div className="relative flex items-center justify-between">
-          <input
-            id="dialpad-input"
-            type="text"
-            value={phoneNumber}
-            onChange={(e) => {
-              setErrorMessage(null);
-              setPhoneNumber(e.target.value);
-            }}
-            placeholder="Enter phone number..."
-            className="w-full bg-transparent text-2xl font-mono font-bold text-white tracking-widest outline-none pr-14 placeholder:text-slate-600 placeholder:text-base"
-          />
-          {phoneNumber && (
-            <div className="flex items-center gap-1 absolute right-0">
-              <button
-                type="button"
-                onClick={handleBackspace}
-                aria-label="Backspace"
-                title="Backspace"
-                className="p-1.5 text-slate-400 hover:text-white hover:bg-[#222] rounded-lg transition-colors"
-              >
-                <Delete className="w-5 h-5" />
-              </button>
-              <button
-                type="button"
-                onClick={handleClear}
-                aria-label="Clear number"
-                title="Clear number"
-                className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-[#222] rounded-lg transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* E.164 Formatted Preview */}
-        {phoneNumber && isValidNumber(phoneNumber) && (
-          <div className="text-[11px] text-emerald-400 font-mono mt-1">
-            Normalized: {normalizePhoneNumber(phoneNumber)}
-          </div>
-        )}
-
-        {/* Error / Feedback Notice */}
-        {errorMessage && (
-          <div className="flex items-center gap-1.5 text-xs text-rose-400 mt-2 bg-rose-500/10 p-2 rounded-lg border border-rose-500/20">
-            <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-            <span>{errorMessage}</span>
-          </div>
-        )}
-
-        {successNotice && (
-          <div className="flex items-center gap-1.5 text-xs text-emerald-400 mt-2 bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20">
-            <Check className="w-3.5 h-3.5 flex-shrink-0" />
-            <span>{successNotice}</span>
-          </div>
+    <div className="w-full flex flex-col items-center select-none text-[#202020]">
+      {/* Number Display Input */}
+      <div className="w-full flex items-center bg-[#FAFCFA] border border-[#E1E6E1] focus-within:border-[#039A01] rounded-xl px-3 py-2 mb-3">
+        <input 
+          id="dialpad-input"
+          type="text" 
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="Enter phone number..."
+          className="w-full bg-transparent text-base font-bold text-[#202020] outline-none placeholder-[#849389]"
+        />
+        {phoneNumber && (
+          <button 
+            type="button" 
+            onClick={handleBackspace} 
+            className="p-1 text-[#5F6962] hover:text-[#202020] transition-colors"
+          >
+            <Delete className="w-4 h-4" />
+          </button>
         )}
       </div>
 
-      {/* 3x4 Keypad Grid */}
-      <div className="grid grid-cols-3 gap-3 w-full mb-6">
+      {errorMessage && (
+        <div className="w-full p-2 mb-3 text-xs bg-[#FDF2F2] border border-[#F8C8C8] text-[#B91C1C] rounded-lg flex items-center gap-1.5">
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
+      {/* Keypad Grid (3 columns) */}
+      <div className="grid grid-cols-3 gap-2 w-full max-w-[280px] mb-4">
         {keypadButtons.map((btn) => (
           <button
             key={btn.key}
             type="button"
             onClick={() => handleKeyPress(btn.key)}
-            className="group flex flex-col items-center justify-center h-16 bg-[#111] hover:bg-[#1a1a1a] active:bg-primary/20 border border-[#222] hover:border-[#333] active:border-primary/40 rounded-2xl transition-all shadow-sm active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/40"
+            className="flex flex-col items-center justify-center h-12 bg-[#FAFCFA] hover:bg-[#E7F4E8] active:bg-[#C8E6CA] border border-[#E1E6E1] hover:border-[#039A01] rounded-xl transition-all shadow-2xs active:scale-95"
           >
-            <span className="text-xl font-bold text-white group-hover:text-primary transition-colors">
-              {btn.key}
-            </span>
-            <span className="text-[10px] text-slate-500 tracking-widest font-mono group-hover:text-slate-400">
-              {btn.sub}
-            </span>
+            <span className="text-base font-bold text-[#202020] leading-none">{btn.key}</span>
+            {btn.sub.trim() && (
+              <span className="text-[9px] font-bold text-[#5F6962] tracking-wider mt-0.5">{btn.sub}</span>
+            )}
           </button>
         ))}
       </div>
 
-      {/* Action Buttons: Dial Button */}
+      {/* Call CTA Button */}
       <button
         type="button"
         onClick={handleInitiateCall}
-        disabled={isCallDisabled}
-        className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all text-base shadow-lg ${
-          isCallDisabled
-            ? 'bg-[#181818] text-slate-600 border border-[#222] cursor-not-allowed shadow-none'
-            : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-900/30 active:scale-98 animate-pulse hover:animate-none'
-        }`}
+        disabled={isDialing || !phoneNumber}
+        className="w-full max-w-[280px] h-11 bg-[#039A01] hover:bg-[#028001] active:bg-[#026601] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
       >
-        <PhoneCall className={`w-5 h-5 ${isDialing ? 'animate-bounce' : ''}`} />
-        <span>
-          {isDialing ? 'Dialing...' : activeCall ? 'Call Active' : 'Start Outbound Call'}
-        </span>
+        <Phone className="w-4 h-4" />
+        <span>{isDialing ? 'Connecting...' : 'Initiate Call'}</span>
       </button>
-
-      <p className="text-[11px] text-slate-500 mt-3 text-center">
-        Press keys or type on your keyboard. Press Enter to dial.
-      </p>
     </div>
   );
 }
