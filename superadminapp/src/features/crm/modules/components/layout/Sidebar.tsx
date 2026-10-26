@@ -209,21 +209,27 @@ export function Sidebar() {
       
       {/* Return to ERP / Logout Session */}
       <div className="px-3 mt-auto pt-3 border-t border-[#E1E6E1] space-y-1.5">
-        <Link href="/">
-          <div className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#026601] hover:text-[#039A01] border border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs shadow-xs">
-            Return to ERP Workspace &rarr;
-          </div>
-        </Link>
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = '/dashboard';
+          }}
+          className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#026601] hover:text-[#039A01] border border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs shadow-xs cursor-pointer"
+        >
+          Return to ERP Workspace &rarr;
+        </button>
         <button 
+          type="button"
           onClick={() => {
             localStorage.removeItem('crm_token');
             localStorage.removeItem('crm_user');
             localStorage.removeItem('paramantra_access_token');
             localStorage.removeItem('paramantra_refresh_token');
             sessionStorage.removeItem('superadmin-erp-session');
+            localStorage.removeItem('superadmin-erp-session');
             window.location.href = '/login';
           }}
-          className="w-full flex justify-center items-center gap-2 bg-white hover:bg-rose-50 text-[#849389] hover:text-rose-600 border border-[#E1E6E1] hover:border-rose-200 py-2 rounded-lg transition-colors font-medium text-xs shadow-xs"
+          className="w-full flex justify-center items-center gap-2 bg-white hover:bg-rose-50 text-[#849389] hover:text-rose-600 border border-[#E1E6E1] hover:border-rose-200 py-2 rounded-lg transition-colors font-medium text-xs shadow-xs cursor-pointer"
         >
           <LogOut className="w-3.5 h-3.5" />
           Logout Session

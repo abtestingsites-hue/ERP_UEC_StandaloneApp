@@ -54,8 +54,10 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     let token = localStorage.getItem("crm_token");
     let userStr = localStorage.getItem("crm_user");
 
-    // 1. First check if ERP session exists in sessionStorage
-    const erpSessionStr = typeof window !== "undefined" ? sessionStorage.getItem("superadmin-erp-session") : null;
+    // 1. First check if ERP session exists in sessionStorage or localStorage
+    const erpSessionStr = typeof window !== "undefined" 
+      ? (sessionStorage.getItem("superadmin-erp-session") || localStorage.getItem("superadmin-erp-session")) 
+      : null;
     let erpRole = '';
     if (erpSessionStr) {
       try {
@@ -64,6 +66,8 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
           token = erpSession.accessToken;
           localStorage.setItem("crm_token", token);
           localStorage.setItem("paramantra_access_token", token);
+          sessionStorage.setItem("superadmin-erp-session", erpSessionStr);
+          localStorage.setItem("superadmin-erp-session", erpSessionStr);
           if (erpSession.user) {
             const rawRole = erpSession.user.role 
               ? (typeof erpSession.user.role === 'string' ? erpSession.user.role : erpSession.user.role.name) 

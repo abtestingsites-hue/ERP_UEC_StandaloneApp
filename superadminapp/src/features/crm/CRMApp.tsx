@@ -35,6 +35,10 @@ const AiRecordsPage = lazy(() => import('./modules/pages/ai-records/page'));
 const AgentAiRecordsPage = lazy(() => import('./modules/pages/agent/ai-records/page'));
 const AiSummaryPage = lazy(() => import('./modules/pages/ai-summary/page'));
 const AgentAiSummaryPage = lazy(() => import('./modules/pages/agent/ai-summary/page'));
+const AiAgentsPage = lazy(() => import('./modules/pages/ai-agents/page'));
+const CarePlansPage = lazy(() => import('./modules/pages/care-plans/page'));
+const EmergencyAlertsPage = lazy(() => import('./modules/pages/emergency-alerts/page'));
+const FeedbackPage = lazy(() => import('./modules/pages/feedback/page'));
 
 function CrmLoadingFallback() {
   return (
@@ -53,7 +57,7 @@ export function CRMApp() {
       <AuthWrapper>
         <Suspense fallback={<CrmLoadingFallback />}>
           <Routes>
-            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route index element={<Navigate to="/crm/dashboard" replace />} />
             
             {/* Core Dashboards */}
             <Route path="dashboard" element={<DashboardPage />} />
@@ -75,9 +79,9 @@ export function CRMApp() {
             <Route path="agent/customers" element={<CustomersPage />} />
             
             {/* Leads Management */}
-            <Route path="leads" element={<Navigate to="leads/pool" replace />} />
+            <Route path="leads" element={<Navigate to="/crm/leads/pool" replace />} />
             <Route path="leads/pool" element={<LeadPoolPage />} />
-            <Route path="agent/leads" element={<Navigate to="agent/leads/pool" replace />} />
+            <Route path="agent/leads" element={<Navigate to="/crm/agent/leads/pool" replace />} />
             <Route path="agent/leads/pool" element={<AgentLeadPoolPage />} />
             <Route path="leads/duplicates" element={<DuplicateLeadsPage />} />
             <Route path="leads/conversion" element={<LeadConversionPage />} />
@@ -97,10 +101,17 @@ export function CRMApp() {
             <Route path="sop/*" element={<SopPage />} />
             
             {/* AI Intelligence & Records */}
+            <Route path="ai-agents" element={<AiAgentsPage />} />
+            <Route path="agent/ai-agents" element={<AiAgentsPage />} />
             <Route path="ai-records" element={<AiRecordsPage />} />
             <Route path="agent/ai-records" element={<AgentAiRecordsPage />} />
             <Route path="ai-summary" element={<AiSummaryPage />} />
             <Route path="agent/ai-summary" element={<AgentAiSummaryPage />} />
+
+            {/* Healthcare Operations */}
+            <Route path="care-plans" element={<CarePlansPage />} />
+            <Route path="emergency-alerts" element={<EmergencyAlertsPage />} />
+            <Route path="feedback" element={<FeedbackPage />} />
             
             {/* Team Directory & Administration */}
             <Route path="agents" element={<AgentsDirectoryPage />} />
@@ -112,7 +123,7 @@ export function CRMApp() {
             <Route path="automation" element={<AutomationPage />} />
 
             {/* Fallback */}
-            <Route path="*" element={<Navigate to="dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/crm/dashboard" replace />} />
           </Routes>
         </Suspense>
       </AuthWrapper>
