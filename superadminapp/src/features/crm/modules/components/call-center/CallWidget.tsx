@@ -620,15 +620,15 @@ export function CallWidget() {
   if (!activeCall && callState === 'IDLE' && !showFeedbackModal && !showConversionModal) {
     return (
       <div className="text-center w-full max-w-md">
-        <div className="w-24 h-24 bg-[#111] rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner shadow-black/50 border border-[#222]">
-           <Phone className="w-10 h-10 text-slate-700" />
+        <div className="w-24 h-24 bg-[#E7F4E8] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xs border border-[#C8E6CA]">
+           <Phone className="w-10 h-10 text-[#026601]" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Ready for Calls</h2>
-        <p className="text-slate-500 mb-8 text-sm">Select an agent or wait for incoming calls.</p>
+        <h2 className="text-2xl font-bold text-[#202020] mb-2">Ready for Calls</h2>
+        <p className="text-[#5F6962] mb-8 text-sm">Select an agent or wait for incoming calls.</p>
         <div className="flex justify-center gap-2 mt-4">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-            <div className={`w-2 h-2 rounded-full ${telephonySocket ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-amber-500 animate-pulse'}`}></div>
-            <span className={`text-xs font-bold ${telephonySocket ? 'text-emerald-500' : 'text-amber-500'}`}>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#E7F4E8] border border-[#C8E6CA]">
+            <div className={`w-2 h-2 rounded-full ${telephonySocket ? 'bg-[#039A01] shadow-[0_0_8px_#039A01]' : 'bg-amber-500 animate-pulse'}`}></div>
+            <span className={`text-xs font-bold ${telephonySocket ? 'text-[#026601]' : 'text-amber-700'}`}>
               {telephonySocket ? 'System Online' : 'Connecting to System...'}
             </span>
           </div>
@@ -641,7 +641,7 @@ export function CallWidget() {
 
   return (
     <>
-      <div className="w-full max-w-sm bg-[#0a0a0a]/80 backdrop-blur-xl border border-[#222] rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+      <div className="w-full max-w-sm bg-white/95 backdrop-blur-xl border border-[#E1E6E1] rounded-3xl p-6 shadow-xl relative overflow-hidden text-[#202020]">
         {/* Background Glow Effect */}
         <div className={`absolute -top-24 -left-24 w-48 h-48 rounded-full blur-3xl opacity-20 pointer-events-none transition-colors duration-1000 ${
           callState === 'CONNECTED' ? 'bg-emerald-500' : 
@@ -672,27 +672,27 @@ export function CallWidget() {
           {/* Profile / Caller Info */}
           <div className="flex flex-col items-center justify-center mb-10">
             <div className="relative mb-4">
-              <div className={`w-28 h-28 rounded-full flex items-center justify-center text-4xl font-bold border-4 shadow-lg transition-all duration-500 ${
-                callState === 'CONNECTED' ? 'border-emerald-500/50 bg-[#111] text-emerald-400 shadow-emerald-500/20' : 
-                callState === 'RINGING' ? 'border-primary/50 bg-[#111] text-primary shadow-primary/20 animate-bounce' : 
-                'border-[#333] bg-[#111] text-white shadow-black'
+              <div className={`w-28 h-28 rounded-full flex items-center justify-center text-4xl font-bold border-4 shadow-sm transition-all duration-500 ${
+                callState === 'CONNECTED' ? 'border-[#039A01] bg-[#E7F4E8] text-[#026601]' : 
+                callState === 'RINGING' ? 'border-[#039A01] bg-[#E7F4E8] text-[#039A01] animate-bounce' : 
+                'border-[#E1E6E1] bg-[#F5F7F5] text-[#202020]'
               }`}>
                 {activeCall?.customerName?.substring(0, 1).toUpperCase() || 'U'}
               </div>
               
               {/* Recording Indicator */}
               {callState === 'CONNECTED' && (
-                <div className="absolute -bottom-2 -right-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-rose-400 shadow-lg animate-pulse">
+                <div className="absolute -bottom-2 -right-2 bg-rose-600 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-rose-400 shadow-sm animate-pulse">
                   <Circle className="w-3 h-3 fill-current" /> REC
                 </div>
               )}
             </div>
             
-            <h2 className="text-2xl font-bold text-white mb-1 truncate w-full text-center">
+            <h2 className="text-2xl font-bold text-[#202020] mb-1 truncate w-full text-center">
               {customerData?.name || activeCall?.customerName || 'Unknown Caller'}
             </h2>
-            <p className="text-slate-400 flex items-center gap-2 mb-2">
-              {callState === 'CONNECTING' && <Loader2 className="w-3 h-3 animate-spin" />}
+            <p className="text-[#5F6962] flex items-center gap-2 mb-2">
+              {callState === 'CONNECTING' && <Loader2 className="w-3 h-3 animate-spin text-[#039A01]" />}
               {customerData?.phone || activeCall?.phone || 'VoIP WebRTC Link'}
             </p>
             

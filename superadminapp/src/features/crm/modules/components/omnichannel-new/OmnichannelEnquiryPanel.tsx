@@ -399,32 +399,32 @@ export function OmnichannelEnquiryPanel({
   );
 
   return (
-    <div className={`flex flex-col bg-[#070b0e] border-l border-[#1a2329] text-slate-200 text-xs h-full overflow-hidden select-text ${className}`}>
+    <div className={`flex flex-col bg-white border-l border-[#E1E6E1] text-[#202020] text-xs h-full overflow-hidden select-text ${className}`}>
       {/* 1. HEADER & CLICK-TO-CALL BANNER */}
-      <div className="p-4 border-b border-[#1a2329] bg-[#0c1217] shrink-0">
+      <div className="p-4 border-b border-[#E1E6E1] bg-[#FAFCFA] shrink-0">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="font-bold text-[11px] uppercase tracking-wider text-slate-300">Enquiry Intelligence</span>
+            <span className="w-2 h-2 rounded-full bg-[#039A01] animate-pulse"></span>
+            <span className="font-bold text-[11px] uppercase tracking-wider text-[#202020]">Enquiry Intelligence</span>
           </div>
 
           {/* AI Suggestion Button */}
           <button
             onClick={runAiClassification}
             disabled={aiAnalyzing}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 font-semibold transition-colors disabled:opacity-50 text-[10px]"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#E7F4E8] hover:bg-[#C8E6CA] border border-[#C8E6CA] text-[#026601] font-semibold transition-colors disabled:opacity-50 text-[10px]"
           >
-            <Sparkles className={`w-3.5 h-3.5 ${aiAnalyzing ? 'animate-spin' : 'text-purple-400'}`} />
+            <Sparkles className={`w-3.5 h-3.5 ${aiAnalyzing ? 'animate-spin' : 'text-[#039A01]'}`} />
             {aiAnalyzing ? 'Analyzing...' : 'AI Suggest'}
           </button>
         </div>
 
         {/* Contact Bar with Click-to-Call */}
-        <div className="flex items-center justify-between bg-[#111920] border border-[#22313d] rounded-xl p-3 shadow-inner">
+        <div className="flex items-center justify-between bg-white border border-[#E1E6E1] rounded-xl p-3 shadow-xs">
           <div className="min-w-0 pr-2">
-            <h4 className="font-bold text-white text-sm truncate">{conversation.customerName}</h4>
-            <div className="flex items-center gap-1.5 text-slate-400 mt-0.5">
-              <Phone className="w-3 h-3 text-slate-500 shrink-0" />
+            <h4 className="font-bold text-[#202020] text-sm truncate">{conversation.customerName}</h4>
+            <div className="flex items-center gap-1.5 text-[#5F6962] mt-0.5">
+              <Phone className="w-3 h-3 text-[#849389] shrink-0" />
               <span className="font-mono text-xs">{hasValidPhone ? cleanPhone : 'No verified phone'}</span>
             </div>
           </div>
@@ -434,10 +434,10 @@ export function OmnichannelEnquiryPanel({
             onClick={handleInitiateCall}
             disabled={!hasValidPhone || isCalling}
             title={hasValidPhone ? `Click to call ${cleanPhone} via LiveKit/Vobiz` : 'No valid phone number for this profile'}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg font-bold transition-all shadow-md shrink-0 ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg font-bold transition-all shadow-xs shrink-0 ${
               hasValidPhone
-                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-900/40 active:scale-95'
-                : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                ? 'bg-[#039A01] hover:bg-[#026601] text-white active:scale-95'
+                : 'bg-[#EFF3EF] text-[#849389] cursor-not-allowed border border-[#E1E6E1]'
             }`}
           >
             <Phone className={`w-3.5 h-3.5 ${isCalling ? 'animate-bounce' : ''}`} />
@@ -446,7 +446,7 @@ export function OmnichannelEnquiryPanel({
         </div>
 
         {callError && (
-          <div className="mt-2 p-2 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[10px] flex items-center gap-1.5">
+          <div className="mt-2 p-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-[10px] flex items-center gap-1.5">
             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             <span>{callError}</span>
           </div>
@@ -454,20 +454,20 @@ export function OmnichannelEnquiryPanel({
 
         {/* Ambulance Emergency Alert Banner */}
         {isAmbulance && (
-          <div className="mt-2.5 p-2.5 rounded-xl bg-rose-600/20 border border-rose-500/50 text-rose-200 flex flex-col gap-1 shadow-lg animate-pulse">
+          <div className="mt-2.5 p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex flex-col gap-1 shadow-xs">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 font-bold text-rose-300 uppercase tracking-wide text-[11px]">
-                <ShieldAlert className="w-4 h-4 text-rose-400" />
+              <div className="flex items-center gap-1.5 font-bold text-rose-700 uppercase tracking-wide text-[11px]">
+                <ShieldAlert className="w-4 h-4 text-rose-600" />
                 <span>AMBULANCE EMERGENCY ENQUIRY</span>
               </div>
               <button
                 onClick={() => setShowOverrideModal(true)}
-                className="text-[9px] underline text-rose-300 hover:text-white"
+                className="text-[9px] underline text-rose-700 hover:text-rose-900"
               >
                 Override Priority
               </button>
             </div>
-            <p className="text-[10px] text-rose-200/80 leading-tight">
+            <p className="text-[10px] text-rose-700 leading-tight">
               Priority is locked to EMERGENCY. <strong>Notice:</strong> Dispatch staff must also initiate local emergency services (108) immediately.
             </p>
           </div>
@@ -475,18 +475,18 @@ export function OmnichannelEnquiryPanel({
 
         {/* AI Confidence & Missing Info Checklist */}
         {missingInfoList.length > 0 && (
-          <div className="mt-2.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-200">
+          <div className="mt-2.5 p-2 rounded-lg bg-[#FEFDE6] border border-[#F3EE7B] text-[#736902]">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#736902] flex items-center gap-1">
                 <AlertTriangle className="w-3 h-3" /> Missing Intake Details ({missingInfoList.length})
               </span>
-              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300">
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#736902] border border-[#F3EE7B]">
                 {Math.round(confidence * 100)}% Confident
               </span>
             </div>
             <div className="flex flex-wrap gap-1 mt-1">
               {missingInfoList.map((item, idx) => (
-                <span key={idx} className="px-1.5 py-0.5 rounded bg-black/40 text-slate-300 text-[9px] border border-amber-500/20">
+                <span key={idx} className="px-1.5 py-0.5 rounded bg-white text-[#736902] text-[9px] border border-[#F3EE7B]">
                   • {item}
                 </span>
               ))}
@@ -496,13 +496,13 @@ export function OmnichannelEnquiryPanel({
       </div>
 
       {/* 2. SUB-TABS NAVIGATION */}
-      <div className="flex border-b border-[#1a2329] bg-[#090e12] shrink-0 text-center font-semibold text-[11px]">
+      <div className="flex border-b border-[#E1E6E1] bg-[#FAFCFA] shrink-0 text-center font-semibold text-[11px]">
         <button
           onClick={() => setActiveTab('classification')}
           className={`flex-1 py-2.5 border-b-2 transition-colors ${
             activeTab === 'classification'
-              ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-[#039A01] text-[#026601] bg-[#E7F4E8]/50 font-bold'
+              : 'border-transparent text-[#5F6962] hover:text-[#202020]'
           }`}
         >
           Catalog & Service
@@ -511,8 +511,8 @@ export function OmnichannelEnquiryPanel({
           onClick={() => setActiveTab('patient')}
           className={`flex-1 py-2.5 border-b-2 transition-colors ${
             activeTab === 'patient'
-              ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-[#039A01] text-[#026601] bg-[#E7F4E8]/50 font-bold'
+              : 'border-transparent text-[#5F6962] hover:text-[#202020]'
           }`}
         >
           Patient & Location
@@ -521,8 +521,8 @@ export function OmnichannelEnquiryPanel({
           onClick={() => setActiveTab('notes')}
           className={`flex-1 py-2.5 border-b-2 transition-colors ${
             activeTab === 'notes'
-              ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-[#039A01] text-[#026601] bg-[#E7F4E8]/50 font-bold'
+              : 'border-transparent text-[#5F6962] hover:text-[#202020]'
           }`}
         >
           Notes & Lead
@@ -530,13 +530,13 @@ export function OmnichannelEnquiryPanel({
       </div>
 
       {/* 3. TAB CONTENT AREA */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-white">
         {/* TAB 1: CLASSIFICATION & SERVICE CATALOG */}
         {activeTab === 'classification' && (
           <div className="space-y-4">
             {/* Foundation / Business Unit Selector */}
             <div>
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1.5">
                 Foundation / Service Provider
               </label>
               <select
@@ -546,7 +546,7 @@ export function OmnichannelEnquiryPanel({
                   setPrimaryService('');
                   setSelectedSubServices([]);
                 }}
-                className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-2 text-white font-medium outline-none focus:border-emerald-500 transition-colors"
+                className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-2 text-[#202020] font-medium outline-none focus:border-[#039A01] transition-colors"
               >
                 {foundations.map((f) => (
                   <option key={f.key} value={f.key}>
@@ -558,13 +558,13 @@ export function OmnichannelEnquiryPanel({
 
             {/* Enquiry Category */}
             <div>
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1.5">
                 Enquiry Category
               </label>
               <select
                 value={enquiryCategory}
                 onChange={(e) => setEnquiryCategory(e.target.value)}
-                className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-2 text-white font-medium outline-none focus:border-emerald-500 transition-colors"
+                className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-2 text-[#202020] font-medium outline-none focus:border-[#039A01] transition-colors"
               >
                 <option value="SERVICE_ENQUIRY">Service Enquiry</option>
                 <option value="JOB_ENQUIRY">Job Enquiry / Careers</option>
@@ -578,30 +578,30 @@ export function OmnichannelEnquiryPanel({
             {/* Service Catalog Selection (Searchable & Checkboxes) */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962]">
                   Select Services ({filteredServices.length})
                 </label>
-                <span className="text-[9px] text-slate-500">Multi-select enabled</span>
+                <span className="text-[9px] text-[#849389]">Multi-select enabled</span>
               </div>
 
               {/* Search Box */}
               <div className="relative mb-2">
-                <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#849389]" />
                 <input
                   type="text"
                   placeholder="Search available services..."
                   value={serviceSearch}
                   onChange={(e) => setServiceSearch(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 outline-none focus:border-emerald-500"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#202020] placeholder-[#849389] outline-none focus:border-[#039A01]"
                 />
               </div>
 
               {/* Service List */}
-              <div className="space-y-1.5 max-h-52 overflow-y-auto custom-scrollbar p-1 bg-[#0b1014] border border-[#1d2730] rounded-xl">
+              <div className="space-y-1.5 max-h-52 overflow-y-auto custom-scrollbar p-1 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl">
                 {isLoadingCatalog ? (
-                  <div className="p-4 text-center text-slate-500">Loading catalog...</div>
+                  <div className="p-4 text-center text-[#5F6962]">Loading catalog...</div>
                 ) : filteredServices.length === 0 ? (
-                  <div className="p-4 text-center text-slate-500">No services match filter</div>
+                  <div className="p-4 text-center text-[#5F6962]">No services match filter</div>
                 ) : (
                   filteredServices.map((service: any) => {
                     const isSelected = primaryService === service.name || selectedSubServices.includes(service.name);
@@ -620,28 +620,28 @@ export function OmnichannelEnquiryPanel({
                         }}
                         className={`p-2 rounded-lg cursor-pointer flex items-start gap-2.5 transition-all border ${
                           isSelected
-                            ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
-                            : 'bg-[#111920] border-transparent hover:border-[#263542] text-slate-300'
+                            ? 'bg-[#E7F4E8] border-[#C8E6CA] text-[#026601]'
+                            : 'bg-white border-[#E1E6E1] hover:border-[#039A01] text-[#202020]'
                         }`}
                       >
                         <div className="mt-0.5 shrink-0">
                           {isSelected ? (
-                            <CheckSquare className="w-4 h-4 text-emerald-400" />
+                            <CheckSquare className="w-4 h-4 text-[#039A01]" />
                           ) : (
-                            <Square className="w-4 h-4 text-slate-600" />
+                            <Square className="w-4 h-4 text-[#849389]" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="font-semibold text-xs flex items-center gap-1.5">
                             <span className="truncate">{service.name}</span>
                             {service.isEmergency && (
-                              <span className="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-400 text-[9px] font-bold border border-rose-500/30">
+                              <span className="px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 text-[9px] font-bold border border-rose-200">
                                 EMERGENCY
                               </span>
                             )}
                           </div>
                           {service.description && (
-                            <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">{service.description}</p>
+                            <p className="text-[10px] text-[#5F6962] mt-0.5 line-clamp-1">{service.description}</p>
                           )}
                         </div>
                       </div>
@@ -673,8 +673,8 @@ export function OmnichannelEnquiryPanel({
                         }}
                         className={`px-2.5 py-1 rounded-md text-[10px] font-medium border transition-colors ${
                           isSubChecked
-                            ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
-                            : 'bg-[#111920] border-[#22313d] text-slate-400 hover:text-white'
+                            ? 'bg-[#E7F4E8] border-[#039A01]/40 text-[#039A01] font-semibold'
+                            : 'bg-[#F5F7F5] border-[#E1E6E1] text-[#5F6962] hover:text-[#202020] hover:bg-white'
                         }`}
                       >
                         {sub}
@@ -687,17 +687,17 @@ export function OmnichannelEnquiryPanel({
 
             {/* Conditional Palliative Care Section */}
             {primaryService.toLowerCase().includes('palliative') && (
-              <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl space-y-2">
-                <div className="flex items-center gap-1.5 text-purple-300 font-bold text-[11px]">
-                  <HeartPulse className="w-4 h-4 text-purple-400" />
+              <div className="p-3 bg-purple-50 border border-purple-200 rounded-xl space-y-2">
+                <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px]">
+                  <HeartPulse className="w-4 h-4 text-purple-600" />
                   <span>Palliative Care Clinical Intake</span>
                 </div>
                 <div>
-                  <label className="text-[9px] font-bold uppercase text-slate-400 block mb-1">Care Urgency Level</label>
+                  <label className="text-[9px] font-bold uppercase text-[#5F6962] block mb-1">Care Urgency Level</label>
                   <select
                     value={palliativeCareUrgency}
                     onChange={(e) => setPalliativeCareUrgency(e.target.value)}
-                    className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                   >
                     <option value="ROUTINE">Routine Palliative Support (Within 24-48h)</option>
                     <option value="URGENT">Urgent Symptom Control (Within 4-8h)</option>
@@ -705,13 +705,13 @@ export function OmnichannelEnquiryPanel({
                   </select>
                 </div>
                 <div>
-                  <label className="text-[9px] font-bold uppercase text-slate-400 block mb-1">Pain & Symptom Notes</label>
+                  <label className="text-[9px] font-bold uppercase text-[#5F6962] block mb-1">Pain & Symptom Notes</label>
                   <textarea
                     rows={2}
                     value={palliativeCareNotes}
                     onChange={(e) => setPalliativeCareNotes(e.target.value)}
                     placeholder="Document current pain score, medication regimen, nausea/dyspnea..."
-                    className="w-full bg-[#111920] border border-[#22313d] rounded-lg p-2 text-xs text-white placeholder-slate-500"
+                    className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg p-2 text-xs text-[#202020] placeholder-[#849389] outline-none focus:border-[#039A01]"
                   />
                 </div>
               </div>
@@ -725,7 +725,7 @@ export function OmnichannelEnquiryPanel({
             {/* Patient Name & Age */}
             <div className="grid grid-cols-3 gap-2">
               <div className="col-span-2">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                   Patient / Elder Name
                 </label>
                 <input
@@ -733,11 +733,11 @@ export function OmnichannelEnquiryPanel({
                   placeholder="e.g. Ramachandran"
                   value={patientName}
                   onChange={(e) => setPatientName(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-emerald-500"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                   Age (Years)
                 </label>
                 <input
@@ -745,14 +745,14 @@ export function OmnichannelEnquiryPanel({
                   placeholder="e.g. 78"
                   value={patientAge}
                   onChange={(e) => setPatientAge(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-emerald-500"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 />
               </div>
             </div>
 
             {/* Health Conditions */}
             <div>
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                 Known Health Conditions
               </label>
               <input
@@ -760,19 +760,19 @@ export function OmnichannelEnquiryPanel({
                 placeholder="e.g. Hypertension, Dementia stage 2, Diabetes"
                 value={patientConditions}
                 onChange={(e) => setPatientConditions(e.target.value)}
-                className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-emerald-500"
+                className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
               />
             </div>
 
             {/* Mobility Requirements */}
             <div>
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                 Mobility & Assistance Level
               </label>
               <select
                 value={patientMobility}
                 onChange={(e) => setPatientMobility(e.target.value)}
-                className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-1.5 text-xs text-white"
+                className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
               >
                 <option value="Fully Independent">Fully Independent</option>
                 <option value="Needs Partial Assistance (Walker / Cane)">Needs Partial Assistance (Walker / Cane)</option>
@@ -784,13 +784,13 @@ export function OmnichannelEnquiryPanel({
             {/* Duration Category & Duration */}
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                   Duration Category
                 </label>
                 <select
                   value={careDurationCategory}
                   onChange={(e) => setCareDurationCategory(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 >
                   <option value="DAY_CARE">Day Care (Single day / scholar)</option>
                   <option value="SHORT_TERM">Short-term Care (&le; 30 days)</option>
@@ -798,7 +798,7 @@ export function OmnichannelEnquiryPanel({
                 </select>
               </div>
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                   Requested Duration
                 </label>
                 <input
@@ -806,7 +806,7 @@ export function OmnichannelEnquiryPanel({
                   placeholder="e.g. 7 days, 3 months"
                   value={careDuration}
                   onChange={(e) => setCareDuration(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 />
               </div>
             </div>
@@ -814,13 +814,13 @@ export function OmnichannelEnquiryPanel({
             {/* Engagement Type & Schedule */}
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                   Engagement Type
                 </label>
                 <select
                   value={engagementType}
                   onChange={(e) => setEngagementType(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 >
                   <option value="One-time Care">One-time Care</option>
                   <option value="Regular Daily Care">Regular Daily Care</option>
@@ -830,13 +830,13 @@ export function OmnichannelEnquiryPanel({
                 </select>
               </div>
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                   Care Schedule
                 </label>
                 <select
                   value={careSchedule}
                   onChange={(e) => setCareSchedule(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 >
                   <option value="12-hour care (Day shift: 8 AM - 8 PM)">12h Day Shift (8 AM - 8 PM)</option>
                   <option value="12-hour care (Night shift: 8 PM - 8 AM)">12h Night Shift (8 PM - 8 AM)</option>
@@ -850,43 +850,43 @@ export function OmnichannelEnquiryPanel({
 
             {/* Conditional Ambulance Locations vs Home Address */}
             {isAmbulance ? (
-              <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl space-y-2">
-                <div className="flex items-center gap-1.5 font-bold text-rose-400 text-xs">
-                  <MapPin className="w-4 h-4" />
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl space-y-2">
+                <div className="flex items-center gap-1.5 font-bold text-rose-700 text-xs">
+                  <MapPin className="w-4 h-4 text-rose-600" />
                   <span>Ambulance Dispatch Locations</span>
                 </div>
                 <div>
-                  <label className="text-[9px] font-bold uppercase text-slate-400 block mb-1">Pickup Location</label>
+                  <label className="text-[9px] font-bold uppercase text-[#5F6962] block mb-1">Pickup Location</label>
                   <input
                     type="text"
                     placeholder="Exact address or landmark for pickup"
                     value={pickupLocation}
                     onChange={(e) => setPickupLocation(e.target.value)}
-                    className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                   />
                 </div>
                 <div>
-                  <label className="text-[9px] font-bold uppercase text-slate-400 block mb-1">Destination Hospital / Clinic</label>
+                  <label className="text-[9px] font-bold uppercase text-[#5F6962] block mb-1">Destination Hospital / Clinic</label>
                   <input
                     type="text"
                     placeholder="Target receiving medical facility"
                     value={destinationLocation}
                     onChange={(e) => setDestinationLocation(e.target.value)}
-                    className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                   />
                 </div>
               </div>
             ) : (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962]">
                     Service Address
                   </label>
                   <button
                     type="button"
                     onClick={handleCaptureLocation}
                     disabled={isGeolocating}
-                    className="text-[10px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+                    className="text-[10px] text-[#039A01] hover:text-[#026601] font-semibold flex items-center gap-1"
                   >
                     <MapPin className="w-3 h-3" />
                     {isGeolocating ? 'Locating...' : 'Capture GPS Pin'}
@@ -897,7 +897,7 @@ export function OmnichannelEnquiryPanel({
                   placeholder="Street address, apartment name, landmark"
                   value={serviceAddress}
                   onChange={(e) => setServiceAddress(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-1.5 text-xs text-white"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
@@ -905,14 +905,14 @@ export function OmnichannelEnquiryPanel({
                     placeholder="City / District"
                     value={cityDistrict}
                     onChange={(e) => setCityDistrict(e.target.value)}
-                    className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                   />
                   <input
                     type="text"
                     placeholder="Postal Code"
                     value={postalCode}
                     onChange={(e) => setPostalCode(e.target.value)}
-                    className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                   />
                 </div>
               </div>
@@ -926,23 +926,23 @@ export function OmnichannelEnquiryPanel({
             {/* Live Notes Area with Auto-Save */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-slate-500" />
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-[#5F6962]" />
                   Live Notes (Auto-Saved)
                 </label>
                 <div className="flex items-center gap-1.5 text-[10px]">
                   {saveStatus === 'SAVING' && (
-                    <span className="text-amber-400 animate-pulse flex items-center gap-1">
+                    <span className="text-amber-600 animate-pulse flex items-center gap-1 font-medium">
                       <RefreshCw className="w-3 h-3 animate-spin" /> Saving...
                     </span>
                   )}
                   {saveStatus === 'SAVED' && (
-                    <span className="text-emerald-400 flex items-center gap-1">
+                    <span className="text-[#039A01] flex items-center gap-1 font-medium">
                       <Check className="w-3 h-3" /> Saved {lastSavedAt}
                     </span>
                   )}
                   {saveStatus === 'FAILED' && (
-                    <span className="text-rose-400 flex items-center gap-1">
+                    <span className="text-rose-600 flex items-center gap-1 font-medium">
                       <AlertCircle className="w-3 h-3" /> Save Failed
                     </span>
                   )}
@@ -953,13 +953,13 @@ export function OmnichannelEnquiryPanel({
                 value={liveNotesText}
                 onChange={(e) => setLiveNotesText(e.target.value)}
                 placeholder="Type customer notes, clinical instructions, doctor follow-ups... Automatically saved to database."
-                className="w-full bg-[#111920] border border-[#22313d] rounded-xl p-3 text-xs text-white placeholder-slate-500 outline-none focus:border-emerald-500 resize-none font-sans"
+                className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl p-3 text-xs text-[#202020] placeholder-[#849389] outline-none focus:border-[#039A01] resize-none font-sans"
               />
             </div>
 
             {/* Follow-up Date Scheduling */}
             <div>
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962] block mb-1">
                 Schedule Follow-up
               </label>
               <div className="relative">
@@ -967,29 +967,29 @@ export function OmnichannelEnquiryPanel({
                   type="datetime-local"
                   value={followupDate}
                   onChange={(e) => setFollowupDate(e.target.value)}
-                  className="w-full bg-[#111920] border border-[#22313d] rounded-lg px-3 py-1.5 text-xs text-white"
+                  className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
                 />
               </div>
             </div>
 
             {/* Lead Association & Creation */}
-            <div className="p-3 bg-[#111920] border border-[#22313d] rounded-xl">
+            <div className="p-3 bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5F6962]">
                   Lead Pool Status
                 </span>
                 {conversation.leadId ? (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">
+                  <span className="px-2 py-0.5 rounded-full bg-[#E7F4E8] text-[#039A01] text-[10px] font-bold border border-[#039A01]/20">
                     Linked to Lead
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold border border-amber-500/30">
+                  <span className="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-bold border border-amber-200">
                     Unlinked Enquiry
                   </span>
                 )}
               </div>
 
-              <p className="text-[10px] text-slate-400 mb-3">
+              <p className="text-[10px] text-[#5F6962] mb-3">
                 {conversation.leadId 
                   ? `Synchronized with Lead #${conversation.leadId.slice(0, 8)}...`
                   : 'Convert this conversation into an official CRM Lead in the shared team pool.'}
@@ -999,7 +999,7 @@ export function OmnichannelEnquiryPanel({
                 type="button"
                 onClick={handleSyncLead}
                 disabled={isSyncingLead}
-                className="w-full py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-colors disabled:opacity-50"
+                className="w-full py-2 rounded-lg bg-[#039A01] hover:bg-[#026601] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors disabled:opacity-50"
               >
                 {isSyncingLead ? (
                   <>
@@ -1024,13 +1024,13 @@ export function OmnichannelEnquiryPanel({
       </div>
 
       {/* 4. FOOTER SAVE ACTIONS */}
-      <div className="p-3 bg-[#0c1217] border-t border-[#1a2329] shrink-0 flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
+      <div className="p-3 bg-white border-t border-[#E1E6E1] shrink-0 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-[10px] text-[#5F6962]">
           <span>Priority:</span>
           <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase border ${
-            priority === 'EMERGENCY' ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 animate-pulse' :
-            priority === 'HIGH' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
-            'bg-slate-800 text-slate-300 border-slate-700'
+            priority === 'EMERGENCY' ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' :
+            priority === 'HIGH' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+            'bg-[#F5F7F5] text-[#202020] border-[#E1E6E1]'
           }`}>
             {priority}
           </span>
@@ -1038,7 +1038,7 @@ export function OmnichannelEnquiryPanel({
 
         <button
           onClick={handleSaveClassification}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-900/40 transition-all active:scale-95"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#039A01] hover:bg-[#026601] text-white font-bold text-xs shadow-xs transition-all active:scale-95"
         >
           <Save className="w-3.5 h-3.5" />
           <span>Save Changes</span>

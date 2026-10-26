@@ -202,8 +202,8 @@ export default function AgentLeadsPage() {
   }, [leads, searchTerm, statusFilter]);
 
   return (
-    <div className="p-4 md:p-6 bg-[#F5F7F5] min-h-screen text-[#202020]">
-      <div className="max-w-7xl mx-auto space-y-5">
+    <div className="p-4 md:p-6 bg-[#F5F7F5] min-h-screen text-[#202020] w-full">
+      <div className="w-full space-y-5">
         
         {/* Toast Notification */}
         {toastMessage && (

@@ -85,7 +85,7 @@ export default function SopOverviewPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-[#050505] overflow-hidden">
+    <div className="flex-1 flex flex-col h-full bg-[#F5F7F5] overflow-hidden text-[#202020]">
       <SopNav
         badgeCounts={{
           daily: metrics.dueTodayCount,
@@ -95,15 +95,15 @@ export default function SopOverviewPage() {
 
       <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
         {/* Header Banner */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#222]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E1E6E1]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA]">
                 Unified Operations
               </span>
-              <h1 className="text-2xl font-bold text-white tracking-tight">SOP & Daily Operations Dashboard</h1>
+              <h1 className="text-2xl font-bold text-[#202020] tracking-tight">SOP & Daily Operations Dashboard</h1>
             </div>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[#5F6962] mt-1">
               Cross-departmental standard operating procedures, daily execution tracking, and workflow orchestration.
             </p>
           </div>
@@ -111,14 +111,14 @@ export default function SopOverviewPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={fetchOverview}
-              className="p-2 rounded-xl bg-[#141416] hover:bg-[#1e1e22] text-slate-400 hover:text-white border border-[#222] transition-colors"
+              className="p-2 rounded-xl bg-white hover:bg-[#F5F7F5] text-[#5F6962] hover:text-[#202020] border border-[#E1E6E1] transition-colors"
               title="Refresh Dashboard"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-emerald-400' : ''}`} />
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-[#039A01]' : ''}`} />
             </button>
             <button
               onClick={() => setIsCreateModalOpen(true)}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-lg shadow-emerald-600/30"
+              className="px-4 py-2 rounded-xl bg-[#039A01] hover:bg-[#028001] text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
             >
               <Plus className="w-4 h-4" />
               New Operational Task
@@ -128,52 +128,52 @@ export default function SopOverviewPage() {
 
         {/* Top Operational Metrics */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-3.5">
-            <span className="text-[11px] text-slate-500 font-medium block">Total Tasks</span>
-            <span className="text-2xl font-bold text-white mt-1 block">{metrics.totalTasks || 0}</span>
-            <span className="text-[10px] text-slate-500 mt-0.5 block">All active SOPs</span>
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-3.5 shadow-xs">
+            <span className="text-[11px] text-[#5F6962] font-medium block">Total Tasks</span>
+            <span className="text-2xl font-bold text-[#202020] mt-1 block">{metrics.totalTasks || 0}</span>
+            <span className="text-[10px] text-[#849389] mt-0.5 block">All active SOPs</span>
           </div>
 
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-3.5">
-            <span className="text-[11px] text-slate-500 font-medium block">Due Today</span>
-            <span className="text-2xl font-bold text-amber-400 mt-1 block">{metrics.dueTodayCount || 0}</span>
-            <span className="text-[10px] text-amber-500/80 mt-0.5 block">Shift deadlines</span>
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-3.5 shadow-xs">
+            <span className="text-[11px] text-[#5F6962] font-medium block">Due Today</span>
+            <span className="text-2xl font-bold text-[#B45309] mt-1 block">{metrics.dueTodayCount || 0}</span>
+            <span className="text-[10px] text-[#D97706] mt-0.5 block">Shift deadlines</span>
           </div>
 
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-3.5">
-            <span className="text-[11px] text-slate-500 font-medium block">In Progress</span>
-            <span className="text-2xl font-bold text-blue-400 mt-1 block">{metrics.inProgressCount || 0}</span>
-            <span className="text-[10px] text-blue-500/80 mt-0.5 block">Under execution</span>
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-3.5 shadow-xs">
+            <span className="text-[11px] text-[#5F6962] font-medium block">In Progress</span>
+            <span className="text-2xl font-bold text-blue-600 mt-1 block">{metrics.inProgressCount || 0}</span>
+            <span className="text-[10px] text-blue-500 mt-0.5 block">Under execution</span>
           </div>
 
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-3.5">
-            <span className="text-[11px] text-slate-500 font-medium block">Pending Approval</span>
-            <span className="text-2xl font-bold text-purple-400 mt-1 block">{metrics.pendingApprovalCount || 0}</span>
-            <span className="text-[10px] text-purple-500/80 mt-0.5 block">Awaiting sign-off</span>
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-3.5 shadow-xs">
+            <span className="text-[11px] text-[#5F6962] font-medium block">Pending Approval</span>
+            <span className="text-2xl font-bold text-purple-600 mt-1 block">{metrics.pendingApprovalCount || 0}</span>
+            <span className="text-[10px] text-purple-500 mt-0.5 block">Awaiting sign-off</span>
           </div>
 
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-3.5">
-            <span className="text-[11px] text-slate-500 font-medium block">Completed</span>
-            <span className="text-2xl font-bold text-emerald-400 mt-1 block">{metrics.completedCount || 0}</span>
-            <span className="text-[10px] text-emerald-500/80 mt-0.5 block">
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-3.5 shadow-xs">
+            <span className="text-[11px] text-[#5F6962] font-medium block">Completed</span>
+            <span className="text-2xl font-bold text-[#039A01] mt-1 block">{metrics.completedCount || 0}</span>
+            <span className="text-[10px] text-[#026601] mt-0.5 block">
               {metrics.completionRate || 0}% Completion
             </span>
           </div>
 
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-3.5">
-            <span className="text-[11px] text-slate-500 font-medium block">Overdue / Blocked</span>
-            <span className="text-2xl font-bold text-rose-400 mt-1 block">
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-3.5 shadow-xs">
+            <span className="text-[11px] text-[#5F6962] font-medium block">Overdue / Blocked</span>
+            <span className="text-2xl font-bold text-rose-600 mt-1 block">
               {(metrics.overdueCount || 0) + (metrics.blockedCount || 0)}
             </span>
-            <span className="text-[10px] text-rose-500/80 mt-0.5 block">Requires escalation</span>
+            <span className="text-[10px] text-rose-500 mt-0.5 block">Requires escalation</span>
           </div>
         </div>
 
         {/* Department Workload Summary Cards */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
-              <Building className="w-4 h-4 text-emerald-400" />
+            <h2 className="text-sm font-bold text-[#202020] flex items-center gap-2">
+              <Building className="w-4 h-4 text-[#039A01]" />
               Department-Wise Operational Workload
             </h2>
           </div>
@@ -187,43 +187,43 @@ export default function SopOverviewPage() {
 
               return (
                 <Link key={deptKey} href={`/sop/${deptKey.toLowerCase().replace('_', '-')}`}>
-                  <div className="bg-[#0f0f11] hover:bg-[#141416] border border-[#222] hover:border-[#333] rounded-xl p-4 transition-all duration-200 cursor-pointer shadow-lg group">
+                  <div className="bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] hover:border-[#039A01] rounded-xl p-4 transition-all duration-200 cursor-pointer shadow-xs group">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2.5">
-                        <div className="p-2 rounded-lg bg-[#18181b] group-hover:bg-emerald-500/10 text-slate-400 group-hover:text-emerald-400 border border-[#2a2a2d] transition-colors">
+                        <div className="p-2 rounded-lg bg-[#EFF3EF] group-hover:bg-[#E7F4E8] text-[#5F6962] group-hover:text-[#026601] border border-[#E1E6E1] transition-colors">
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <h3 className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
+                          <h3 className="text-xs font-bold text-[#202020] group-hover:text-[#039A01] transition-colors">
                             {meta.label}
                           </h3>
-                          <span className="text-[10px] text-slate-500">{stats.total} Total Tasks</span>
+                          <span className="text-[10px] text-[#5F6962]">{stats.total} Total Tasks</span>
                         </div>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-emerald-400 transition-transform group-hover:translate-x-0.5" />
+                      <ArrowRight className="w-4 h-4 text-[#849389] group-hover:text-[#039A01] transition-transform group-hover:translate-x-0.5" />
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-400">Completion</span>
-                        <span className="font-bold text-emerald-400">{rate}%</span>
+                        <span className="text-[#5F6962]">Completion</span>
+                        <span className="font-bold text-[#039A01]">{rate}%</span>
                       </div>
-                      <div className="w-full bg-[#18181b] h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-emerald-500 h-full rounded-full transition-all" style={{ width: `${rate}%` }} />
+                      <div className="w-full bg-[#EFF3EF] h-1.5 rounded-full overflow-hidden">
+                        <div className="bg-[#039A01] h-full rounded-full transition-all" style={{ width: `${rate}%` }} />
                       </div>
 
-                      <div className="grid grid-cols-3 gap-1 pt-2 border-t border-[#1c1c1f] text-[10px] text-center">
+                      <div className="grid grid-cols-3 gap-1 pt-2 border-t border-[#E1E6E1] text-[10px] text-center">
                         <div>
-                          <span className="text-slate-500 block">Active</span>
-                          <span className="font-semibold text-blue-400">{stats.inProgress}</span>
+                          <span className="text-[#5F6962] block">Active</span>
+                          <span className="font-semibold text-blue-600">{stats.inProgress}</span>
                         </div>
                         <div>
-                          <span className="text-slate-500 block">Approval</span>
-                          <span className="font-semibold text-purple-400">{stats.pendingApproval}</span>
+                          <span className="text-[#5F6962] block">Approval</span>
+                          <span className="font-semibold text-purple-600">{stats.pendingApproval}</span>
                         </div>
                         <div>
-                          <span className="text-slate-500 block">Done</span>
-                          <span className="font-semibold text-emerald-400">{stats.completed}</span>
+                          <span className="text-[#5F6962] block">Done</span>
+                          <span className="font-semibold text-[#039A01]">{stats.completed}</span>
                         </div>
                       </div>
                     </div>
@@ -237,19 +237,19 @@ export default function SopOverviewPage() {
         {/* Split Grid: Pending Approvals & Staff Workload */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Pending Approvals Queue */}
-          <div className="bg-[#0f0f11] border border-[#222] rounded-xl p-5 shadow-xl">
+          <div className="bg-white border border-[#E1E6E1] rounded-xl p-5 shadow-xs">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-purple-400" />
+              <h2 className="text-sm font-bold text-[#202020] flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-purple-600" />
                 Pending Manager Approvals ({pendingApprovals.length})
               </h2>
-              <span className="text-[10px] text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
+              <span className="text-[10px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
                 Action Required
               </span>
             </div>
 
             {pendingApprovals.length === 0 ? (
-              <div className="p-8 text-center text-slate-500 text-xs">
+              <div className="p-8 text-center text-[#5F6962] text-xs">
                 No tasks currently waiting for manager sign-off.
               </div>
             ) : (

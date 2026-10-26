@@ -12,7 +12,6 @@ export function AgentNavbar() {
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationsRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-  const mockNotifications: any[] = [];
 
   useEffect(() => {
     setTime(new Date());
@@ -42,123 +41,56 @@ export function AgentNavbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('crm_token');
-    localStorage.removeItem('crm_user');
-    localStorage.removeItem('paramantra_access_token');
-    localStorage.removeItem('paramantra_refresh_token');
-    sessionStorage.removeItem('superadmin-erp-session');
-    window.location.href = '/login';
-  };
-
   return (
-    <header className="h-[60px] border-b border-[#E1E6E1] bg-[#FFFFFF] flex items-center justify-between px-6 shrink-0 relative z-50 text-[#202020]">
-      
+    <header className="h-[64px] border-b border-[#E1E6E1] bg-white flex items-center justify-between px-6 shrink-0 relative z-50 text-[#202020]">
       {/* Search */}
       <div className="flex-1 max-w-md">
         <div className="relative group">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5F6962] group-focus-within:text-[#039A01] transition-colors" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#849389] group-focus-within:text-[#039A01] transition-colors" />
           <input 
             aria-label="Search tasks, customers, or calls"
             type="text" 
-            id="agent-navbar-search"
             placeholder="Search tasks, customers, or calls..." 
-            className="w-full bg-[#FAFCFA] border border-[#E1E6E1] focus:border-[#039A01] rounded-lg pl-10 pr-4 py-1.5 text-xs outline-none text-[#202020] transition-all placeholder-[#849389]"
+            className="w-full bg-[#F5F7F5] border border-[#E1E6E1] focus:border-[#039A01] rounded-full pl-9 pr-4 py-1.5 text-xs outline-none text-[#202020] transition-all placeholder-[#849389]"
           />
         </div>
       </div>
 
-      {/* Right Actions */}
-      <div className="flex items-center gap-5 ml-6">
-        
-        {/* Clock */}
-        {time && (
-          <div className="hidden md:flex flex-col items-end">
-            <span className="text-xs font-bold text-[#202020] tracking-wider">
-              {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </span>
-            <span className="text-[10px] text-[#5F6962] uppercase tracking-wider font-semibold">
-              {time.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' })}
-            </span>
-          </div>
-        )}
+      {/* Clock & Profile */}
+      <div className="flex items-center gap-5">
+        <div className="text-right">
+          <p className="text-xs font-bold text-[#202020] tracking-tight">
+            {time ? time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '...'}
+          </p>
+          <p className="text-[10px] text-[#5F6962] uppercase font-semibold">
+            {time ? time.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }) : '...'}
+          </p>
+        </div>
 
-        <div className="h-6 w-px bg-[#E1E6E1] hidden md:block"></div>
+        <div className="w-px h-6 bg-[#E1E6E1]"></div>
 
-        {/* Notification */}
         <div className="relative" ref={notificationsRef}>
           <button 
-            aria-label="Notifications"
             onClick={() => setShowNotifications(!showNotifications)}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#FAFCFA] border border-[#E1E6E1] hover:border-[#039A01] hover:bg-[#E7F4E8] text-[#5F6962] hover:text-[#026601] transition-all relative"
+            className="p-1.5 rounded-full hover:bg-[#F5F7F5] transition-colors"
           >
-            <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#039A01] rounded-full border-2 border-[#FFFFFF]"></span>
+            <Bell className="w-4 h-4 text-[#5F6962]" />
           </button>
-          
-          <AnimatePresence>
-            {showNotifications && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="absolute right-0 mt-3 w-80 bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl shadow-lg overflow-hidden z-50 text-[#202020]"
-              >
-                <div className="p-3 border-b border-[#E1E6E1] flex justify-between items-center bg-[#FAFCFA]">
-                  <h3 className="font-bold text-[#202020] text-xs">Notifications</h3>
-                  <button className="text-[10px] text-[#039A01] hover:underline font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Mark all read
-                  </button>
-                </div>
-                <div className="max-h-80 overflow-y-auto custom-scrollbar p-4 text-center text-xs text-[#5F6962]">
-                  No new notifications
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
-        {/* Profile */}
-        <div className="flex items-center gap-3 relative" ref={profileRef}>
+        {/* User Pill */}
+        <div className="flex items-center gap-3 pl-2">
           <div className="text-right hidden sm:block">
-            <p className="text-xs font-bold text-[#202020] leading-tight">{user?.name || 'Agent'}</p>
-            <p className="text-[10px] text-[#5F6962]">{user?.email || 'agent@eldercare.com'}</p>
+            <h2 className="text-xs font-bold text-[#202020] leading-none">{user?.name || 'Care Coordinator'}</h2>
+            <p className="text-[10px] text-[#5F6962] mt-1">{user?.email || 'agent@eldercare.com'}</p>
           </div>
-          <div className="relative cursor-pointer">
-            <img 
-              alt="Profile" 
-              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              src={user?.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Agent')}&background=039a01&color=fff`} 
-              className="w-8 h-8 rounded-full border border-[#E1E6E1] object-cover hover:border-[#039A01] transition-colors"
-            />
-            {showProfileDropdown && (
-              <div className="absolute right-0 top-full mt-2 w-52 bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl shadow-lg overflow-hidden transition-all z-50 text-[#202020]">
-                 <Link
-                   href="/agent/profile"
-                   onClick={() => setShowProfileDropdown(false)}
-                   className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-[#FAFCFA] hover:text-[#039A01] text-[#202020] text-xs font-medium transition-colors border-b border-[#E1E6E1]"
-                 >
-                   My Profile
-                 </Link>
-                 <a
-                   href="/dashboard"
-                   onClick={() => setShowProfileDropdown(false)}
-                   className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-[#E7F4E8] text-[#026601] text-xs font-medium transition-colors border-b border-[#E1E6E1] no-underline"
-                 >
-                   Return to ERP Workspace →
-                 </a>
-                 <button 
-                   onClick={handleLogout}
-                   className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-[#FDF2F2] hover:text-[#B91C1C] text-[#5F6962] text-xs font-medium transition-colors"
-                 >
-                   <LogOut className="w-3.5 h-3.5" /> Sign Out
-                 </button>
-              </div>
-            )}
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#039A01] to-[#028001] flex items-center justify-center font-bold text-white text-xs shadow-xs">
+            {user?.name ? user.name.slice(0, 2).toUpperCase() : 'AG'}
           </div>
         </div>
-
       </div>
     </header>
   );
 }
+
+export default AgentNavbar;

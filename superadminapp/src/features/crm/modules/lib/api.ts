@@ -1,14 +1,11 @@
 export const getApiBaseUrl = (): string => {
-  if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.startsWith('http')) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '');
+  const envApiUrl = typeof process !== 'undefined' && process?.env?.NEXT_PUBLIC_API_URL 
+    ? process.env.NEXT_PUBLIC_API_URL 
+    : (import.meta as any)?.env?.VITE_CRM_API_URL || (import.meta as any)?.env?.VITE_API_URL;
+  if (envApiUrl && envApiUrl.startsWith('http')) {
+    return envApiUrl.replace(/\/$/, '');
   }
-  if (typeof window !== 'undefined') {
-    const host = window.location.hostname;
-    if (host !== 'localhost' && host !== '127.0.0.1') {
-      return 'https://crm-uec-backend.onrender.com';
-    }
-    return `http://${host}:4000`;
-  }
+  // CRM API server is hosted at crm-uec-backend.onrender.com (the ERP port 4000 backend does not host CRM telephony/analytics routes)
   return 'https://crm-uec-backend.onrender.com';
 };
 

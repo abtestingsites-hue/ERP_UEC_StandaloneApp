@@ -168,15 +168,15 @@ export function DashboardLayout() {
   };
 
   return (
-    <div className="flex-1 flex flex-col md:flex-row overflow-hidden h-full bg-[#F8FAFC] text-[#0F172A] md:bg-[#050505] md:text-white">
+    <div className="flex-1 flex flex-col md:flex-row overflow-hidden h-full bg-[#F5F7F5] text-[#202020]">
       {/* 1. Left Selector Sidebar - Hidden on mobile */}
-      <aside className="hidden md:flex w-64 border-r border-[#1e1e1e] bg-[#090909] flex-col p-4 shrink-0">
+      <aside className="hidden md:flex w-64 border-r border-[#E1E6E1] bg-white flex-col p-4 shrink-0 shadow-xs">
         <input aria-label="Search Presets" 
           type="text" 
           placeholder="Search Presets..." 
           value={localSearch}
           onChange={(e) => setLocalSearch(e.target.value)}
-          className="w-full bg-[#141414] border border-[#222] rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 outline-none focus:border-orange-500 mb-4"
+          className="w-full bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-3 py-1.5 text-xs text-[#202020] placeholder-[#849389] outline-none focus:border-[#039A01] mb-4"
         />
         <div className="flex-1 overflow-y-auto space-y-1 custom-scrollbar">
           {filteredDashboards.map((d) => (
@@ -252,18 +252,18 @@ export function DashboardLayout() {
           </div>
           <button 
             onClick={handleExportPDF}
-            className="flex items-center justify-center gap-1.5 px-3 py-2 min-h-[48px] md:min-h-0 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all self-stretch md:self-auto shadow-none"
+            className="flex items-center justify-center gap-1.5 px-3 py-2 min-h-[48px] md:min-h-0 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#202020] transition-all self-stretch md:self-auto shadow-xs"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-[#039A01]" />
             <span>Export PDF Report</span>
           </button>
         </header>
 
         {/* Viewport content */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar relative bg-[#050505]">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar relative bg-[#F5F7F5]">
           {isLoading && (
-            <div className="absolute inset-0 bg-[#050505]/40 flex items-center justify-center text-xs text-slate-500 z-10">
-              <span className="w-5 h-5 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mr-2.5"></span>
+            <div className="absolute inset-0 bg-white/60 flex items-center justify-center text-xs text-[#5F6962] z-10">
+              <span className="w-5 h-5 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin mr-2.5"></span>
               Loading dashboard metrics...
             </div>
           )}

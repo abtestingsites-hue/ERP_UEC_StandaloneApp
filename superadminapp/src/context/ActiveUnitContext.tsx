@@ -79,6 +79,11 @@ export function ActiveUnitProvider({ children }: { children: ReactNode }) {
                 console.warn('Failed to load authorized units in SuperAdminApp:', err);
                 if (user?.unit) {
                     setUnits([user.unit]);
+                } else if (hasExplicitAllUnits) {
+                    // Provide standard fallback units for SuperAdmin so UI is never blocked
+                    setUnits([
+                        { id: 'all-units-fallback', name: 'Universal Nature Care & Cure Foundation', code: 'UNCF' }
+                    ]);
                 }
             } finally {
                 if (isMounted) {

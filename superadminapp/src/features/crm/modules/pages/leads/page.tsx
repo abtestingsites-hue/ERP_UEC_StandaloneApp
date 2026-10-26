@@ -24,8 +24,8 @@ export default function LeadAnalyticsPage() {
   if (!data) return <div className="h-screen bg-[#050505] flex items-center justify-center text-slate-500">Loading Dashboard...</div>;
 
   return (
-    <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="p-6 w-full">
+      <div className="w-full space-y-6">
 
         {/* Header */}
         <div>
@@ -34,7 +34,10 @@ export default function LeadAnalyticsPage() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div 
+          className="grid gap-4" 
+          style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}
+        >
           <div className="bg-[#111] border border-[#222] p-5 rounded-xl">
             <div className="flex items-center justify-between mb-4">
               <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
@@ -87,7 +90,10 @@ export default function LeadAnalyticsPage() {
         </div>
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div 
+          className="grid gap-6" 
+          style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}
+        >
           <div className="bg-[#111] border border-[#222] p-6 rounded-xl">
             <h3 className="text-lg font-semibold mb-6">Service Interest Breakdown</h3>
             <div className="h-[300px]">

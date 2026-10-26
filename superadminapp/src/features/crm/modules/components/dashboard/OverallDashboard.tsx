@@ -11,11 +11,12 @@ import { SentimentTrend } from './SentimentTrend';
 import { OmnichannelEnquiriesChart } from './OmnichannelEnquiriesChart';
 import { RightSidebarPanels } from './RightSidebarPanels';
 
-export function OverallDashboard({ data }: { data?: any }) {
-  if (!data) {
+export function OverallDashboard({ data, metrics }: { data?: any; metrics?: any }) {
+  const activeData = data || metrics;
+  if (!activeData || (!activeData.kpis && !activeData.metrics && !activeData.charts)) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center text-xs text-slate-500 gap-4">
-        <span className="w-6 h-6 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin"></span>
+      <div className="w-full h-full min-h-[300px] flex flex-col items-center justify-center text-xs text-[#5F6962] gap-4">
+        <span className="w-6 h-6 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin"></span>
         <span>Loading Command Center Data...</span>
       </div>
     );
@@ -29,24 +30,24 @@ export function OverallDashboard({ data }: { data?: any }) {
 
           {/* KPI Grid (12 cards) */}
           <div className="mb-3">
-            <AdvancedKpiCards data={data} />
+            <AdvancedKpiCards data={activeData} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-            <div className="md:col-span-2 bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl p-3 h-[250px] shadow-2xs">
-              <PerformanceHeatmap data={data} />
+            <div className="md:col-span-2 bg-white border border-[#E1E6E1] rounded-xl p-3 h-[250px] shadow-sm">
+              <PerformanceHeatmap data={activeData} />
             </div>
-            <div className="bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl p-3 h-[250px] shadow-2xs">
-              <OmnichannelTrends data={data} />
+            <div className="bg-white border border-[#E1E6E1] rounded-xl p-3 h-[250px] shadow-sm">
+              <OmnichannelTrends data={activeData} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-            <div className="md:col-span-2 bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl p-3 shadow-2xs">
-              <AgentLeaderboard data={data} />
+            <div className="md:col-span-2 bg-white border border-[#E1E6E1] rounded-xl p-3 shadow-sm">
+              <AgentLeaderboard data={activeData} />
             </div>
-            <div className="bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl p-3 flex flex-col justify-between shadow-2xs">
-              <SlaGauge percentage={data?.metrics?.slaMet ? parseInt(data.metrics.slaMet, 10) : 100} />
+            <div className="bg-white border border-[#E1E6E1] rounded-xl p-3 flex flex-col justify-between shadow-sm">
+              <SlaGauge percentage={activeData?.metrics?.slaMet ? parseInt(activeData.metrics.slaMet, 10) : 100} />
             </div>
           </div>
 
@@ -55,19 +56,19 @@ export function OverallDashboard({ data }: { data?: any }) {
               <OmnichannelEnquiriesChart />
             </div>
             <div>
-              <SentimentTrend data={data} />
+              <SentimentTrend data={activeData} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-3">
-            <div className="bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl p-3 shadow-2xs">
-              <CallVolumeHeatmap data={data} />
+            <div className="bg-white border border-[#E1E6E1] rounded-xl p-3 shadow-sm">
+              <CallVolumeHeatmap data={activeData} />
             </div>
           </div>
         </div>
 
         {/* Right Info Panels */}
-        <div className="w-[280px] p-4 hidden lg:block overflow-y-auto custom-scrollbar bg-[#FFFFFF] border-l border-[#E1E6E1]">
+        <div className="w-[280px] p-4 hidden lg:block overflow-y-auto custom-scrollbar bg-white border-l border-[#E1E6E1]">
           <RightSidebarPanels />
         </div>
       </div>

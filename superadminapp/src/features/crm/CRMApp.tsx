@@ -15,8 +15,8 @@ const CustomersPage = lazy(() => import('./modules/pages/customers/page'));
 const LeadPoolPage = lazy(() => import('./modules/pages/leads/pool/page'));
 const AgentLeadPoolPage = lazy(() => import('./modules/pages/agent/leads/pool/page'));
 const DuplicateLeadsPage = lazy(() => import('./modules/pages/leads/duplicates/page'));
-const LeadConversionPage = lazy(() => import('./modules/pages/leads/conversion/page'));
-const LeadFollowUpsPage = lazy(() => import('./modules/pages/leads/follow-ups/page'));
+const LeadConversionPage = lazy(() => import('./modules/pages/agent/leads/conversion/page'));
+const LeadFollowUpsPage = lazy(() => import('./modules/pages/agent/leads/follow-ups/page'));
 const CalendarPage = lazy(() => import('./modules/pages/calendar/page'));
 const ReportsPage = lazy(() => import('./modules/pages/reports/page'));
 const AgentReportsPage = lazy(() => import('./modules/pages/agent/reports/page'));
@@ -49,7 +49,7 @@ function CrmLoadingFallback() {
 
 export function CRMApp() {
   return (
-    <div className="crm-root" style={{ width: '100%', height: '100%', background: 'var(--surface-page, #F5F7F5)', color: '#202020', minHeight: '100vh', position: 'relative' }}>
+    <div className="crm-root" style={{ width: '100%', height: '100%', background: '#F5F7F5', color: '#202020', minHeight: '100vh', position: 'relative' }}>
       <AuthWrapper>
         <Suspense fallback={<CrmLoadingFallback />}>
           <Routes>

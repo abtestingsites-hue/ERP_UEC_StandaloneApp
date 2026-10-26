@@ -182,7 +182,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
       {/* Mobile Shell */}
       <div 
         data-crm-mobile-shell="true"
-        className="crm-mobile-shell flex md:hidden flex-col h-screen overflow-hidden bg-[#F5F7F5] text-[#202020] relative"
+        className="crm-mobile-shell flex md:hidden flex-col h-screen overflow-hidden bg-[#000000] text-white relative"
       >
         <MobileHeader 
           shouldShowAgentShell={shouldShowAgentShell} 
@@ -195,7 +195,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
           shouldShowAgentShell={shouldShowAgentShell}
         />
         
-        <main className="flex-1 overflow-y-auto bg-[#F5F7F5] text-[#202020] relative pb-16">
+        <main className="flex-1 overflow-y-auto bg-[#000000] text-white relative pb-16">
           {children}
         </main>
 

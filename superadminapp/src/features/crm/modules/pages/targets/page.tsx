@@ -183,14 +183,16 @@ export default function TargetManagementPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#050505] text-white">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] text-[#202020]">
       {/* 1. Header Toolbar */}
-      <header className="border-b border-[#1e1e1e] bg-[#090909] p-4 flex items-center justify-between shrink-0">
+      <header className="border-b border-[#E1E6E1] bg-white p-4 flex items-center justify-between shrink-0 shadow-xs">
         <div className="flex items-center gap-2.5">
-          <Target className="text-orange-500 w-5 h-5 animate-pulse" />
+          <div className="w-8 h-8 rounded-lg bg-[#E7F4E8] flex items-center justify-center text-[#039A01]">
+            <Target className="w-4 h-4" />
+          </div>
           <div>
-            <h1 className="text-sm font-black uppercase tracking-wider">Target Management</h1>
-            <p className="text-[10px] text-slate-500 mt-0.5">Corporate KPI metrics & conversion forecasting</p>
+            <h1 className="text-sm font-bold uppercase tracking-wider text-[#202020]">Target Management</h1>
+            <p className="text-[10px] text-[#5F6962] mt-0.5">Corporate KPI metrics & conversion forecasting</p>
           </div>
         </div>
 
@@ -199,29 +201,29 @@ export default function TargetManagementPage() {
           {activeTab === 'targets' && isSuperAdmin && (
             <button 
               onClick={() => setIsFormOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold transition-all shadow-[0_0_15px_rgba(234,88,12,0.1)]"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#039A01] hover:bg-[#028001] text-white rounded-xl text-xs font-bold transition-all shadow-sm"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Set Target</span>
             </button>
           )}
 
-          <div className="flex bg-[#141414] border border-[#222] p-0.5 rounded-lg">
+          <div className="flex bg-[#F5F7F5] border border-[#E1E6E1] p-0.5 rounded-lg">
             <button 
               onClick={() => setActiveTab('targets')}
-              className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${activeTab === 'targets' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${activeTab === 'targets' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
             >
               Targets
             </button>
             <button 
               onClick={() => setActiveTab('forecasts')}
-              className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${activeTab === 'forecasts' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${activeTab === 'forecasts' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
             >
               Forecasts
             </button>
             <button 
               onClick={() => setActiveTab('insights')}
-              className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${activeTab === 'insights' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${activeTab === 'insights' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
             >
               Agent Comparisons
             </button>
@@ -229,9 +231,9 @@ export default function TargetManagementPage() {
 
           <button 
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#202020] transition-all shadow-xs"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-[#039A01]" />
             <span className="hidden sm:inline">Export</span>
           </button>
         </div>
@@ -245,42 +247,42 @@ export default function TargetManagementPage() {
           <div className="space-y-6">
             
             {/* Enterprise KPI metrics summary row */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Conversion Goals Set</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">{sumTargetConversions} Conversions</span>
-                <span className="text-[10px] text-slate-600 block mt-1">Aggregated target value</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Conversion Goals Set</span>
+                <span className="text-3xl font-extrabold text-[#202020] block mt-1.5">{sumTargetConversions} Conversions</span>
+                <span className="text-[10px] text-[#849389] block mt-1">Aggregated target value</span>
               </div>
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Completed Conversions</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">{sumAchievedConversions} Accounts</span>
-                <span className="text-[10px] text-emerald-400 block mt-1">Achieved to date</span>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Completed Conversions</span>
+                <span className="text-3xl font-extrabold text-[#039A01] block mt-1.5">{sumAchievedConversions} Accounts</span>
+                <span className="text-[10px] text-[#026601] font-semibold block mt-1">Achieved to date</span>
               </div>
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Overall Attainment</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">{overallAttainmentRate}%</span>
-                <span className="text-[10px] text-slate-600 block mt-1">Completion performance index</span>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Overall Attainment</span>
+                <span className="text-3xl font-extrabold text-[#202020] block mt-1.5">{overallAttainmentRate}%</span>
+                <span className="text-[10px] text-[#849389] block mt-1">Completion performance index</span>
               </div>
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Active Goal Records</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">{activeTargetsCount} Records</span>
-                <span className="text-[10px] text-slate-600 block mt-1">Total active scope lines</span>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Active Goal Records</span>
+                <span className="text-3xl font-extrabold text-[#202020] block mt-1.5">{activeTargetsCount} Records</span>
+                <span className="text-[10px] text-[#849389] block mt-1">Total active scope lines</span>
               </div>
             </div>
 
             {/* Scope Filter Tabs */}
-            <div className="flex items-center justify-between border-b border-[#1c1c1c] pb-3.5">
-              <div className="flex bg-[#0e0e0e] border border-[#222] p-0.5 rounded-lg">
-                <button onClick={() => setTargetFilter('All')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'All' ? 'bg-[#1e1e1e] text-white' : 'text-slate-500 hover:text-white'}`}>All Scope</button>
-                <button onClick={() => setTargetFilter('Organization')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'Organization' ? 'bg-[#1e1e1e] text-white' : 'text-slate-500 hover:text-white'}`}>Organization</button>
-                <button onClick={() => setTargetFilter('Team')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'Team' ? 'bg-[#1e1e1e] text-white' : 'text-slate-500 hover:text-white'}`}>Team</button>
-                <button onClick={() => setTargetFilter('Agent')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'Agent' ? 'bg-[#1e1e1e] text-white' : 'text-slate-500 hover:text-white'}`}>Agent</button>
+            <div className="flex items-center justify-between border-b border-[#E1E6E1] pb-3.5">
+              <div className="flex bg-[#F5F7F5] border border-[#E1E6E1] p-0.5 rounded-lg">
+                <button onClick={() => setTargetFilter('All')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'All' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>All Scope</button>
+                <button onClick={() => setTargetFilter('Organization')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'Organization' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>Organization</button>
+                <button onClick={() => setTargetFilter('Team')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'Team' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>Team</button>
+                <button onClick={() => setTargetFilter('Agent')} className={`px-3 py-1 rounded text-[10px] font-bold uppercase transition-all ${targetFilter === 'Agent' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>Agent</button>
               </div>
 
               {isSuperAdmin && (
                 <button 
                   onClick={handleResetDefaults} 
-                  className="text-[10px] font-bold text-slate-500 hover:text-orange-500 uppercase tracking-wider transition-all"
+                  className="text-[10px] font-bold text-[#849389] hover:text-[#039A01] uppercase tracking-wider transition-all"
                 >
                   Reset Defaults
                 </button>
@@ -293,26 +295,26 @@ export default function TargetManagementPage() {
                 visibleTargets.map((t) => {
                   const percent = Math.min(Math.round((t.achievedValue / t.targetValue) * 100), 100);
                   return (
-                    <div key={t.id} className="bg-[#0b0b0b] border border-[#1e1e1e] rounded-2xl p-5 hover:border-[#2b2b2b] transition-all space-y-4">
+                    <div key={t.id} className="bg-white border border-[#E1E6E1] rounded-2xl p-5 hover:border-[#C8E6CA] transition-all space-y-4 shadow-xs">
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="text-[9px] font-extrabold text-orange-500 uppercase tracking-widest px-2 py-0.5 bg-orange-600/10 rounded-full">{t.period} Target</span>
-                          <h4 className="text-sm font-bold text-white mt-1.5">{t.assignee} ({t.scope})</h4>
+                          <span className="text-[9px] font-extrabold text-[#026601] uppercase tracking-widest px-2 py-0.5 bg-[#E7F4E8] border border-[#C8E6CA] rounded-full">{t.period} Target</span>
+                          <h4 className="text-sm font-bold text-[#202020] mt-1.5">{t.assignee} ({t.scope})</h4>
                         </div>
                         <div className="text-right">
-                          <span className="text-xs text-slate-500 block">Achieved / Goal</span>
-                          <span className="text-sm font-black text-white block mt-0.5">{t.achievedValue} / {t.targetValue}</span>
+                          <span className="text-xs text-[#5F6962] block">Achieved / Goal</span>
+                          <span className="text-sm font-black text-[#202020] block mt-0.5">{t.achievedValue} / {t.targetValue}</span>
                         </div>
                       </div>
 
                       <div className="space-y-1.5">
-                        <div className="flex justify-between text-[10px] text-slate-500 font-bold uppercase">
+                        <div className="flex justify-between text-[10px] text-[#5F6962] font-bold uppercase">
                           <span>Progress</span>
-                          <span>{percent}%</span>
+                          <span className="text-[#039A01] font-bold">{percent}%</span>
                         </div>
-                        <div className="w-full bg-[#161616] h-2 rounded-full overflow-hidden">
+                        <div className="w-full bg-[#E1E6E1] h-2 rounded-full overflow-hidden">
                           <div 
-                            className="h-full rounded-full bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-1000" 
+                            className="h-full rounded-full bg-gradient-to-r from-[#039A01] to-[#028001] transition-all duration-1000" 
                             style={{ width: `${percent}%` }}
                           ></div>
                         </div>
@@ -321,7 +323,7 @@ export default function TargetManagementPage() {
                   );
                 })
               ) : (
-                <div className="col-span-full py-20 text-center text-slate-500 border border-dashed border-[#1e1e1e] rounded-2xl text-xs">
+                <div className="col-span-full py-20 text-center text-[#5F6962] border border-dashed border-[#E1E6E1] bg-white rounded-2xl text-xs">
                   No targets mapped for this filter scope.
                 </div>
               )}
@@ -332,33 +334,38 @@ export default function TargetManagementPage() {
         {/* TAB 2: FORECASTED LEADS */}
         {activeTab === 'forecasts' && (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Forecasted Lead Volume</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">{forecastedLeadVolume} Leads</span>
-                <span className="text-[10px] text-slate-600 block mt-1">Scale based on active targets</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Forecasted Lead Volume</span>
+                <span className="text-3xl font-extrabold text-[#202020] block mt-1.5">{forecastedLeadVolume} Leads</span>
+                <span className="text-[10px] text-[#849389] block mt-1">Scale based on active targets</span>
               </div>
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Expected Conversions</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">{expectedConversions} Accounts</span>
-                <span className="text-[10px] text-emerald-400 block mt-1">+4.2% CSAT yield projected</span>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Expected Conversions</span>
+                <span className="text-3xl font-extrabold text-[#039A01] block mt-1.5">{expectedConversions} Accounts</span>
+                <span className="text-[10px] text-[#026601] font-semibold block mt-1">Weighted conversion forecast</span>
               </div>
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Forecast Accuracy index</span>
-                <span className="text-3xl font-extrabold text-white block mt-1.5">94.2%</span>
-                <span className="text-[10px] text-slate-600 block mt-1">Optimal precision threshold</span>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Estimated Pipeline Value</span>
+                <span className="text-3xl font-extrabold text-[#202020] block mt-1.5">₹{(forecastedLeadVolume * 15000).toLocaleString()}</span>
+                <span className="text-[10px] text-[#849389] block mt-1">Projected revenue potential</span>
+              </div>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider block">Forecast Accuracy index</span>
+                <span className="text-3xl font-extrabold text-[#202020] block mt-1.5">94.2%</span>
+                <span className="text-[10px] text-[#849389] block mt-1">Optimal precision threshold</span>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Forecast vs Actual */}
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl space-y-4">
-                <div className="flex items-center justify-between border-b border-[#1c1c1c] pb-3">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Forecast vs Actual Performance</h3>
-                  <div className="flex bg-[#141414] border border-[#222] p-0.5 rounded-lg">
-                    <button onClick={() => setForecastChartType('line')} className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${forecastChartType === 'line' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}>Line</button>
-                    <button onClick={() => setForecastChartType('bar')} className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${forecastChartType === 'bar' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}>Bar</button>
-                    <button onClick={() => setForecastChartType('area')} className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${forecastChartType === 'area' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}>Area</button>
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl space-y-4 shadow-xs">
+                <div className="flex items-center justify-between border-b border-[#E1E6E1] pb-3">
+                  <h3 className="text-xs font-bold text-[#202020] uppercase tracking-wider">Forecast vs Actual Performance</h3>
+                  <div className="flex bg-[#F5F7F5] border border-[#E1E6E1] p-0.5 rounded-lg">
+                    <button onClick={() => setForecastChartType('line')} className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${forecastChartType === 'line' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>Line</button>
+                    <button onClick={() => setForecastChartType('bar')} className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${forecastChartType === 'bar' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>Bar</button>
+                    <button onClick={() => setForecastChartType('area')} className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${forecastChartType === 'area' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}>Area</button>
                   </div>
                 </div>
 

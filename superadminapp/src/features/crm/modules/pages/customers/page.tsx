@@ -28,7 +28,7 @@ export default function CustomersPage() {
   return (
     <div className="h-full flex flex-col p-4 md:p-6 text-[#202020] bg-[#F5F7F5] min-h-screen">
       {leadId ? (
-        <div className="flex-1 flex flex-col h-full max-w-7xl w-full mx-auto space-y-4">
+        <div className="flex-1 flex flex-col h-full w-full space-y-4">
           {/* Header & Tab Navigation */}
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -124,7 +124,7 @@ export default function CustomersPage() {
           </div>
         </div>
       ) : (
-        <div className="flex-1 max-w-7xl w-full mx-auto flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs p-6 overflow-hidden">
+        <div className="flex-1 w-full flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs p-6 overflow-hidden">
           <div className="flex items-center justify-between pb-4 border-b border-[#E1E6E1] mb-5">
             <div>
               <h2 className="text-xl font-bold text-[#202020] mb-0.5">Leads Timeline Directory</h2>

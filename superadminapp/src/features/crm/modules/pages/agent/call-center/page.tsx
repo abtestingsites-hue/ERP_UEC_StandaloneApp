@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Users, Phone, PhoneOutgoing, Video, ShieldCheck, PhoneCall, PhoneOff } from "lucide-react";
+import { Users, Phone, PhoneOutgoing, ShieldCheck, Activity } from "lucide-react";
 import { useCallStore } from "../../../store/useCallStore";
+import { useSocket } from "../../../providers/SocketProvider";
 import { CallWidget } from "../../../components/call-center/CallWidget";
 import { NumericKeypad } from "../../../components/call-center/NumericKeypad";
-
-import { SocketContext } from '../../../providers/SocketProvider';
+import { QueueOperationsView } from "../../../components/call-center/QueueOperationsView";
 import { apiFetch } from '../../../lib/api';
 
 interface Agent {
   id: string;
-  userId: string;
+  userId?: string;
   name: string;
   role: string;
   email: string;
@@ -20,16 +20,15 @@ interface Agent {
 }
 
 export default function AgentCallCenter() {
-  const [activeTab, setActiveTab] = useState<'inbound' | 'outbound'>('inbound');
+  const [activeTab, setActiveTab] = useState<'inbound' | 'outbound' | 'internal' | 'queue'>('inbound');
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { setActiveCall, queuedCalls, missedCalls } = useCallStore();
-  const { telephonySocket, mediaSocket } = React.useContext(SocketContext);
+  const { setActiveCall, queuedCalls, missedCalls, fetchDashboardCalls } = useCallStore();
+  const { telephonySocket, mediaSocket } = useSocket();
 
   useEffect(() => {
     const fetchAgents = async () => {
       try {
-        const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
         const res = await apiFetch(`/api/v1/agents`);
         if (res.ok) {
           const data = await res.json();
@@ -114,6 +113,7 @@ export default function AgentCallCenter() {
       setActiveCall({
         callSid: roomName,
         customerName: agent.name,
+        phone: 'Internal',
         urgency: 'NORMAL',
         category: agent.department,
         isCaller: true,
@@ -144,152 +144,228 @@ export default function AgentCallCenter() {
   };
 
   return (
-    <div className="h-full flex flex-col p-4 md:p-6 overflow-hidden bg-[#F5F7F5] text-[#202020]">
-      <header className="mb-5 flex flex-col md:flex-row justify-between items-start md:items-end shrink-0 gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#E7F4E8] border border-[#C8E6CA] flex items-center justify-center">
-            <PhoneCall className="w-5 h-5 text-[#026601]" />
-          </div>
-          <div>
-            <h1 className="text-xl md:text-2xl font-black tracking-tight text-[#202020]">Call Center</h1>
-            <p className="text-[#5F6962] mt-0.5 text-xs md:text-sm">Agent Workspace & Communication Hub</p>
-          </div>
+    <div className="h-full flex flex-col p-6 overflow-hidden bg-[#F5F7F5] text-[#202020]">
+      {/* Header */}
+      <header className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end shrink-0 gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#202020]">Call Center</h1>
+          <p className="text-[#5F6962] mt-1 text-sm">Manage active WebRTC calls, queue board, and live interactions.</p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex bg-[#FFFFFF] border border-[#E1E6E1] rounded-lg p-1 w-full md:w-auto shadow-xs">
+        {/* 4 Tabs: Inbound, Outbound, Internal, Queue Engine */}
+        <div className="flex bg-white border border-[#E1E6E1] rounded-xl p-1 shadow-xs">
           <button
             onClick={() => setActiveTab('inbound')}
-            className={`flex-1 md:flex-none px-4 md:px-5 py-1.5 rounded-md text-xs font-bold flex justify-center items-center gap-2 transition-colors ${
+            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
               activeTab === 'inbound' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
             }`}
           >
-            <Phone className="w-3.5 h-3.5 hidden sm:block" /> Inbound
+            <Phone className="w-4 h-4" /> Inbound
           </button>
           <button
             onClick={() => setActiveTab('outbound')}
-            className={`flex-1 md:flex-none px-4 md:px-5 py-1.5 rounded-md text-xs font-bold flex justify-center items-center gap-2 transition-colors ${
+            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
               activeTab === 'outbound' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
             }`}
           >
-            <PhoneOutgoing className="w-3.5 h-3.5 hidden sm:block" /> Outbound
+            <PhoneOutgoing className="w-4 h-4" /> Outbound
+          </button>
+          <button
+            onClick={() => setActiveTab('internal')}
+            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
+              activeTab === 'internal' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
+            }`}
+          >
+            <Users className="w-4 h-4" /> Internal
+          </button>
+          <button
+            onClick={() => setActiveTab('queue')}
+            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
+              activeTab === 'queue' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
+            }`}
+          >
+            <Activity className="w-4 h-4" /> Queue Engine
           </button>
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 overflow-y-auto lg:overflow-hidden">
+      {/* Balanced 50/50 Two Panel Layout (Strictly Side-by-Side) */}
+      <div className="flex-1 flex flex-row gap-6 min-h-0 overflow-hidden">
 
-        {/* Left Side: Dynamic Content based on Tab */}
-        <div className="w-full lg:w-1/2 flex flex-col gap-6 shrink-0 lg:shrink min-h-[500px] lg:min-h-0">
-          <div className="flex-1 flex flex-col bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl shadow-xs overflow-hidden">
-            {activeTab === 'inbound' ? (
-              <div className="flex flex-col h-full">
-                <div className="p-4 border-b border-[#E1E6E1] bg-[#FAFCFA]">
-                  <h2 className="text-sm font-bold text-[#202020] flex items-center gap-2">
-                    <Users className="w-4 h-4 text-[#039A01]" /> Internal Directory
+        {/* Left Side (50%): Dynamic Content based on Tab */}
+        <div className="w-1/2 flex-1 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs overflow-hidden min-h-0">
+          {activeTab === 'queue' && (
+            <QueueOperationsView />
+          )}
+
+          {activeTab === 'internal' && (
+            <div className="flex flex-col h-full">
+              <div className="p-5 border-b border-[#E1E6E1] bg-[#FAFCFA]">
+                <h2 className="text-base font-bold text-[#202020] flex items-center gap-2">
+                  <Users className="w-4 h-4 text-[#039A01]" /> Internal Directory
+                </h2>
+                <p className="text-xs text-[#5F6962] mt-0.5">Staff, Admins, and Super Admins</p>
+              </div>
+              <div className="flex-1 overflow-y-auto p-5 custom-scrollbar">
+                {isLoading ? (
+                  <div className="flex justify-center items-center h-full text-[#5F6962]">
+                    <div className="w-5 h-5 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin"></div>
+                  </div>
+                ) : (
+                  <div className="space-y-2.5">
+                    {agents.map((agent) => (
+                      <div key={agent.id} className="flex justify-between items-center p-3.5 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl hover:border-[#039A01] transition-colors">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-[#E7F4E8] text-[#026601] flex items-center justify-center font-bold text-xs shrink-0">
+                            {agent.name.substring(0, 2).toUpperCase()}
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="text-xs font-bold text-[#202020] flex items-center gap-2 truncate">
+                              {agent.name}
+                              {(agent.role === 'ADMIN' || agent.role === 'SUPER_ADMIN') && (
+                                <ShieldCheck className="w-3.5 h-3.5 text-[#039A01] shrink-0" />
+                              )}
+                            </h4>
+                            <p className="text-[10px] text-[#5F6962] capitalize truncate">
+                              {agent.role ? agent.role.replace('_', ' ') : 'Agent'} • {agent.department || 'General'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2.5 shrink-0 ml-2">
+                          <span className="hidden sm:flex items-center gap-1.5 text-[10px] font-semibold text-[#5F6962]">
+                            <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'AVAILABLE' ? 'bg-[#039A01]' : 'bg-[#B91C1C]'}`}></span>
+                            {agent.status}
+                          </span>
+                          <button
+                            onClick={() => handleWebRtcCall(agent)}
+                            className="bg-[#E7F4E8] hover:bg-[#039A01] text-[#026601] hover:text-white p-2 rounded-lg transition-colors"
+                            title="Call via WebRTC"
+                          >
+                            <Phone className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'inbound' && (
+            <div className="flex flex-col h-full">
+              <div className="p-5 border-b border-[#E1E6E1] bg-[#FAFCFA] flex justify-between items-center">
+                <div>
+                  <h2 className="text-base font-bold text-[#202020] flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#039A01]" /> Inbound Call Logs
                   </h2>
-                  <p className="text-xs text-[#5F6962] mt-0.5">Staff, Admins, and Super Admins</p>
+                  <p className="text-xs text-[#5F6962] mt-0.5">Recent queued and missed inbound calls</p>
                 </div>
-                <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-                  {isLoading ? (
-                    <div className="flex justify-center items-center h-full text-[#5F6962]">
-                      <div className="w-5 h-5 border-2 border-[#039A01]/20 border-t-[#039A01] rounded-full animate-spin"></div>
+                <button
+                  onClick={() => fetchDashboardCalls()}
+                  className="bg-white hover:bg-[#E7F4E8] border border-[#E1E6E1] text-[#202020] hover:text-[#039A01] text-xs px-3 py-1.5 rounded-lg font-medium transition-colors shadow-xs"
+                >
+                  Refresh
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto p-5 custom-scrollbar space-y-6">
+                
+                {/* Currently Ringing / Queued */}
+                <div>
+                  <h3 className="text-xs font-bold text-[#5F6962] uppercase tracking-wider mb-2.5">Currently Ringing / Queued</h3>
+                  {(!queuedCalls || queuedCalls.length === 0) ? (
+                    <div className="text-center p-6 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl text-[#849389] text-xs">
+                      No active inbound calls
                     </div>
                   ) : (
                     <div className="space-y-2.5">
-                      {agents.map((agent) => (
-                        <div key={agent.id} className="flex justify-between items-center p-3.5 bg-[#FAFCFA] border border-[#E1E6E1] rounded-lg hover:border-[#039A01] transition-colors">
+                      {queuedCalls.map((call: any, idx: number) => (
+                        <div key={idx} className="flex justify-between items-center p-3.5 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl hover:border-[#039A01] transition-colors cursor-pointer">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-[#E7F4E8] text-[#026601] flex items-center justify-center font-bold text-xs shrink-0">
-                              {agent.name.substring(0, 2).toUpperCase()}
+                            <div className="w-9 h-9 rounded-full bg-[#E7F4E8] text-[#026601] flex items-center justify-center">
+                              <Phone className="w-4 h-4 animate-pulse" />
                             </div>
-                            <div className="min-w-0">
-                              <h4 className="text-xs font-bold text-[#202020] flex items-center gap-2 truncate">
-                                {agent.name}
-                                {(agent.role === 'ADMIN' || agent.role === 'SUPER_ADMIN') && (
-                                  <ShieldCheck className="w-3.5 h-3.5 text-[#039A01] shrink-0" />
-                                )}
-                              </h4>
-                              <p className="text-[10px] text-[#5F6962] capitalize truncate">
-                                {agent.role ? agent.role.replace('_', ' ') : 'Agent'} • {agent.department || 'General'}
-                              </p>
+                            <div>
+                              <h4 className="text-xs font-bold text-[#202020]">{call.customer?.name || 'Unknown Caller'}</h4>
+                              <p className="text-[10px] text-[#5F6962]">{call.customer?.phone || call.transferHistory?.phone || call.reason || 'Unknown Number'}</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 md:gap-3 shrink-0 ml-2">
-                            <span className="hidden sm:flex items-center gap-1.5 text-[10px] font-semibold text-[#5F6962]">
-                              <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'AVAILABLE' ? 'bg-[#039A01]' : 'bg-[#B91C1C]'}`}></span>
-                              {agent.status}
-                            </span>
-                            <button
-                              onClick={() => handleWebRtcCall(agent)}
-                              className="bg-[#E7F4E8] hover:bg-[#039A01] text-[#026601] hover:text-white p-2 rounded-lg transition-colors"
-                              title="Call via WebRTC"
-                            >
-                              <Phone className="w-3.5 h-3.5" />
-                            </button>
+                          <div className="text-right">
+                            <span className="px-2 py-0.5 bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA] rounded text-[10px] font-bold">RINGING</span>
+                            <div className="text-[10px] text-[#5F6962] mt-1">{new Date(call.startedAt || call.createdAt).toLocaleTimeString()}</div>
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
                 </div>
-              </div>
-            ) : (
-              <div className="flex flex-col h-full bg-[#FFFFFF]">
-                {/* Dialer Section */}
-                <div className="p-4 border-b border-[#E1E6E1]">
-                  <NumericKeypad
-                    onCallInitiated={(data) => {
-                      const finalRoomName = data.roomName || data.callSid || `room_${Date.now()}`;
-                      setActiveCall({
-                        callSid: finalRoomName,
-                        roomName: finalRoomName,
-                        customerName: 'Customer',
-                        phone: data.to || 'Customer',
-                        urgency: 'NORMAL',
-                        category: 'Outbound',
-                        direction: 'OUTBOUND',
-                        status: 'DIALING',
-                        isCaller: true,
-                        accepted: true,
-                        token: data.token,
-                        serverUrl: data.serverUrl || data.wsUrl
-                      } as any);
-                    }}
-                  />
+
+                {/* Recent Missed Calls */}
+                <div>
+                  <h3 className="text-xs font-bold text-[#5F6962] uppercase tracking-wider mb-2.5">Recent Missed Calls</h3>
+                  {(!missedCalls || missedCalls.length === 0) ? (
+                    <div className="text-center p-6 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl text-[#849389] text-xs">
+                      No recent missed calls
+                    </div>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {missedCalls.map((call: any, idx: number) => (
+                        <div key={idx} className="flex justify-between items-center p-3.5 bg-rose-50/50 border border-rose-200 rounded-xl">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center">
+                              <Phone className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <h4 className="text-xs font-bold text-[#202020]">{call.customer?.name || 'Unknown Caller'}</h4>
+                              <p className="text-[10px] text-[#5F6962]">{call.customer?.phone || call.transferHistory?.phone || call.reason || 'Unknown Number'}</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <span className="px-2 py-0.5 bg-rose-100 text-rose-700 rounded text-[10px] font-bold">MISSED</span>
+                            <div className="text-[10px] text-[#5F6962] mt-1">{new Date(call.startedAt || call.createdAt).toLocaleTimeString()}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* Lists Section */}
-                <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4">
-                  <div>
-                    <h3 className="text-xs font-bold text-[#5F6962] uppercase tracking-wider mb-2">Queued Calls ({queuedCalls.length})</h3>
-                    {queuedCalls.length === 0 ? (
-                      <p className="text-xs text-[#849389] py-2">No calls currently waiting</p>
-                    ) : (
-                      <div className="space-y-2">
-                        {queuedCalls.map((c, i) => (
-                          <div key={i} className="p-2.5 rounded-lg border border-[#E1E6E1] bg-[#FAFCFA] flex justify-between items-center text-xs">
-                            <span className="font-semibold">{c.caller || c.from || 'Caller'}</span>
-                            <span className="text-[10px] bg-[#E7F4E8] text-[#026601] px-2 py-0.5 rounded font-bold">{c.waitDuration || '0m'}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+
+          {activeTab === 'outbound' && (
+            <div className="flex flex-col items-center justify-center h-full p-6 overflow-y-auto custom-scrollbar">
+              <NumericKeypad
+                onCallInitiated={(data) => {
+                  const finalRoomName = data.roomName || data.callSid || `room_${Date.now()}`;
+                  setActiveCall({
+                    callSid: finalRoomName,
+                    roomName: finalRoomName,
+                    customerName: 'Customer',
+                    phone: data.to || 'Customer',
+                    urgency: 'NORMAL',
+                    category: 'Outbound',
+                    direction: 'OUTBOUND',
+                    status: 'DIALING',
+                    isCaller: true,
+                    accepted: true,
+                    token: data.token,
+                    serverUrl: data.serverUrl || data.wsUrl
+                  } as any);
+                }}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Right Side: Call Widget Panel */}
-        <div className="w-full lg:w-1/2 flex flex-col gap-6 shrink-0 lg:shrink min-h-[400px] lg:min-h-0">
-          <div className="flex-1 flex flex-col bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl shadow-xs p-4 overflow-hidden">
-            <CallWidget />
-          </div>
+        {/* Right Side (50%): Active WebRTC Phone System */}
+        <div className="w-1/2 flex-1 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs p-8 items-center justify-center min-h-0">
+          <CallWidget />
         </div>
 
       </div>
     </div>
   );
 }
+

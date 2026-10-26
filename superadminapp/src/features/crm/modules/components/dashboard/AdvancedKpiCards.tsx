@@ -19,26 +19,29 @@ export function AdvancedKpiCards({ data }: { data?: any }) {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+    <div 
+      className="grid gap-3" 
+      style={{ gridTemplateColumns: 'repeat(6, minmax(0, 1fr))' }}
+    >
       {kpis.map((kpi, idx) => {
         const Icon = kpi.icon;
         const trendColor = kpi.isUp ? 'text-emerald-500' : 'text-rose-500';
         const TrendIcon = kpi.isUp ? ArrowUpRight : ArrowDownRight;
 
         return (
-          <div key={idx} className="bg-[#0a0a0a] border border-[#222] p-3 rounded-xl flex flex-col hover:border-[#333] transition-colors relative overflow-hidden">
+          <div key={idx} className="bg-white border border-[#E1E6E1] p-3 rounded-xl flex flex-col hover:border-[#039A01] shadow-xs transition-colors relative overflow-hidden">
              {/* Subtle gradient glow */}
-             <div className="absolute -top-6 -right-6 w-16 h-16 bg-primary/5 rounded-full blur-xl"></div>
+             <div className="absolute -top-6 -right-6 w-16 h-16 bg-[#E7F4E8]/50 rounded-full blur-xl"></div>
              
              <div className="flex items-center gap-2.5 mb-2">
-               <div className={`p-1.5 rounded-md bg-[#111] border border-[#222]`}>
-                 <Icon className={`w-3.5 h-3.5 ${kpi.iconColor || 'text-primary'}`} />
+               <div className={`p-1.5 rounded-md bg-[#F5F7F5] border border-[#E1E6E1]`}>
+                 <Icon className={`w-3.5 h-3.5 ${kpi.iconColor || 'text-[#039A01]'}`} />
                </div>
-               <p className="text-[11px] text-slate-400 font-medium truncate">{kpi.label}</p>
+               <p className="text-[11px] text-[#5F6962] font-medium truncate">{kpi.label}</p>
              </div>
              
              <div className="mt-auto">
-               <h3 className="text-xl font-bold text-white mb-1 leading-none">{kpi.value}</h3>
+               <h3 className="text-xl font-bold text-[#202020] mb-1 leading-none">{kpi.value}</h3>
                <div className={`flex items-center gap-1 text-[9px] font-medium ${trendColor}`}>
                  <TrendIcon className="w-3 h-3" />
                  <span>{kpi.trend} vs yesterday</span>

@@ -67,23 +67,23 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="w-72 h-screen border-r border-[#1a1a1a] bg-[#050505] text-white flex flex-col pt-6 pb-4 shrink-0">
+    <div className="w-72 h-screen border-r border-[#E1E6E1] bg-white text-[#202020] flex flex-col pt-6 pb-4 shrink-0 shadow-sm">
       {/* Brand */}
       <div className="px-6 flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#039A01] to-[#028001] flex items-center justify-center shadow-md shadow-[#039A01]/20">
           <Shield className="text-white w-6 h-6" />
         </div>
         <div>
-          <h1 className="font-bold text-lg tracking-tight text-white">ElderCare</h1>
-          <p className="text-[9px] text-slate-500 font-bold tracking-wider uppercase">CRM Enterprise</p>
+          <h1 className="font-bold text-lg tracking-tight text-[#202020]">ElderCare</h1>
+          <p className="text-[9px] text-[#5F6962] font-bold tracking-wider uppercase">CRM Enterprise</p>
         </div>
       </div>
 
       {/* Agent Status Component */}
       <div className="px-6 mb-6">
-        <div className="p-4 rounded-xl bg-[#0d0d0d] border border-[#1e1e1e]">
+        <div className="p-4 rounded-xl bg-[#F5F7F5] border border-[#E1E6E1]">
           <div className="flex items-center justify-between mb-2.5">
-            <span className="text-xs font-semibold text-slate-400">Agent Queue Status</span>
+            <span className="text-xs font-semibold text-[#5F6962]">Agent Queue Status</span>
             <div className="relative flex items-center justify-center">
               <span className={`w-2.5 h-2.5 rounded-full shadow-lg ${getStatusColor()}`}></span>
               {status !== 'OFFLINE' && (
@@ -94,7 +94,7 @@ export function Sidebar() {
           <select
             aria-label="Agent availability status" value={status}
             onChange={(e) => setStatus(e.target.value as any)}
-            className="w-full bg-[#141414] border border-[#262626] rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-orange-500"
+            className="w-full bg-white border border-[#E1E6E1] rounded-lg px-2.5 py-1.5 text-xs text-[#202020] outline-none focus:border-[#039A01]"
           >
             <option value="AVAILABLE">🟢 Available</option>
             <option value="BUSY">🟠 Busy (Break)</option>
@@ -116,13 +116,13 @@ export function Sidebar() {
                 <button
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-150 group text-left mb-1 ${
                     isActive
-                      ? 'bg-orange-600/15 border border-orange-500/20 text-orange-500 shadow-md shadow-orange-500/5'
-                      : 'text-slate-400 hover:bg-[#101010] hover:text-white border border-transparent'
+                      ? 'bg-[#E7F4E8] border border-[#C8E6CA] text-[#026601] shadow-sm'
+                      : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020] border border-transparent'
                   }`}
                 >
                   <item.icon
                     className={`w-4 h-4 ${
-                      isActive ? 'text-orange-500' : 'text-slate-500 group-hover:text-orange-500 transition-colors'
+                      isActive ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#039A01] transition-colors'
                     }`}
                   />
                   <span className="font-semibold text-xs tracking-wide">{item.label}</span>
@@ -136,26 +136,26 @@ export function Sidebar() {
       <div className="px-4 mb-2">
         <a 
           href="/dashboard"
-          className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-[#141414] hover:bg-emerald-500/10 border border-[#222] hover:border-emerald-500/30 text-emerald-400 text-xs font-semibold transition-all no-underline"
+          className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-[#E7F4E8] hover:bg-[#039A01] border border-[#C8E6CA] text-[#026601] hover:text-white text-xs font-semibold transition-all no-underline shadow-sm"
         >
           Return to ERP Workspace →
         </a>
       </div>
 
       {/* User Profile Footer */}
-      <div className="px-4 mt-auto border-t border-[#1e1e1e] pt-4">
-        <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#0c0c0c] transition-colors relative group">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center font-bold text-white text-sm shadow">
+      <div className="px-4 mt-auto border-t border-[#E1E6E1] pt-4">
+        <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#F5F7F5] transition-colors relative group">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#039A01] to-[#028001] flex items-center justify-center font-bold text-white text-sm shadow">
             {currentUser?.email?.charAt(0).toUpperCase() || 'U'}
           </div>
           <div className="text-left flex-1 min-w-0">
-            <p className="text-xs font-bold text-white truncate">{currentUser?.email?.split('@')[0] || 'Agent Smith'}</p>
-            <p className="text-[10px] text-slate-500 font-bold tracking-wider uppercase truncate">{currentUser?.role || 'CRM Agent'}</p>
+            <p className="text-xs font-bold text-[#202020] truncate">{currentUser?.email?.split('@')[0] || 'Agent Smith'}</p>
+            <p className="text-[10px] text-[#5F6962] font-bold tracking-wider uppercase truncate">{currentUser?.role || 'CRM Agent'}</p>
           </div>
           <button
             onClick={handleLogout}
             aria-label="Log Out Session"
-            className="p-1.5 rounded-lg text-slate-500 hover:text-red-500 hover:bg-red-500/10 transition-colors"
+            className="p-1.5 rounded-lg text-[#849389] hover:text-red-500 hover:bg-red-500/10 transition-colors"
             title="Log Out Session"
           >
             <LogOut className="w-4 h-4" />

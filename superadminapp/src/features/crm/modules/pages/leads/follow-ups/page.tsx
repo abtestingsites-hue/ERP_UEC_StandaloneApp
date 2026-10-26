@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import { useLeadStore } from '../../../store/useLeadStore';
@@ -59,9 +59,10 @@ export default function LeadFollowUpsPage() {
           {isLoading ? (
             <div className="text-center py-12 text-slate-500">Loading schedule...</div>
           ) : followups.length === 0 ? (
-            <div className="text-center py-12 bg-[#111] border border-[#222] rounded-xl text-slate-500">
-              <CalendarIcon className="w-8 h-8 mx-auto mb-3 opacity-50" />
-              No upcoming followups scheduled.
+            <div className="text-center py-12 bg-white border border-[#E1E6E1] rounded-2xl text-[#5F6962] shadow-xs">
+              <CalendarIcon className="w-8 h-8 mx-auto mb-3 text-[#5F6962]/40" />
+              <h3 className="text-sm font-bold text-[#202020] mb-1">No upcoming followups scheduled</h3>
+              <p className="text-xs text-[#5F6962]">You currently do not have any pending callbacks or follow-up tasks.</p>
             </div>
           ) : (
             followups.map(followup => {
@@ -71,18 +72,18 @@ export default function LeadFollowUpsPage() {
               return (
                 <div
                   key={followup.id}
-                  className={`flex items-start gap-4 p-5 rounded-xl border transition-colors ${isCompleted ? 'bg-[#111] border-[#222] opacity-60' : 'bg-[#1a1a1a] border-[#333] hover:border-[#444]'
+                  className={`flex items-start gap-4 p-5 rounded-2xl border transition-colors shadow-xs ${isCompleted ? 'bg-[#FAFCFA] border-[#E1E6E1] opacity-60' : 'bg-white border-[#E1E6E1] hover:border-[#039A01]'
                     }`}
                 >
                   {/* Left: Date/Time */}
-                  <div className="shrink-0 flex flex-col items-center justify-center w-20 p-3 bg-[#111] rounded-lg border border-[#222]">
-                    <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+                  <div className="shrink-0 flex flex-col items-center justify-center w-20 p-3 bg-[#FAFCFA] rounded-xl border border-[#E1E6E1]">
+                    <span className="text-xs text-[#5F6962] font-semibold uppercase tracking-wider">
                       {date.toLocaleString('default', { month: 'short' })}
                     </span>
-                    <span className="text-2xl font-bold">
+                    <span className="text-2xl font-bold text-[#202020]">
                       {date.getDate()}
                     </span>
-                    <span className="text-xs text-primary font-medium mt-1">
+                    <span className="text-xs text-[#026601] font-bold mt-1">
                       {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
@@ -90,21 +91,21 @@ export default function LeadFollowUpsPage() {
                   {/* Middle: Details */}
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold">{followup.lead?.customerName || 'Unknown Lead'}</h3>
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${followup.meetingType === 'CALLBACK' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
-                        'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                      <h3 className="text-base font-bold text-[#202020]">{followup.lead?.customerName || 'Unknown Lead'}</h3>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${followup.meetingType === 'CALLBACK' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                        'bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA]'
                         }`}>
                         {followup.meetingType}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-6 text-sm text-slate-400 mb-3">
+                    <div className="flex items-center gap-6 text-xs text-[#5F6962] mb-3">
                       <div className="flex items-center gap-1.5">
-                        <Phone className="w-4 h-4" />
+                        <Phone className="w-3.5 h-3.5 text-[#849389]" />
                         {followup.lead?.phoneNumber}
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <User className="w-4 h-4" />
+                        <User className="w-3.5 h-3.5 text-[#849389]" />
                         Assigned: {followup.assignedAgent?.name || 'You'}
                       </div>
                     </div>

@@ -184,18 +184,18 @@ export default function CalendarPage() {
   });
 
   return (
-    <div className="flex-1 p-6 h-full flex flex-col bg-[#050505] text-white overflow-hidden">
+    <div className="flex-1 p-6 h-full flex flex-col bg-[#F5F7F5] text-[#202020] overflow-hidden">
       {/* Header */}
       <header className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-1 flex items-center gap-2">
-            <CalendarIcon className="text-orange-500 w-6 h-6" /> Enterprise Scheduler
+          <h1 className="text-2xl font-bold text-[#202020] mb-1 flex items-center gap-2">
+            <CalendarIcon className="text-[#039A01] w-6 h-6" /> Enterprise Scheduler
           </h1>
-          <p className="text-sm text-slate-500">Coordinate and manage calendar slots, reminders, and patient events</p>
+          <p className="text-sm text-[#5F6962]">Coordinate and manage calendar slots, reminders, and patient events</p>
         </div>
         <div className="flex items-center gap-3 self-end md:self-auto">
           {/* Calendar Selector Views */}
-          <div className="bg-[#0d0d0d] border border-[#1e1e1e] p-0.5 rounded-lg flex flex-wrap gap-0.5">
+          <div className="bg-white border border-[#E1E6E1] p-0.5 rounded-lg flex flex-wrap gap-0.5 shadow-xs">
             {[
               { key: 'month', label: 'Monthly View' },
               { key: 'week', label: 'Weekly View' },
@@ -205,7 +205,7 @@ export default function CalendarPage() {
               <button
                 key={v.key}
                 onClick={() => setView(v.key as any)}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold tracking-wider transition-all ${view === v.key ? 'bg-orange-600 text-white shadow-md shadow-orange-600/10' : 'text-slate-500 hover:text-white'
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold tracking-wider transition-all ${view === v.key ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
                   }`}
               >
                 {v.label}
@@ -215,7 +215,7 @@ export default function CalendarPage() {
           {isSuperAdmin && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-orange-600 hover:bg-orange-500 text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center gap-1.5 shadow-[0_0_15px_rgba(234,88,12,0.15)] transition-all"
+              className="bg-[#039A01] hover:bg-[#028001] text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition-all"
             >
               <Plus className="w-4 h-4" /> Book Slot
             </button>
@@ -224,8 +224,8 @@ export default function CalendarPage() {
       </header>
 
       {/* Date Navigator Header */}
-      <div className="flex items-center justify-between mb-4 bg-[#0d0d0d] border border-[#1e1e1e] p-4 rounded-xl shrink-0">
-        <h2 className="text-md font-bold tracking-tight">
+      <div className="flex items-center justify-between mb-4 bg-white border border-[#E1E6E1] p-4 rounded-xl shrink-0 shadow-xs">
+        <h2 className="text-md font-bold tracking-tight text-[#202020]">
           {view === 'month' && `${monthNames[month]} ${year}`}
           {view === 'week' && `Week of ${weekDays[0].toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
           {view === 'day' && currentDate.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
@@ -233,13 +233,13 @@ export default function CalendarPage() {
           {view === 'timeline' && `Operational Activity Flow: ${currentDate.toLocaleDateString()}`}
         </h2>
         <div className="flex items-center gap-2">
-          <button aria-label="Previous date" onClick={handlePrevDate} className="p-1.5 bg-[#141414] hover:bg-[#202020] border border-[#262626] rounded-lg text-slate-400 hover:text-white transition-colors">
+          <button aria-label="Previous date" onClick={handlePrevDate} className="p-1.5 bg-[#F5F7F5] hover:bg-[#E1E6E1] border border-[#E1E6E1] rounded-lg text-[#5F6962] hover:text-[#202020] transition-colors">
             <ChevronLeft className="w-4.5 h-4.5" />
           </button>
-          <button onClick={() => setCurrentDate(new Date())} className="px-3 py-1 bg-[#141414] hover:bg-[#202020] border border-[#262626] rounded-lg text-xs text-slate-400 hover:text-white transition-colors">
+          <button onClick={() => setCurrentDate(new Date())} className="px-3 py-1 bg-[#F5F7F5] hover:bg-[#E1E6E1] border border-[#E1E6E1] rounded-lg text-xs font-semibold text-[#5F6962] hover:text-[#202020] transition-colors">
             Today
           </button>
-          <button aria-label="Next date" onClick={handleNextDate} className="p-1.5 bg-[#141414] hover:bg-[#202020] border border-[#262626] rounded-lg text-slate-400 hover:text-white transition-colors">
+          <button aria-label="Next date" onClick={handleNextDate} className="p-1.5 bg-[#F5F7F5] hover:bg-[#E1E6E1] border border-[#E1E6E1] rounded-lg text-[#5F6962] hover:text-[#202020] transition-colors">
             <ChevronRight className="w-4.5 h-4.5" />
           </button>
         </div>
@@ -248,23 +248,23 @@ export default function CalendarPage() {
       {/* MAIN VIEWPORT BODY */}
       <div className="flex-1 overflow-hidden relative flex flex-col">
         {isLoading ? (
-          <div className="absolute inset-0 bg-[#050505]/50 flex items-center justify-center text-slate-500 z-10">
-            <span className="w-6 h-6 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mr-3"></span>
+          <div className="absolute inset-0 bg-white/60 flex items-center justify-center text-[#5F6962] z-10">
+            <span className="w-6 h-6 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin mr-3"></span>
             Loading schedules...
           </div>
         ) : null}
 
         {/* 1. MONTH VIEW */}
         {view === 'month' && (
-          <div className="flex-1 flex flex-col overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e] rounded-xl p-5">
-            <div className="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">
+          <div className="flex-1 flex flex-col overflow-hidden bg-white border border-[#E1E6E1] rounded-xl p-5 shadow-xs">
+            <div className="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-[#5F6962] uppercase tracking-wider">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
                 <div key={d}>{d}</div>
               ))}
             </div>
             <div className="flex-1 grid grid-cols-7 gap-2 overflow-y-auto custom-scrollbar">
               {blanksArray.map((i) => (
-                <div key={`blank-${i}`} className="bg-[#121212]/30 border border-transparent rounded-lg min-h-[95px]"></div>
+                <div key={`blank-${i}`} className="bg-[#F5F7F5]/50 border border-transparent rounded-lg min-h-[95px]"></div>
               ))}
               {daysArray.map((day) => {
                 const matchedEvents = events.filter((e) => {
@@ -273,8 +273,8 @@ export default function CalendarPage() {
                 });
 
                 return (
-                  <div key={day} className="bg-[#121212] border border-[#1c1c1c] hover:border-orange-500/30 rounded-lg p-2 min-h-[95px] flex flex-col transition-all">
-                    <span className="text-[10px] font-bold text-slate-500 self-end mb-1">{day}</span>
+                  <div key={day} className="bg-[#F5F7F5] border border-[#E1E6E1] hover:border-[#039A01] rounded-lg p-2 min-h-[95px] flex flex-col transition-all">
+                    <span className="text-[10px] font-bold text-[#5F6962] self-end mb-1">{day}</span>
                     <div className="mt-1 space-y-1.5 overflow-y-auto max-h-[65px] custom-scrollbar flex-1">
                       {matchedEvents.map((evt) => (
                         <div key={evt.id} className={`text-[9px] border px-2 py-0.5 rounded font-bold truncate ${getTypeStyle(evt.type)}`} title={`${evt.title} (${evt.type})`}>
@@ -291,12 +291,12 @@ export default function CalendarPage() {
 
         {/* 2. WEEK VIEW */}
         {view === 'week' && (
-          <div className="flex-1 flex flex-col overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e] rounded-xl p-5">
-            <div className="grid grid-cols-7 gap-3 mb-2 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">
+          <div className="flex-1 flex flex-col overflow-hidden bg-white border border-[#E1E6E1] rounded-xl p-5 shadow-xs">
+            <div className="grid grid-cols-7 gap-3 mb-2 text-center text-xs font-bold text-[#5F6962] uppercase tracking-wider">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d, index) => (
                 <div key={d} className="flex flex-col">
                   <span>{d}</span>
-                  <span className="text-[10px] text-slate-400 font-semibold">{weekDays[index].getDate()}</span>
+                  <span className="text-[10px] text-[#849389] font-semibold">{weekDays[index].getDate()}</span>
                 </div>
               ))}
             </div>
@@ -308,7 +308,7 @@ export default function CalendarPage() {
                 });
 
                 return (
-                  <div key={idx} className="bg-[#121212] border border-[#1c1c1c] rounded-lg p-3 min-h-[300px] flex flex-col">
+                  <div key={idx} className="bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg p-3 min-h-[300px] flex flex-col">
                     <div className="mt-2 space-y-2 overflow-y-auto flex-1 custom-scrollbar">
                       {matchedEvents.map((evt) => (
                         <div key={evt.id} className={`text-[10px] border p-2.5 rounded-lg flex flex-col gap-1.5 font-bold ${getTypeStyle(evt.type)}`}>
@@ -326,7 +326,7 @@ export default function CalendarPage() {
 
         {/* 3. DAY VIEW */}
         {view === 'day' && (
-          <div className="flex-1 overflow-y-auto bg-[#0d0d0d] border border-[#1e1e1e] rounded-xl p-6 custom-scrollbar">
+          <div className="flex-1 overflow-y-auto bg-white border border-[#E1E6E1] rounded-xl p-6 custom-scrollbar shadow-xs">
             <div className="space-y-4">
               {Array.from({ length: 10 }, (_, i) => 9 + i).map((hour) => {
                 const matchedEvents = events.filter((e) => {
@@ -337,11 +337,11 @@ export default function CalendarPage() {
                 });
 
                 return (
-                  <div key={hour} className="flex gap-4 border-b border-[#1c1c1c]/40 pb-3">
-                    <span className="w-16 text-xs text-slate-500 font-bold self-start mt-1">{hour === 12 ? '12:00 PM' : hour > 12 ? `${hour - 12}:00 PM` : `${hour}:00 AM`}</span>
+                  <div key={hour} className="flex gap-4 border-b border-[#E1E6E1] pb-3">
+                    <span className="w-16 text-xs text-[#5F6962] font-bold self-start mt-1">{hour === 12 ? '12:00 PM' : hour > 12 ? `${hour - 12}:00 PM` : `${hour}:00 AM`}</span>
                     <div className="flex-1 space-y-2">
                       {matchedEvents.length === 0 ? (
-                        <div className="h-6 border border-dashed border-[#222] rounded-md"></div>
+                        <div className="h-6 border border-dashed border-[#E1E6E1] rounded-md bg-[#F5F7F5]/50"></div>
                       ) : (
                         matchedEvents.map((evt) => (
                           <div key={evt.id} className={`p-3 border rounded-xl flex items-center justify-between ${getTypeStyle(evt.type)}`}>
@@ -365,8 +365,8 @@ export default function CalendarPage() {
 
         {/* 4. AGENDA VIEW */}
         {view === 'agenda' && (
-          <div className="flex-1 overflow-y-auto custom-scrollbar bg-[#0d0d0d] border border-[#1e1e1e] rounded-xl p-6">
-            <h3 className="text-sm font-bold text-slate-400 mb-4 tracking-wide uppercase">Scheduled Items Agenda</h3>
+          <div className="flex-1 overflow-y-auto custom-scrollbar bg-white border border-[#E1E6E1] rounded-xl p-6 shadow-xs">
+            <h3 className="text-sm font-bold text-[#202020] mb-4 tracking-wide uppercase">Scheduled Items Agenda</h3>
             {events.length === 0 ? (
               <div className="text-center py-20 text-slate-500 text-sm">No scheduled events in your agenda list.</div>
             ) : (

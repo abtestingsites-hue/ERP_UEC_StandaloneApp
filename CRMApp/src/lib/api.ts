@@ -1,13 +1,9 @@
 export const getApiBaseUrl = (): string => {
-  if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.startsWith('http')) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '');
-  }
-  if (typeof window !== 'undefined') {
-    const host = window.location.hostname;
-    if (host !== 'localhost' && host !== '127.0.0.1') {
-      return 'https://crm-uec-backend.onrender.com';
-    }
-    return `http://${host}:4000`;
+  const envApiUrl = typeof process !== 'undefined' && process?.env?.NEXT_PUBLIC_API_URL 
+    ? process.env.NEXT_PUBLIC_API_URL 
+    : (import.meta as any)?.env?.VITE_CRM_API_URL || (import.meta as any)?.env?.VITE_API_URL;
+  if (envApiUrl && envApiUrl.startsWith('http')) {
+    return envApiUrl.replace(/\/$/, '');
   }
   return 'https://crm-uec-backend.onrender.com';
 };

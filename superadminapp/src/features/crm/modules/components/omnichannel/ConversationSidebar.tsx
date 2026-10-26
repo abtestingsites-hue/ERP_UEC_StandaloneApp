@@ -47,61 +47,61 @@ export function ConversationSidebar() {
   };
 
   return (
-    <div className="w-80 h-full border-r border-[#222] bg-[#050505] flex flex-col shrink-0">
-      <div className="p-4 border-b border-[#222] space-y-4">
-        <h2 className="font-bold text-lg text-white">Unified Inbox</h2>
+    <div className="w-80 h-full border-r border-[#E1E6E1] bg-white flex flex-col shrink-0 text-[#202020]">
+      <div className="p-4 border-b border-[#E1E6E1] space-y-4">
+        <h2 className="font-bold text-lg text-[#202020]">Unified Inbox</h2>
         <div className="relative group">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#849389] group-focus-within:text-[#039A01] transition-colors" />
           <input aria-label="Search messages"
             type="text" 
             id="search-unified-inbox"
             placeholder="Search messages..." 
-            className="w-full bg-[#111] border border-[#222] focus:border-primary rounded-lg pl-9 pr-3 py-2 text-sm outline-none transition-all text-white placeholder-slate-500"
+            className="w-full bg-[#F5F7F5] border border-[#E1E6E1] focus:border-[#039A01] rounded-lg pl-9 pr-3 py-2 text-sm outline-none transition-all text-[#202020] placeholder-[#849389]"
           />
         </div>
         <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
           <button 
             onClick={() => setActiveTab('all')}
-            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'all' ? 'bg-[#222] text-white' : 'bg-[#111] border border-[#333] text-slate-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'all' ? 'bg-[#E7F4E8] text-[#026601] font-bold border border-[#C8E6CA]' : 'bg-[#F5F7F5] border border-[#E1E6E1] text-[#5F6962] hover:text-[#202020]'}`}
           >
             All
           </button>
           <button 
             onClick={() => setActiveTab('whatsapp')}
-            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'whatsapp' ? 'bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30' : 'bg-[#111] border border-[#333] text-slate-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'whatsapp' ? 'bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/40 font-bold' : 'bg-[#F5F7F5] border border-[#E1E6E1] text-[#5F6962] hover:text-[#202020]'}`}
           >
             WhatsApp
           </button>
           <button 
             onClick={() => setActiveTab('email')}
-            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'email' ? 'bg-rose-500/20 text-rose-500 border border-rose-500/30' : 'bg-[#111] border border-[#333] text-slate-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'email' ? 'bg-rose-100 text-rose-700 border border-rose-300 font-bold' : 'bg-[#F5F7F5] border border-[#E1E6E1] text-[#5F6962] hover:text-[#202020]'}`}
           >
             Mail
           </button>
           <button 
             onClick={() => setActiveTab('instagram')}
-            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'instagram' ? 'bg-[#E1306C]/20 text-[#E1306C] border border-[#E1306C]/30' : 'bg-[#111] border border-[#333] text-slate-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'instagram' ? 'bg-pink-100 text-pink-700 border border-pink-300 font-bold' : 'bg-[#F5F7F5] border border-[#E1E6E1] text-[#5F6962] hover:text-[#202020]'}`}
           >
             Instagram
           </button>
           <button 
             onClick={() => setActiveTab('messenger')}
-            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'messenger' ? 'bg-[#0084FF]/20 text-[#0084FF] border border-[#0084FF]/30' : 'bg-[#111] border border-[#333] text-slate-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeTab === 'messenger' ? 'bg-blue-100 text-blue-700 border border-blue-300 font-bold' : 'bg-[#F5F7F5] border border-[#E1E6E1] text-[#5F6962] hover:text-[#202020]'}`}
           >
             Messenger
           </button>
-          <button aria-label="Filter conversations" className="p-1 text-slate-500 hover:text-white ml-auto transition-colors"><Filter className="w-4 h-4" /></button>
+          <button aria-label="Filter conversations" className="p-1 text-[#849389] hover:text-[#202020] ml-auto transition-colors"><Filter className="w-4 h-4" /></button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center h-40 text-slate-500">
-            <Loader2 className="w-6 h-6 animate-spin mb-2" />
+          <div className="flex flex-col items-center justify-center h-40 text-[#5F6962]">
+            <Loader2 className="w-6 h-6 animate-spin mb-2 text-[#039A01]" />
             <span className="text-sm">Syncing with CRM...</span>
           </div>
         ) : conversations.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-40 text-slate-500">
+          <div className="flex flex-col items-center justify-center h-40 text-[#5F6962]">
             <span className="text-sm">No active conversations</span>
           </div>
         ) : (
@@ -109,14 +109,14 @@ export function ConversationSidebar() {
             <motion.div
               key={conv.id}
               onClick={() => handleSelect(conv.id)}
-              className={`p-4 border-b border-[#222] cursor-pointer transition-colors relative hover:bg-[#111] flex gap-3 ${activeConversationId === conv.id ? 'bg-[#111] border-l-4 border-l-primary' : 'border-l-4 border-l-transparent'}`}
+              className={`p-4 border-b border-[#E1E6E1] cursor-pointer transition-colors relative hover:bg-[#F5F7F5] flex gap-3 ${activeConversationId === conv.id ? 'bg-[#E7F4E8] border-l-4 border-l-[#039A01]' : 'border-l-4 border-l-transparent'}`}
             >
               {/* Avatar Section */}
               <div className="relative shrink-0 w-10 h-10">
                 {conv.customerAvatar ? (
                   <img alt={conv.customerName || "Customer avatar"}
                     src={conv.customerAvatar}
-                    className="w-10 h-10 rounded-full object-cover border border-[#222]"
+                    className="w-10 h-10 rounded-full object-cover border border-[#E1E6E1]"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                       (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
@@ -125,12 +125,12 @@ export function ConversationSidebar() {
                 ) : null}
                 
                 {/* Fallback Avatar */}
-                <div className={`absolute inset-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm ${conv.customerAvatar ? 'hidden' : ''} ${conv.channel === 'instagram' ? 'bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]' : 'bg-[#111] border border-[#222] text-slate-400'}`}>
+                <div className={`absolute inset-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm ${conv.customerAvatar ? 'hidden' : ''} ${conv.channel === 'instagram' ? 'bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]' : 'bg-[#EFF3EF] border border-[#E1E6E1] text-[#5F6962]'}`}>
                   {conv.customerName === 'Instagram Contact' ? 'IG' : conv.customerName.charAt(0).toUpperCase()}
                 </div>
                 
                 {/* Channel Icon Badge */}
-                <div className="absolute -bottom-1 -right-1 z-10 bg-black rounded-full p-1 border border-[#222] flex items-center justify-center">
+                <div className="absolute -bottom-1 -right-1 z-10 bg-white rounded-full p-1 border border-[#E1E6E1] flex items-center justify-center">
                   <ChannelIcon channel={conv.channel} />
                 </div>
               </div>
@@ -139,17 +139,17 @@ export function ConversationSidebar() {
               <div className="flex-1 min-w-0 flex flex-col justify-between">
                 <div className="flex justify-between items-baseline mb-0.5">
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <span className="font-semibold text-sm text-slate-200 truncate">{conv.customerName}</span>
+                    <span className="font-semibold text-sm text-[#202020] truncate">{conv.customerName}</span>
                     {conv.priority === 'emergency' && <AlertCircle className="w-3 h-3 text-rose-500 shrink-0" />}
                   </div>
-                  <span className="text-[10px] text-slate-500 whitespace-nowrap ml-2">{conv.timestamp}</span>
+                  <span className="text-[10px] text-[#849389] whitespace-nowrap ml-2">{conv.timestamp}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <p className={`text-xs truncate pr-4 ${conv.unreadCount > 0 ? 'font-semibold text-foreground' : 'text-slate-500'}`}>
+                  <p className={`text-xs truncate pr-4 ${conv.unreadCount > 0 ? 'font-semibold text-[#026601]' : 'text-[#5F6962]'}`}>
                     {conv.lastMessage}
                   </p>
                   {conv.unreadCount > 0 && (
-                    <span className="w-5 h-5 flex items-center justify-center bg-primary text-white text-[10px] font-bold rounded-full shrink-0">
+                    <span className="w-5 h-5 flex items-center justify-center bg-[#039A01] text-white text-[10px] font-bold rounded-full shrink-0">
                       {conv.unreadCount}
                     </span>
                   )}

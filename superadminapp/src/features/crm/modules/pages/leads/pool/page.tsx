@@ -183,8 +183,8 @@ export default function LeadPoolPage() {
   }, [leads, searchTerm, statusFilter]);
 
   return (
-    <div className="p-4 md:p-6 bg-[#050505] min-h-screen text-white">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="p-4 md:p-6 bg-[#050505] min-h-screen text-white w-full">
+      <div className="w-full space-y-6">
         
         {/* Toast Notification */}
         {toastMessage && (

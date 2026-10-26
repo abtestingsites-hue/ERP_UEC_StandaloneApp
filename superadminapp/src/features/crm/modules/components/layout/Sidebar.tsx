@@ -23,6 +23,7 @@ export function Sidebar() {
   const [userRole, setUserRole] = useState<string>('');
 
   React.useEffect(() => {
+    // Fallback if useAuthStore doesn't persist on reload
     if (user?.role) {
       setUserRole(user.role);
     } else {
@@ -41,7 +42,7 @@ export function Sidebar() {
       case 'BUSY': return 'bg-amber-500 shadow-amber-500/50';
       case 'ON_CALL': return 'bg-rose-500 shadow-rose-500/50';
       case 'WRAP_UP': return 'bg-purple-500 shadow-purple-500/50';
-      default: return 'bg-slate-400';
+      default: return 'bg-slate-500 shadow-slate-500/50';
     }
   };
 
@@ -97,82 +98,60 @@ export function Sidebar() {
     { label: 'Reports & Audit', href: '/sop/reports' },
   ];
 
-  const statuses = [
-    { value: 'AVAILABLE', label: 'Available' },
-    { value: 'BUSY', label: 'Busy' },
-    { value: 'ON_CALL', label: 'On Call' },
-    { value: 'WRAP_UP', label: 'Wrap Up' },
-  ];
-
   return (
-    <div className="w-[240px] h-screen border-r border-[#E1E6E1] bg-[#FFFFFF] flex flex-col pt-5 pb-5 shrink-0 relative z-20 text-[#202020]">
+    <div className="w-[220px] h-screen border-r border-[#E1E6E1] bg-white flex flex-col pt-5 pb-5 shrink-0 relative z-20 text-[#202020]">
       {/* Brand */}
-      <div className="px-5 flex items-center gap-3 mb-6">
-        <div className="w-9 h-9 rounded-lg bg-white border border-[#E1E6E1] p-1 flex items-center justify-center shadow-xs shrink-0">
-          <img src="/logo.png" alt="UNCF Logo" className="w-7 h-7 object-contain" />
-        </div>
+      <div className="px-4 flex items-center gap-2 mb-6">
+        <HeartPulse className="text-[#039A01] w-6 h-6" />
         <div>
-          <h1 className="font-bold text-base tracking-tight text-[#039A01] leading-none">ElderCare</h1>
-          <p className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider mt-1">Enterprise CRM</p>
+          <h1 className="font-bold text-base tracking-tight text-[#202020]">ElderCare</h1>
+          <p className="text-[8px] text-[#5F6962] font-semibold uppercase tracking-wider">CRM Platform</p>
         </div>
       </div>
 
-      <div className="px-4 mb-2">
-        <p className="text-[11px] font-bold text-[#5F6962] uppercase tracking-wider pl-2">Menu</p>
-      </div>
-
-      {/* Navigation Links */}
+      {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar">
         {navItems.map((item, i) => {
-          const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+          const isActive = pathname.startsWith(item.href) || (pathname === '/' && item.href === '/dashboard');
+          
           return (
             <Link href={item.href} key={i}>
               <div
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
-                  isActive 
-                  ? 'bg-[#E7F4E8] text-[#026601] border-l-[3px] border-[#039A01] font-semibold' 
-                  : 'text-[#202020] hover:bg-[#F5F7F5] hover:text-[#039A01] border-l-[3px] border-transparent font-medium'
-                }`}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group ${isActive ? 'bg-[#E7F4E8] border-l-3 border-[#039A01] text-[#026601] font-semibold shadow-xs' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
               >
-                <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
-                  isActive ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
-                }`}>
-                  <item.icon className="w-4 h-4" />
-                </div>
-                <span className="text-xs">{item.label}</span>
+                <item.icon className={`w-4 h-4 ${isActive ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#5F6962] transition-colors'}`} />
+                <span className="font-medium text-xs">{item.label}</span>
+                {item.badge && (
+                  <span className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-[#039A01] text-white' : 'border border-[#C8E6CA] text-[#039A01] bg-[#E7F4E8]'}`}>
+                    {item.badge}
+                  </span>
+                )}
               </div>
             </Link>
           );
         })}
 
-        {/* Leads Collapsible */}
+        {/* SOP & Daily Operations Collapsible */}
+        {/* SOP & Daily Operations Collapsible */}
         <div className="pt-2">
           <button 
-            onClick={() => setIsLeadsOpen(!isLeadsOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
-              pathname.startsWith('/leads') 
-                ? 'bg-[#E7F4E8] text-[#026601] border-l-[3px] border-[#039A01] font-semibold' 
-                : 'text-[#202020] hover:bg-[#F5F7F5] hover:text-[#039A01] border-l-[3px] border-transparent font-medium'
-            }`}
+            onClick={() => setIsSopOpen(!isSopOpen)}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${pathname.startsWith('/sop') ? 'bg-[#E7F4E8] border-l-3 border-[#039A01] text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
           >
-            <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
-              pathname.startsWith('/leads') ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
-            }`}>
-              <Target className="w-4 h-4" />
-            </div>
-            <span className="text-xs">Leads</span>
-            <ChevronDown className={`w-3.5 h-3.5 ml-auto text-[#5F6962] transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
+            <CheckSquare className={`w-4 h-4 ${pathname.startsWith('/sop') ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#5F6962]'}`} />
+            <span className="font-medium text-xs">SOP & Daily Ops</span>
+            <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isSopOpen ? 'rotate-180' : ''}`} />
           </button>
           
-          {isLeadsOpen && (
+          {isSopOpen && (
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              className="pl-[3rem] pr-3 py-1 space-y-1"
+              className="pl-9 pr-3 py-1 space-y-1"
             >
-              {leadItems.map((item, idx) => (
+              {sopItems.map((item, idx) => (
                 <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-bold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
+                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
                     {item.label}
                   </div>
                 </Link>
@@ -180,17 +159,78 @@ export function Sidebar() {
             </motion.div>
           )}
         </div>
-      </nav>
 
-      {/* Footer Navigation */}
-      <div className="px-3 mt-auto pt-4 border-t border-[#E1E6E1] space-y-2">
-        <a 
-          href="/dashboard"
-          className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#202020] hover:text-[#026601] border border-[#E1E6E1] hover:border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs no-underline"
+        {/* Leads Module Collapsible */}
+        <div className="pt-2">
+          <button 
+            onClick={() => setIsLeadsOpen(!isLeadsOpen)}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${pathname.startsWith('/leads') ? 'bg-[#E7F4E8] border-l-3 border-[#039A01] text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
+          >
+            <Target className={`w-4 h-4 ${pathname.startsWith('/leads') ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#5F6962]'}`} />
+            <span className="font-medium text-xs">Leads</span>
+            <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
+          </button>
+          
+          {isLeadsOpen && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              className="pl-9 pr-3 py-1 space-y-1"
+            >
+              {leadItems.map((item, idx) => (
+                <Link href={item.href} key={idx}>
+                  <div className={`text-xs py-2 transition-colors ${pathname === item.href ? 'text-[#039A01] font-semibold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
+                    {item.label}
+                  </div>
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </div>
+
+        {/* Bottom Nav Items (Settings) */}
+        <div className="pt-2">
+          {bottomNavItems.map((item, i) => {
+            const isActive = pathname.startsWith(item.href);
+            return (
+              <Link href={item.href} key={i}>
+                <div
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive ? 'bg-[#E7F4E8] border-l-3 border-[#039A01] text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020]'}`}
+                >
+                  <item.icon className={`w-4 h-4 ${isActive ? 'text-[#039A01]' : 'text-[#849389] group-hover:text-[#5F6962] transition-colors'}`} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+      </nav>
+      
+      {/* Return to ERP / Logout Session */}
+      <div className="px-3 mt-auto pt-3 border-t border-[#E1E6E1] space-y-1.5">
+        <Link href="/">
+          <div className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#026601] hover:text-[#039A01] border border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs shadow-xs">
+            Return to ERP Workspace &rarr;
+          </div>
+        </Link>
+        <button 
+          onClick={() => {
+            localStorage.removeItem('crm_token');
+            localStorage.removeItem('crm_user');
+            localStorage.removeItem('paramantra_access_token');
+            localStorage.removeItem('paramantra_refresh_token');
+            sessionStorage.removeItem('superadmin-erp-session');
+            window.location.href = '/login';
+          }}
+          className="w-full flex justify-center items-center gap-2 bg-white hover:bg-rose-50 text-[#849389] hover:text-rose-600 border border-[#E1E6E1] hover:border-rose-200 py-2 rounded-lg transition-colors font-medium text-xs shadow-xs"
         >
-          Return to ERP Workspace →
-        </a>
+          <LogOut className="w-3.5 h-3.5" />
+          Logout Session
+        </button>
       </div>
     </div>
   );
 }
+
+export default Sidebar;

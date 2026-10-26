@@ -95,7 +95,7 @@ export function SopNav({ badgeCounts }: SopNavProps) {
   ];
 
   return (
-    <div className="w-full bg-[#0a0a0a] border-b border-[#222] px-4 py-2 overflow-x-auto custom-scrollbar">
+    <div className="w-full bg-white border-b border-[#E1E6E1] px-4 py-2 overflow-x-auto custom-scrollbar">
       <div className="flex items-center gap-1.5 min-w-max">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -104,16 +104,16 @@ export function SopNav({ badgeCounts }: SopNavProps) {
               <div
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
                   item.isActive
-                    ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-emerald-400 border border-emerald-500/30 shadow-sm'
-                    : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a] border border-transparent'
+                    ? 'bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA] shadow-xs font-semibold'
+                    : 'text-[#5F6962] hover:text-[#202020] hover:bg-[#F5F7F5] border border-transparent'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${item.isActive ? 'text-emerald-400' : 'text-slate-500'}`} />
+                <Icon className={`w-3.5 h-3.5 ${item.isActive ? 'text-[#039A01]' : 'text-[#849389]'}`} />
                 <span>{item.label}</span>
                 {item.badge !== undefined && item.badge > 0 && (
                   <span
                     className={`ml-1 text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                      item.badgeColor || 'bg-slate-800 text-slate-300'
+                      item.badgeColor || 'bg-[#EFF3EF] text-[#202020]'
                     }`}
                   >
                     {item.badge}

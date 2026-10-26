@@ -198,38 +198,38 @@ export default function CallCenterPage() {
   };
 
   return (
-    <div className="h-full flex flex-col p-6 overflow-hidden">
+    <div className="h-full flex flex-col p-6 overflow-hidden bg-[#F5F7F5] text-[#202020]">
       <header className="mb-6 flex justify-between items-end shrink-0">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Call Center</h1>
-          <p className="text-slate-500 mt-1">Manage active WebRTC calls, queue board, and live interactions.</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#202020]">Call Center</h1>
+          <p className="text-[#5F6962] mt-1">Manage active WebRTC calls, queue board, and live interactions.</p>
         </div>
 
         {/* Tabs */}
-        <div className="flex bg-[#111] border border-[#222] rounded-lg p-1">
+        <div className="flex bg-white border border-[#E1E6E1] rounded-xl p-1 shadow-xs">
           <button
             onClick={() => setActiveTab('inbound')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'inbound' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'inbound' ? 'bg-[#E7F4E8] text-[#026601] shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
           >
             <Phone className="w-4 h-4" /> Inbound
           </button>
           <button
             onClick={() => setActiveTab('outbound')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'outbound' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'outbound' ? 'bg-[#E7F4E8] text-[#026601] shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
           >
             <PhoneOutgoing className="w-4 h-4" /> Outbound
           </button>
           <button
             onClick={() => setActiveTab('internal')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'internal' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'internal' ? 'bg-[#E7F4E8] text-[#026601] shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
           >
             <Users className="w-4 h-4" /> Internal
           </button>
           <button
             onClick={() => setActiveTab('queue')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'queue' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'queue' ? 'bg-[#E7F4E8] text-[#026601] shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
           >
-            <Activity className="w-4 h-4 text-emerald-400" /> Queue Engine
+            <Activity className="w-4 h-4 text-[#039A01]" /> Queue Engine
           </button>
         </div>
       </header>
@@ -237,52 +237,52 @@ export default function CallCenterPage() {
       <div className="flex-1 flex gap-6 min-h-0">
 
         {/* Left Side: Dynamic Content based on Tab */}
-        <div className="w-1/2 flex flex-col bg-[#050505] border border-[#222] rounded-2xl shadow-lg overflow-hidden">
+        <div className="w-1/2 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-sm overflow-hidden">
           {activeTab === 'queue' && (
             <QueueOperationsView />
           )}
 
           {activeTab === 'internal' && (
             <div className="flex flex-col h-full">
-              <div className="p-5 border-b border-[#222] bg-[#0a0a0a]">
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Users className="w-5 h-5 text-primary" /> Internal Directory
+              <div className="p-5 border-b border-[#E1E6E1] bg-[#F5F7F5]">
+                <h2 className="text-lg font-bold text-[#202020] flex items-center gap-2">
+                  <Users className="w-5 h-5 text-[#039A01]" /> Internal Directory
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">Staff, Admins, and Super Admins</p>
+                <p className="text-xs text-[#5F6962] mt-1">Staff, Admins, and Super Admins</p>
               </div>
               <div className="flex-1 overflow-y-auto p-5 custom-scrollbar">
                 {isLoading ? (
-                  <div className="flex justify-center items-center h-full text-slate-500">
-                    <div className="w-5 h-5 border-2 border-slate-500/20 border-t-slate-500 rounded-full animate-spin"></div>
+                  <div className="flex justify-center items-center h-full text-[#5F6962]">
+                    <div className="w-5 h-5 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin"></div>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     {agents.map((agent) => (
-                      <div key={agent.id} className="flex justify-between items-center p-4 bg-[#111] border border-[#222] rounded-xl hover:border-[#333] transition-colors">
+                      <div key={agent.id} className="flex justify-between items-center p-4 bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl hover:border-[#039A01] transition-colors">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-[#E7F4E8] text-[#026601] flex items-center justify-center font-bold text-sm">
                             {agent.name.substring(0, 2).toUpperCase()}
                           </div>
                           <div>
-                            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                            <h4 className="text-sm font-bold text-[#202020] flex items-center gap-2">
                               {agent.name}
                               {(agent.role === 'ADMIN' || agent.role === 'SUPER_ADMIN') && (
-                                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                                <ShieldCheck className="w-3.5 h-3.5 text-[#039A01]" />
                               )}
                             </h4>
-                            <p className="text-[10px] text-slate-400 capitalize">
-                              {agent.role ? agent.role.replace('_', ' ') : 'Agent'} â€¢ {agent.department || 'General'}
+                            <p className="text-[10px] text-[#5F6962] capitalize">
+                              {agent.role ? agent.role.replace('_', ' ') : 'Agent'} • {agent.department || 'General'}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="flex items-center gap-1.5 text-[10px] font-medium text-slate-400">
-                            <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'AVAILABLE' ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
+                          <span className="flex items-center gap-1.5 text-[10px] font-medium text-[#5F6962]">
+                            <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'AVAILABLE' ? 'bg-[#039A01]' : 'bg-rose-500'}`}></span>
                             {agent.status}
                           </span>
                           <button
                             onClick={() => handleWebRtcCall(agent)}
-                            className="bg-primary/10 hover:bg-primary/20 text-primary p-2 rounded-lg transition-colors"
+                            className="bg-[#E7F4E8] hover:bg-[#C8E6CA] text-[#026601] p-2 rounded-lg transition-colors"
                             title="Call via WebRTC"
                           >
                             <Phone className="w-4 h-4" />
@@ -298,38 +298,38 @@ export default function CallCenterPage() {
 
           {activeTab === 'inbound' && (
             <div className="flex flex-col h-full">
-              <div className="p-5 border-b border-[#222] bg-[#0a0a0a] flex justify-between items-center">
+              <div className="p-5 border-b border-[#E1E6E1] bg-[#F5F7F5] flex justify-between items-center">
                 <div>
-                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Phone className="w-5 h-5 text-primary" /> Inbound Call Logs
+                  <h2 className="text-lg font-bold text-[#202020] flex items-center gap-2">
+                    <Phone className="w-5 h-5 text-[#039A01]" /> Inbound Call Logs
                   </h2>
-                  <p className="text-xs text-slate-500 mt-1">Recent queued and missed inbound calls</p>
+                  <p className="text-xs text-[#5F6962] mt-1">Recent queued and missed inbound calls</p>
                 </div>
-                <button onClick={() => fetchDashboardCalls()} className="bg-[#222] hover:bg-[#333] text-white text-xs px-3 py-1.5 rounded transition-colors">Refresh</button>
+                <button onClick={() => fetchDashboardCalls()} className="bg-white hover:bg-[#E7F4E8] border border-[#E1E6E1] text-[#202020] hover:text-[#039A01] text-xs px-3 py-1.5 rounded-lg font-medium transition-colors">Refresh</button>
               </div>
               <div className="flex-1 overflow-y-auto p-5 custom-scrollbar space-y-6">
                 
                 {/* Queued Calls */}
                 <div>
-                  <h3 className="text-sm font-bold text-slate-400 mb-3">Currently Ringing / Queued</h3>
+                  <h3 className="text-sm font-bold text-[#5F6962] mb-3">Currently Ringing / Queued</h3>
                   {(!queuedCalls || queuedCalls.length === 0) ? (
-                    <div className="text-center p-6 bg-[#111] border border-[#222] rounded-xl text-slate-500 text-sm">No active inbound calls</div>
+                    <div className="text-center p-6 bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-[#5F6962] text-sm">No active inbound calls</div>
                   ) : (
                     <div className="space-y-3">
                       {queuedCalls.map((call: any, idx: number) => (
-                        <div key={idx} className="flex justify-between items-center p-4 bg-[#111] border border-[#222] rounded-xl hover:border-primary/50 transition-colors cursor-pointer">
+                        <div key={idx} className="flex justify-between items-center p-4 bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl hover:border-[#039A01] transition-colors cursor-pointer">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-full bg-[#E7F4E8] text-[#026601] flex items-center justify-center">
                               <Phone className="w-5 h-5 animate-pulse" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-bold text-white">{call.customer?.name || 'Unknown Caller'}</h4>
-                              <p className="text-xs text-slate-400">{call.customer?.phone || call.transferHistory?.phone || call.reason || 'Unknown Number'}</p>
+                              <h4 className="text-sm font-bold text-[#202020]">{call.customer?.name || 'Unknown Caller'}</h4>
+                              <p className="text-xs text-[#5F6962]">{call.customer?.phone || call.transferHistory?.phone || call.reason || 'Unknown Number'}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded text-xs font-bold">RINGING</span>
-                            <div className="text-xs text-slate-500 mt-1">{new Date(call.startedAt || call.createdAt).toLocaleTimeString()}</div>
+                            <span className="px-2 py-1 bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA] rounded text-xs font-bold">RINGING</span>
+                            <div className="text-xs text-[#5F6962] mt-1">{new Date(call.startedAt || call.createdAt).toLocaleTimeString()}</div>
                           </div>
                         </div>
                       ))}
@@ -339,25 +339,25 @@ export default function CallCenterPage() {
 
                 {/* Missed Calls */}
                 <div>
-                  <h3 className="text-sm font-bold text-slate-400 mb-3">Recent Missed Calls</h3>
+                  <h3 className="text-sm font-bold text-[#5F6962] mb-3">Recent Missed Calls</h3>
                   {(!missedCalls || missedCalls.length === 0) ? (
-                    <div className="text-center p-6 bg-[#111] border border-[#222] rounded-xl text-slate-500 text-sm">No recent missed calls</div>
+                    <div className="text-center p-6 bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-[#5F6962] text-sm">No recent missed calls</div>
                   ) : (
                     <div className="space-y-3">
                       {missedCalls.map((call: any, idx: number) => (
-                        <div key={idx} className="flex justify-between items-center p-4 bg-[#111] border border-rose-500/20 rounded-xl">
+                        <div key={idx} className="flex justify-between items-center p-4 bg-rose-50/50 border border-rose-200 rounded-xl">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-rose-500/20 text-rose-500 flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center">
                               <Phone className="w-5 h-5" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-bold text-white">{call.customer?.name || 'Unknown Caller'}</h4>
-                              <p className="text-xs text-slate-400">{call.customer?.phone || call.transferHistory?.phone || call.reason || 'Unknown Number'}</p>
+                              <h4 className="text-sm font-bold text-[#202020]">{call.customer?.name || 'Unknown Caller'}</h4>
+                              <p className="text-xs text-[#5F6962]">{call.customer?.phone || call.transferHistory?.phone || call.reason || 'Unknown Number'}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <span className="px-2 py-1 bg-rose-500/20 text-rose-400 rounded text-xs font-bold">MISSED</span>
-                            <div className="text-xs text-slate-500 mt-1">{new Date(call.startedAt || call.createdAt).toLocaleTimeString()}</div>
+                            <span className="px-2 py-1 bg-rose-100 text-rose-700 rounded text-xs font-bold">MISSED</span>
+                            <div className="text-xs text-[#5F6962] mt-1">{new Date(call.startedAt || call.createdAt).toLocaleTimeString()}</div>
                           </div>
                         </div>
                       ))}
@@ -395,7 +395,7 @@ export default function CallCenterPage() {
         </div>
 
         {/* Right Side: Active WebRTC Phone System */}
-        <div className="w-1/2 flex flex-col bg-[#050505] border border-[#222] rounded-2xl shadow-lg p-8 items-center justify-center">
+        <div className="w-1/2 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-sm p-8 items-center justify-center">
           <CallWidget />
         </div>
       </div>

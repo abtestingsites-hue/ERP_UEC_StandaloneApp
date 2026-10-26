@@ -146,7 +146,7 @@ export function WebsiteLeadSyncPanel() {
   const totalDuplicatesAll = sources.reduce((acc, s) => acc + (s.duplicatesSkipped || 0), 0);
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="p-6 space-y-6 w-full">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#222] pb-5">
         <div>

@@ -33,18 +33,18 @@ export function Customer360Panel() {
   const profilePic = activeCustomerProfile?.instagramProfilePic || '';
 
   return (
-    <div className="w-80 h-full border-l border-[#222] bg-[#050505] flex flex-col shrink-0 overflow-y-auto custom-scrollbar">
+    <div className="w-80 h-full border-l border-[#E1E6E1] bg-white flex flex-col shrink-0 overflow-y-auto custom-scrollbar text-[#202020]">
       {/* Profile Header */}
-      <div className="p-6 border-b border-[#222] text-center relative bg-gradient-to-b from-[#111]/50 to-transparent backdrop-blur-sm">
+      <div className="p-6 border-b border-[#E1E6E1] text-center relative bg-gradient-to-b from-[#F5F7F5] to-transparent backdrop-blur-sm">
         {isInstagram && (
-          <div className="absolute top-4 right-4 text-pink-500 bg-pink-500/10 p-1.5 rounded-full border border-pink-500/20 shadow-[0_0_15px_rgba(236,72,153,0.15)]">
+          <div className="absolute top-4 right-4 text-pink-500 bg-pink-50 p-1.5 rounded-full border border-pink-200 shadow-xs">
             <InstagramIcon className="w-4 h-4" />
           </div>
         )}
         <div className="relative inline-block mt-2">
           {profilePic ? (
             <img alt="Customer avatar" src={profilePic} 
-              className="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-[#222] object-cover shadow-lg bg-[#111]" 
+              className="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-[#E1E6E1] object-cover shadow-sm bg-[#F5F7F5]" 
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
                 (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
@@ -52,33 +52,33 @@ export function Customer360Panel() {
             />
           ) : null}
           
-          <div className={`w-24 h-24 rounded-full mx-auto mb-4 border-2 border-[#222] shadow-lg flex items-center justify-center text-white text-3xl font-bold ${profilePic ? 'hidden' : ''} ${isInstagram ? 'bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]' : 'bg-[#111]'}`}>
+          <div className={`w-24 h-24 rounded-full mx-auto mb-4 border-2 border-[#E1E6E1] shadow-sm flex items-center justify-center text-white text-3xl font-bold ${profilePic ? 'hidden' : ''} ${isInstagram ? 'bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]' : 'bg-[#EFF3EF] text-[#5F6962]'}`}>
             {(activeCustomerProfile?.name || activeConv.customerName) === 'Instagram Contact' ? 'IG' : (activeCustomerProfile?.name || activeConv.customerName)?.charAt(0).toUpperCase()}
           </div>
           
           {isInstagram && activeCustomerProfile?.profileEnriched && (
-            <span className="absolute bottom-4 right-0 bg-blue-500 text-white rounded-full p-0.5 border-2 border-[#050505] shadow-md z-10" title="Verified Identity">
+            <span className="absolute bottom-4 right-0 bg-blue-500 text-white rounded-full p-0.5 border-2 border-white shadow-xs z-10" title="Verified Identity">
               <CheckCircle className="w-5 h-5 fill-blue-500 text-white" />
             </span>
           )}
         </div>
-        <h3 className="font-bold text-lg text-white flex items-center justify-center gap-1.5">
+        <h3 className="font-bold text-lg text-[#202020] flex items-center justify-center gap-1.5">
           {activeCustomerProfile?.name || activeConv.customerName}
         </h3>
         
         {isCustomerLoading && (
-          <div className="animate-pulse w-32 h-4 bg-[#222] mx-auto mt-2 rounded"></div>
+          <div className="animate-pulse w-32 h-4 bg-[#EFF3EF] mx-auto mt-2 rounded"></div>
         )}
         
         <div className="flex gap-2 justify-center mt-3">
           {isInstagram ? (
             activeCustomerProfile?.profileEnriched ? (
-              <span className="bg-blue-500/10 text-blue-400 text-xs px-2.5 py-1 rounded-full font-semibold border border-blue-500/20 flex items-center gap-1">
-                <CheckCircle className="w-3 h-3 text-blue-400" /> Meta Enriched
+              <span className="bg-blue-50 text-blue-600 text-xs px-2.5 py-1 rounded-full font-semibold border border-blue-200 flex items-center gap-1">
+                <CheckCircle className="w-3 h-3 text-blue-500" /> Meta Enriched
               </span>
             ) : (
-              <span className="bg-amber-500/10 text-amber-400 text-xs px-2.5 py-1 rounded-full font-semibold border border-amber-500/20 flex items-center gap-1 animate-pulse">
-                <RefreshCw className="w-3 h-3 text-amber-400 animate-spin" /> Identity Syncing...
+              <span className="bg-amber-50 text-amber-700 text-xs px-2.5 py-1 rounded-full font-semibold border border-amber-200 flex items-center gap-1 animate-pulse">
+                <RefreshCw className="w-3 h-3 text-amber-500 animate-spin" /> Identity Syncing...
               </span>
             )
           ) : null}
@@ -88,41 +88,41 @@ export function Customer360Panel() {
       <div className="p-6 space-y-6">
         {/* Contact Info */}
         <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-[#5F6962] mb-3 flex items-center gap-2">
             <User className="w-3 h-3" /> Details
           </h4>
           
           {isCustomerLoading ? (
             <div className="space-y-2 animate-pulse">
-               <div className="h-4 bg-[#111] rounded"></div>
-               <div className="h-4 bg-[#111] rounded"></div>
-               <div className="h-4 bg-[#111] rounded"></div>
+               <div className="h-4 bg-[#EFF3EF] rounded"></div>
+               <div className="h-4 bg-[#EFF3EF] rounded"></div>
+               <div className="h-4 bg-[#EFF3EF] rounded"></div>
             </div>
           ) : (
             <div className="space-y-2 text-sm">
               {isInstagram ? (
                 <>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Platform</span>
-                    <span className="font-medium text-pink-400 flex items-center gap-1">
+                    <span className="text-[#5F6962]">Platform</span>
+                    <span className="font-medium text-pink-600 flex items-center gap-1">
                       <InstagramIcon className="w-3.5 h-3.5" /> Instagram
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">IG Handle</span>
-                    <span className="font-medium text-slate-200">
+                    <span className="text-[#5F6962]">IG Handle</span>
+                    <span className="font-medium text-[#202020]">
                       {activeCustomerProfile?.instagramUsername || activeCustomerProfile?.name || 'Pending'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">IG User ID</span>
-                    <span className="font-mono text-xs text-slate-400 truncate max-w-[150px]">
+                    <span className="text-[#5F6962]">IG User ID</span>
+                    <span className="font-mono text-xs text-[#5F6962] truncate max-w-[150px]">
                       {activeCustomerProfile?.platformUserId || (activeCustomerProfile?.phone?.startsWith('ig_') ? activeCustomerProfile.phone.replace('ig_', '') : (activeCustomerProfile?.phone || 'N/A'))}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Phone</span>
-                    <span className="font-medium text-slate-300">
+                    <span className="text-[#5F6962]">Phone</span>
+                    <span className="font-medium text-[#202020]">
                       {activeCustomerProfile?.phone && !activeCustomerProfile.phone.startsWith('ig_') && /^\+?[0-9\s\-]{8,}$/.test(activeCustomerProfile.phone)
                         ? activeCustomerProfile.phone
                         : 'No phone number available'}
@@ -132,8 +132,8 @@ export function Customer360Panel() {
               ) : (
                 <>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Phone</span>
-                    <span className="font-medium text-slate-200">
+                    <span className="text-[#5F6962]">Phone</span>
+                    <span className="font-medium text-[#202020]">
                       {activeCustomerProfile?.phone || 'N/A'}
                     </span>
                   </div>

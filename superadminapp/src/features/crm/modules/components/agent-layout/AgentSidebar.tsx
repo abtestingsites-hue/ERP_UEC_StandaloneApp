@@ -31,7 +31,7 @@ export function AgentSidebar() {
     { label: 'Lead Data', href: '/agent/leads/pool' },
     { label: 'Conversion Board', href: '/agent/leads/conversion' },
     { label: 'Follow Ups', href: '/agent/leads/follow-ups' },
-    { label: 'Leads Timeline', href: '/customers' },
+    { label: 'Leads Timeline', href: '/agent/customers' },
   ];
 
   const [user, setUser] = useState<{name: string, department: string} | null>(null);
@@ -47,42 +47,42 @@ export function AgentSidebar() {
   }, []);
 
   return (
-    <div className="w-[240px] h-screen border-r border-[#E1E6E1] bg-[#FFFFFF] flex flex-col pt-5 pb-5 shrink-0 relative z-20 text-[#202020]">
+    <div className="w-[240px] h-screen border-r border-[#E1E6E1] bg-white flex flex-col pt-5 pb-5 shrink-0 relative z-20 text-[#202020]">
       {/* Brand */}
-      <div className="px-5 flex items-center gap-3 mb-6">
-        <div className="w-9 h-9 rounded-lg bg-white border border-[#E1E6E1] p-1 flex items-center justify-center shadow-xs shrink-0">
-          <img src="/logo.png" alt="UNCF Logo" className="w-7 h-7 object-contain" />
+      <div className="px-6 flex items-center gap-3 mb-6">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#039A01] to-[#028001] flex items-center justify-center shadow-md shadow-[#039A01]/20">
+          <Phone className="text-white w-4 h-4" />
         </div>
         <div>
-          <h1 className="font-bold text-base tracking-tight text-[#039A01] leading-none">ElderCare</h1>
-          <p className="text-[10px] text-[#5F6962] font-bold uppercase tracking-wider mt-1">Agent Portal</p>
+          <h1 className="font-bold text-lg tracking-tight text-[#202020] leading-none">ElderCare</h1>
+          <p className="text-[10px] text-[#039A01] font-bold uppercase tracking-widest mt-1">Agent Portal</p>
         </div>
       </div>
 
-      <div className="px-4 mb-2">
-        <p className="text-[11px] font-bold text-[#5F6962] uppercase tracking-wider pl-2">Menu</p>
+      <div className="px-4 mb-3">
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider pl-2">Menu</p>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar">
+      <nav className="flex-1 overflow-y-auto px-4 space-y-1 custom-scrollbar">
         {navItems.map((item, i) => {
           const isActive = pathname.startsWith(item.href);
           
           return (
             <Link href={item.href} key={i}>
               <div
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 group ${
                   isActive 
-                  ? 'bg-[#E7F4E8] text-[#026601] border-l-[3px] border-[#039A01] font-semibold' 
-                  : 'text-[#202020] hover:bg-[#F5F7F5] hover:text-[#039A01] border-l-[3px] border-transparent font-medium'
+                  ? 'bg-[#E7F4E8] border border-[#C8E6CA] shadow-xs text-[#026601] font-semibold' 
+                  : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020] border border-transparent'
                 }`}
               >
-                <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
-                  isActive ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+                  isActive ? 'bg-[#039A01] text-white shadow-xs' : 'bg-[#EFF3EF] text-[#849389] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
                 }`}>
                   <item.icon className="w-4 h-4" />
                 </div>
-                <span className="text-xs">{item.label}</span>
+                <span className={`font-medium text-xs ${isActive ? 'text-[#026601] font-bold' : ''}`}>{item.label}</span>
               </div>
             </Link>
           );
@@ -92,30 +92,24 @@ export function AgentSidebar() {
         <div className="pt-2">
           <button 
             onClick={() => setIsLeadsOpen(!isLeadsOpen)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
-              pathname.startsWith('/agent/leads') 
-                ? 'bg-[#E7F4E8] text-[#026601] border-l-[3px] border-[#039A01] font-semibold' 
-                : 'text-[#202020] hover:bg-[#F5F7F5] hover:text-[#039A01] border-l-[3px] border-transparent font-medium'
-            }`}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 group ${pathname.startsWith('/agent/leads') ? 'bg-[#E7F4E8] border border-[#C8E6CA] shadow-xs text-[#026601] font-semibold' : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020] border border-transparent'}`}
           >
-            <div className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
-              pathname.startsWith('/agent/leads') ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#5F6962] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'
-            }`}>
+            <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${pathname.startsWith('/agent/leads') ? 'bg-[#039A01] text-white' : 'bg-[#EFF3EF] text-[#849389] group-hover:bg-[#E7F4E8] group-hover:text-[#039A01]'}`}>
               <Target className="w-4 h-4" />
             </div>
-            <span className="text-xs">Leads</span>
-            <ChevronDown className={`w-3.5 h-3.5 ml-auto text-[#5F6962] transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
+            <span className="font-medium text-xs">Leads CRM</span>
+            <ChevronDown className={`w-3.5 h-3.5 ml-auto transition-transform ${isLeadsOpen ? 'rotate-180' : ''}`} />
           </button>
           
           {isLeadsOpen && (
             <motion.div 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              className="pl-[3rem] pr-3 py-1 space-y-1"
+              className="pl-[3.25rem] pr-3 py-1 space-y-1"
             >
               {leadItems.map((item, idx) => (
                 <Link href={item.href} key={idx}>
-                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#039A01] font-bold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
+                  <div className={`text-xs py-1.5 transition-colors ${pathname === item.href ? 'text-[#026601] font-bold' : 'text-[#5F6962] hover:text-[#202020]'}`}>
                     {item.label}
                   </div>
                 </Link>
@@ -125,14 +119,13 @@ export function AgentSidebar() {
         </div>
       </nav>
 
-      {/* Footer Navigation */}
-      <div className="px-3 mt-auto pt-4 border-t border-[#E1E6E1] space-y-2">
-        <a 
-          href="/dashboard"
-          className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#202020] hover:text-[#026601] border border-[#E1E6E1] hover:border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs no-underline"
-        >
-          Return to ERP Workspace →
-        </a>
+      {/* Return to ERP Workspace & Logout */}
+      <div className="px-3 mt-auto pt-3 border-t border-[#E1E6E1] space-y-1.5">
+        <Link href="/">
+          <div className="w-full flex justify-center items-center gap-2 bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#026601] hover:text-[#039A01] border border-[#C8E6CA] py-2 rounded-lg transition-colors font-semibold text-xs shadow-xs">
+            Return to ERP Workspace &rarr;
+          </div>
+        </Link>
         <button 
           onClick={() => {
             localStorage.removeItem('crm_token');
@@ -142,7 +135,7 @@ export function AgentSidebar() {
             sessionStorage.removeItem('superadmin-erp-session');
             window.location.href = '/login';
           }}
-          className="w-full flex justify-center items-center gap-2 bg-[#FDF2F2] hover:bg-[#FCE8E8] text-[#B91C1C] border border-[#F8C8C8] py-2 rounded-lg transition-colors font-semibold text-xs"
+          className="w-full flex justify-center items-center gap-2 bg-white hover:bg-rose-50 text-[#849389] hover:text-rose-600 border border-[#E1E6E1] hover:border-rose-200 py-2 rounded-lg transition-colors font-medium text-xs shadow-xs"
         >
           <LogOut className="w-3.5 h-3.5" />
           Logout
@@ -151,3 +144,5 @@ export function AgentSidebar() {
     </div>
   );
 }
+
+export default AgentSidebar;

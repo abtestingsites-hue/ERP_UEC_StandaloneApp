@@ -75,9 +75,36 @@ const buildConfig = (options?: InventoryReadOptions) => {
 
 export const inventoryService = {
     // 1. Authorized Units
+    // 1. Authorized Units
     getAuthorizedUnits: async (): Promise<UnitInfo[]> => {
-        const response = await api.get('/master/units/authorized');
-        return response.data?.data || [];
+        try {
+            const response = await api.get('/master/units/authorized', { timeout: 4000 });
+            const list = response.data?.data || [];
+            if (Array.isArray(list) && list.length > 0 && typeof window !== 'undefined') {
+                try {
+                    window.localStorage.setItem('cached_authorized_units', JSON.stringify(list));
+                } catch {
+                    // ignore storage quota
+                }
+            }
+            return list;
+        } catch (err) {
+            // Check cache if available
+            if (typeof window !== 'undefined') {
+                try {
+                    const cached = window.localStorage.getItem('cached_authorized_units');
+                    if (cached) {
+                        const parsed = JSON.parse(cached);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            return parsed;
+                        }
+                    }
+                } catch {
+                    // ignore
+                }
+            }
+            throw err;
+        }
     },
 
     // 2. Product Catalog

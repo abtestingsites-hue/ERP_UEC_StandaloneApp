@@ -153,50 +153,50 @@ export function OmnichannelApp() {
     return (
       <motion.div 
         initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}
-        className="flex-1 flex flex-col h-full bg-[#030303] relative"
+        className="flex-1 flex flex-col h-full bg-[#F5F7F5] relative"
       >
         {/* Workspace Header */}
-        <div className={`h-16 border-b border-[#1c1c1c] flex items-center justify-between px-6 shrink-0 ${colors.bg}`}>
+        <div className={`h-16 border-b border-[#E1E6E1] flex items-center justify-between px-6 shrink-0 bg-white`}>
           <div className="flex items-center gap-3">
-            <button onClick={() => setSelectedPlatform(null)} className="md:hidden mr-2 text-slate-400 hover:text-white">
+            <button onClick={() => setSelectedPlatform(null)} className="md:hidden mr-2 text-[#5F6962] hover:text-[#202020]">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white ${colors.primary}`}>
               <platformDef.icon className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-bold text-white leading-tight">{platformDef.name} Workspace</h2>
+              <h2 className="font-bold text-[#202020] leading-tight">{platformDef.name} Workspace</h2>
               <p className={`text-[10px] font-semibold uppercase tracking-wider ${colors.text}`}>
                 {platformDef.status}
               </p>
             </div>
           </div>
           <div className="flex gap-2">
-            <button aria-label="Search conversations" className="p-2 text-slate-400 hover:text-white rounded-md hover:bg-black/20 transition-colors"><Search className="w-4 h-4" /></button>
-            <button aria-label="More options" className="p-2 text-slate-400 hover:text-white rounded-md hover:bg-black/20 transition-colors"><MoreVertical className="w-4 h-4" /></button>
+            <button aria-label="Search conversations" className="p-2 text-[#5F6962] hover:text-[#202020] rounded-md hover:bg-[#F5F7F5] transition-colors"><Search className="w-4 h-4" /></button>
+            <button aria-label="More options" className="p-2 text-[#5F6962] hover:text-[#202020] rounded-md hover:bg-[#F5F7F5] transition-colors"><MoreVertical className="w-4 h-4" /></button>
           </div>
         </div>
 
         {/* Conversation Area */}
         {activeConv ? (
-          <div className="flex-1 flex h-[calc(100%-4rem)]">
+          <div className="flex-1 flex h-[calc(100%-4rem)] bg-white">
             {/* Thread */}
-            <div className="flex-1 flex flex-col border-r border-[#1c1c1c]">
+            <div className="flex-1 flex flex-col border-r border-[#E1E6E1]">
               {/* Active Conversation Header */}
-              <div className="h-14 border-b border-[#1c1c1c] bg-[#080808] flex items-center justify-between px-6 shrink-0">
+              <div className="h-14 border-b border-[#E1E6E1] bg-[#FAFCFA] flex items-center justify-between px-6 shrink-0">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#222] overflow-hidden flex items-center justify-center text-slate-300 font-bold border border-[#333]">
+                  <div className="w-8 h-8 rounded-full bg-[#EFF3EF] overflow-hidden flex items-center justify-center text-[#5F6962] font-bold border border-[#E1E6E1]">
                     {activeConv.customerAvatar ? <img src={activeConv.customerAvatar} alt="avatar" /> : (activeConv.customerName?.replace(/^@/, '') || 'U').charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-white">{activeConv.customerName}</h3>
-                    <p className="text-[10px] text-slate-400">{activeConv.channel === 'sms' ? activeConv.customerName : (activeConv.channel === 'email' ? activeConv.customerEmail : 'Online')}</p>
+                    <h3 className="font-bold text-sm text-[#202020]">{activeConv.customerName}</h3>
+                    <p className="text-[10px] text-[#5F6962]">{activeConv.channel === 'sms' ? activeConv.customerName : (activeConv.channel === 'email' ? activeConv.customerEmail : 'Online')}</p>
                   </div>
                 </div>
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-[#020202]">
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-[#F5F7F5]">
                 <AnimatePresence>
                   {activeMessages.map((msg) => (
                     <motion.div
@@ -204,16 +204,16 @@ export function OmnichannelApp() {
                       key={msg.id}
                       className={`flex flex-col ${msg.sender === 'agent' ? 'items-end' : 'items-start'}`}
                     >
-                      <div className={`max-w-[70%] p-3 rounded-2xl shadow-sm ${msg.sender === 'agent'
+                      <div className={`max-w-[70%] p-3 rounded-2xl shadow-xs ${msg.sender === 'agent'
                         ? `${colors.primary} text-white rounded-br-sm`
-                        : 'bg-[#141414] border border-[#222] text-slate-200 rounded-bl-sm'
+                        : 'bg-white border border-[#E1E6E1] text-[#202020] rounded-bl-sm'
                       }`}>
                         <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                       </div>
-                      <div className="flex items-center gap-1 mt-1 text-[10px] text-slate-500">
+                      <div className="flex items-center gap-1 mt-1 text-[10px] text-[#849389]">
                         <span>{msg.timestamp}</span>
                         {msg.sender === 'agent' && (
-                          msg.status === 'read' ? <CheckCheck className="w-3 h-3 text-blue-500" /> : <Check className="w-3 h-3" />
+                          msg.status === 'read' ? <CheckCheck className="w-3 h-3 text-[#039A01]" /> : <Check className="w-3 h-3" />
                         )}
                       </div>
                     </motion.div>
@@ -223,18 +223,18 @@ export function OmnichannelApp() {
               </div>
 
               {/* Composer */}
-              <div className="p-4 bg-[#080808] border-t border-[#1c1c1c] shrink-0">
-                <div className="flex items-end gap-2 bg-[#141414] border border-[#262626] rounded-xl p-2 focus-within:border-slate-500 transition-colors">
-                  <button aria-label="Attach file" className="p-2 text-slate-400 hover:text-white"><Paperclip className="w-4 h-4" /></button>
+              <div className="p-4 bg-white border-t border-[#E1E6E1] shrink-0">
+                <div className="flex items-end gap-2 bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl p-2 focus-within:border-[#039A01] transition-colors">
+                  <button aria-label="Attach file" className="p-2 text-[#5F6962] hover:text-[#202020]"><Paperclip className="w-4 h-4" /></button>
                   <textarea aria-label="Message input"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
                     placeholder={`Reply via ${platformDef.name}...`}
-                    className="flex-1 max-h-32 min-h-[36px] bg-transparent resize-none outline-none text-sm text-white py-2 px-1 placeholder-slate-500"
+                    className="flex-1 max-h-32 min-h-[36px] bg-transparent resize-none outline-none text-sm text-[#202020] py-2 px-1 placeholder-[#849389]"
                     rows={1}
                   />
-                  <button aria-label="Attach image" className="p-2 text-slate-400 hover:text-white"><ImageIcon className="w-4 h-4" /></button>
+                  <button aria-label="Attach image" className="p-2 text-[#5F6962] hover:text-[#202020]"><ImageIcon className="w-4 h-4" /></button>
                   <button aria-label="Send message" onClick={handleSend} disabled={!inputText.trim()} className={`p-2 rounded-lg text-white disabled:opacity-50 transition-colors ${colors.primary}`}>
                     <Send className="w-4 h-4" />
                   </button>
@@ -261,29 +261,29 @@ export function OmnichannelApp() {
   };
 
   return (
-    <div className="flex h-full w-full bg-[#000] text-white overflow-hidden">
+    <div className="flex h-full w-full bg-[#F5F7F5] text-[#202020] overflow-hidden">
       
       {/* 1. RECENT CHATS PANEL (Left) */}
-      <div className="w-80 md:w-96 flex flex-col border-r border-[#1a1a1a] bg-[#050505] shrink-0 z-10">
-        <div className="p-5 border-b border-[#1a1a1a]">
+      <div className="w-80 md:w-96 flex flex-col border-r border-[#E1E6E1] bg-white shrink-0 z-10">
+        <div className="p-5 border-b border-[#E1E6E1]">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-white tracking-tight">Recent Chats</h2>
+            <h2 className="text-lg font-bold text-[#202020] tracking-tight">Recent Chats</h2>
             {selectedPlatform && selectedPlatform !== 'all' && (
               <button 
                 onClick={() => setSelectedPlatform('all')}
-                className="text-[10px] font-bold uppercase tracking-wider bg-[#1a1a1a] hover:bg-[#262626] text-slate-300 px-2 py-1 rounded transition-colors"
+                className="text-[10px] font-bold uppercase tracking-wider bg-[#F5F7F5] hover:bg-[#E7F4E8] text-[#5F6962] hover:text-[#039A01] px-2 py-1 rounded border border-[#E1E6E1] transition-colors"
               >
                 View All
               </button>
             )}
           </div>
           <div className="relative group">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-white transition-colors" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#849389] group-focus-within:text-[#039A01] transition-colors" />
             <input aria-label="Search conversations"
               type="text" 
               id="search-workspace-conversations"
               placeholder="Search conversations..." 
-              className="w-full bg-[#111] border border-[#222] focus:border-slate-500 rounded-lg pl-9 pr-3 py-2 text-sm outline-none transition-all text-white placeholder-slate-500"
+              className="w-full bg-[#F5F7F5] border border-[#E1E6E1] focus:border-[#039A01] rounded-lg pl-9 pr-3 py-2 text-sm outline-none transition-all text-[#202020] placeholder-[#849389]"
             />
           </div>
         </div>
@@ -307,14 +307,14 @@ export function OmnichannelApp() {
                     if (selectedPlatform !== conv.channel) setSelectedPlatform(conv.channel);
                     markAsRead(conv.id);
                   }}
-                  className={`flex gap-3 p-3 rounded-xl cursor-pointer transition-all ${isActive ? 'bg-[#1a1a1a] shadow-sm' : 'hover:bg-[#0f0f0f]'}`}
+                  className={`flex gap-3 p-3 rounded-xl cursor-pointer transition-all ${isActive ? 'bg-[#E7F4E8] border border-[#C8E6CA] shadow-xs' : 'hover:bg-[#F5F7F5]'}`}
                 >
                   <div className="relative shrink-0">
-                    <div className="w-11 h-11 rounded-full bg-[#222] overflow-hidden flex items-center justify-center text-slate-400 font-bold border border-[#333]">
+                    <div className="w-11 h-11 rounded-full bg-[#EFF3EF] overflow-hidden flex items-center justify-center text-[#5F6962] font-bold border border-[#E1E6E1]">
                       {conv.customerAvatar ? <img src={conv.customerAvatar} alt="av" className="w-full h-full object-cover" /> : (conv.customerName?.replace(/^@/, '') || 'U').charAt(0).toUpperCase()}
                     </div>
                     <div 
-                      className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#050505]"
+                      className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center border-2 border-white"
                       style={{ backgroundColor: platform.color }}
                     >
                       <Icon className="w-2.5 h-2.5 text-white" />
@@ -322,15 +322,15 @@ export function OmnichannelApp() {
                   </div>
                   <div className="flex-1 min-w-0 flex flex-col justify-center">
                     <div className="flex justify-between items-baseline mb-0.5">
-                      <span className="font-semibold text-sm text-slate-100 truncate">{conv.customerName}</span>
-                      <span className="text-[10px] text-slate-500">{conv.timestamp}</span>
+                      <span className="font-semibold text-sm text-[#202020] truncate">{conv.customerName}</span>
+                      <span className="text-[10px] text-[#849389]">{conv.timestamp}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className={`text-xs truncate pr-2 ${conv.unreadCount > 0 ? 'text-white font-medium' : 'text-slate-500'}`}>
+                      <p className={`text-xs truncate pr-2 ${conv.unreadCount > 0 ? 'text-[#026601] font-semibold' : 'text-[#5F6962]'}`}>
                         {conv.lastMessage}
                       </p>
                       {conv.unreadCount > 0 && (
-                        <span className="w-4 h-4 flex items-center justify-center bg-orange-500 text-white text-[9px] font-bold rounded-full shrink-0">
+                        <span className="w-4 h-4 flex items-center justify-center bg-[#039A01] text-white text-[9px] font-bold rounded-full shrink-0">
                           {conv.unreadCount}
                         </span>
                       )}
@@ -341,13 +341,13 @@ export function OmnichannelApp() {
             })}
           </AnimatePresence>
           {filteredConversations.length === 0 && (
-            <div className="text-center text-slate-500 text-sm py-10">No recent conversations found.</div>
+            <div className="text-center text-[#849389] text-sm py-10">No recent conversations found.</div>
           )}
         </div>
       </div>
 
       {/* 2. MAIN WORKSPACE / PLATFORM HUB */}
-      <div className="flex-1 flex flex-col bg-[#030303] relative overflow-hidden">
+      <div className="flex-1 flex flex-col bg-[#F5F7F5] relative overflow-hidden">
         {(!selectedPlatform || selectedPlatform === 'all') ? (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
@@ -355,30 +355,30 @@ export function OmnichannelApp() {
           >
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-3 mb-2">
-                <LayoutGrid className="w-6 h-6 text-orange-500" />
-                <h1 className="text-3xl font-bold text-white tracking-tight">Connected Platforms</h1>
+                <LayoutGrid className="w-6 h-6 text-[#039A01]" />
+                <h1 className="text-3xl font-bold text-[#202020] tracking-tight">Connected Platforms</h1>
               </div>
-              <p className="text-slate-400 mb-10">Manage and access all your omnichannel communication streams in one place.</p>
+              <p className="text-[#5F6962] mb-10">Manage and access all your omnichannel communication streams in one place.</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {PLATFORMS.map((platform) => (
                   <div 
                     key={platform.id}
                     onClick={() => handlePlatformSelect(platform.id)}
-                    className="group relative bg-[#0a0a0a] border border-[#1c1c1c] hover:border-[#333] rounded-2xl p-6 cursor-pointer transition-all hover:-translate-y-1 hover:shadow-2xl overflow-hidden"
+                    className="group relative bg-white border border-[#E1E6E1] hover:border-[#039A01] rounded-2xl p-6 cursor-pointer transition-all hover:-translate-y-1 hover:shadow-md overflow-hidden"
                   >
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" style={{ backgroundColor: platform.color }}></div>
                     <div className="flex items-start justify-between mb-6 relative z-10">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg" style={{ backgroundColor: platform.color }}>
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: platform.color }}>
                         <platform.icon className="w-6 h-6 text-white" />
                       </div>
-                      <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border ${platform.status === 'Connected' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-800 text-slate-400 border-slate-700'}`}>
+                      <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border ${platform.status === 'Connected' ? 'bg-[#E7F4E8] text-[#026601] border-[#C8E6CA]' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
                         {platform.status}
                       </span>
                     </div>
                     <div className="relative z-10">
-                      <h3 className="text-lg font-bold text-white mb-1">{platform.name}</h3>
-                      <p className="text-xs text-slate-500">
+                      <h3 className="text-lg font-bold text-[#202020] mb-1">{platform.name}</h3>
+                      <p className="text-xs text-[#5F6962]">
                         {platform.status === 'Connected' 
                           ? `View recent ${platform.name} conversations and manage active chats.` 
                           : `Connect your ${platform.name} account to start receiving messages.`}

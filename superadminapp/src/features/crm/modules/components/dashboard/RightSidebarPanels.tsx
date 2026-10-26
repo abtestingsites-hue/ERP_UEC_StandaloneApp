@@ -24,7 +24,7 @@ export function RightSidebarPanels() {
   ];
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 text-[#202020]">
       
       {/* Queue Overview */}
       <div>
@@ -37,7 +37,7 @@ export function RightSidebarPanels() {
             <div key={i} className="flex flex-col gap-1.5">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-[#5F6962] font-medium">{q.name}</span>
-                <span className="text-xs font-mono text-[#202020] font-bold">{q.count}</span>
+                <span className="text-xs font-mono text-[#202020]">{q.count}</span>
               </div>
               <div className="h-1.5 w-full bg-[#EFF3EF] rounded-full overflow-hidden">
                 <div 
@@ -70,7 +70,7 @@ export function RightSidebarPanels() {
                   <p className="text-xs font-bold text-[#202020] truncate">{item.title}</p>
                   <p className="text-[10px] text-[#5F6962] truncate">{item.desc}</p>
                 </div>
-                <span className="text-[9px] text-[#5F6962] font-medium shrink-0 pt-0.5">{item.time}</span>
+                <span className="text-[9px] text-[#849389] font-medium shrink-0 pt-0.5">{item.time}</span>
               </div>
             );
           })}
@@ -83,21 +83,21 @@ export function RightSidebarPanels() {
       <div>
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-sm font-bold text-[#202020]">Top Performing Agents</h3>
-          <select aria-label="Sidebar metrics timeframe" className="bg-[#FFFFFF] border border-[#E1E6E1] text-[9px] text-[#5F6962] rounded-md px-1 py-0.5 outline-none">
+          <select aria-label="Sidebar metrics timeframe" className="bg-[#F5F7F5] border border-[#E1E6E1] text-[9px] text-[#5F6962] rounded-md px-1 py-0.5 outline-none">
             <option>This Month</option>
           </select>
         </div>
         
         <div className="grid grid-cols-12 mb-1 px-1">
           <div className="col-span-8"></div>
-          <div className="col-span-2 text-right text-[9px] text-[#5F6962] uppercase font-bold">CSAT</div>
-          <div className="col-span-2 text-right text-[9px] text-[#5F6962] uppercase font-bold">AHT</div>
+          <div className="col-span-2 text-right text-[9px] text-[#849389] uppercase">CSAT</div>
+          <div className="col-span-2 text-right text-[9px] text-[#849389] uppercase">AHT</div>
         </div>
 
         <div className="space-y-2">
           {topAgents.map((agent, i) => (
             <div key={i} className="grid grid-cols-12 items-center gap-2 hover:bg-[#F5F7F5] p-1 rounded-md transition-colors cursor-default">
-              <div className="col-span-1 text-[10px] text-[#5F6962] text-center font-bold">{agent.rank}</div>
+              <div className="col-span-1 text-[10px] text-[#849389] text-center font-medium">{agent.rank}</div>
               <div className="col-span-7 flex items-center gap-2 overflow-hidden">
                 <img src={agent.img} alt={agent.name} className="w-6 h-6 rounded-full border border-[#E1E6E1]" />
                 <span className="text-[11px] text-[#202020] font-medium truncate">{agent.name}</span>
@@ -112,3 +112,5 @@ export function RightSidebarPanels() {
     </div>
   );
 }
+
+export default RightSidebarPanels;

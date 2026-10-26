@@ -104,9 +104,12 @@ export function ConversationThread() {
 
   if (!activeConv) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center text-slate-400">
-        <MessageCircle className="w-12 h-12 mb-4 opacity-20" />
-        <p>Select a conversation to start messaging</p>
+      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#F5F7F5]">
+        <div className="w-16 h-16 rounded-2xl bg-white border border-[#E1E6E1] flex items-center justify-center mb-4 shadow-xs">
+          <MessageCircle className="w-8 h-8 text-[#039A01]" />
+        </div>
+        <h3 className="text-base font-bold text-[#202020] mb-1">Unified Messaging Hub</h3>
+        <p className="text-xs text-[#5F6962] max-w-sm">Select any customer conversation from the left to view transcripts, multichannel chats, and send replies.</p>
       </div>
     );
   }
@@ -151,51 +154,51 @@ export function ConversationThread() {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#000]">
+    <div className="flex-1 flex flex-col bg-[#F5F7F5] text-[#202020]">
       {/* Header */}
-      <div className="h-16 border-b border-[#222] bg-[#050505] px-6 flex items-center justify-between shrink-0">
+      <div className="h-16 border-b border-[#E1E6E1] bg-white px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveConversation(null as any)}
-            className="md:hidden p-2 -ml-4 mr-1 text-slate-400 hover:text-white transition-colors"
+            className="md:hidden p-2 -ml-4 mr-1 text-[#5F6962] hover:text-[#202020] transition-colors"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <div className="relative shrink-0 w-8 h-8">
             {activeConv.customerAvatar ? (
               <img alt={activeConv.customerName || "Customer avatar"} src={activeConv.customerAvatar}
-                className="w-8 h-8 rounded-full object-cover border border-[#222]"
+                className="w-8 h-8 rounded-full object-cover border border-[#E1E6E1]"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                   (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                 }}
               />
             ) : null}
-            <div className={`absolute inset-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-xs ${activeConv.customerAvatar ? 'hidden' : ''} ${activeConv.channel === 'instagram' ? 'bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]' : 'bg-[#111] border border-[#222] text-slate-400'}`}>
+            <div className={`absolute inset-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-xs ${activeConv.customerAvatar ? 'hidden' : ''} ${activeConv.channel === 'instagram' ? 'bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]' : 'bg-[#EFF3EF] border border-[#E1E6E1] text-[#5F6962]'}`}>
               {activeConv.customerName === 'Instagram Contact' ? 'IG' : activeConv.customerName.charAt(0).toUpperCase()}
             </div>
           </div>
-          <span className="font-bold text-white flex items-center gap-1.5">
+          <span className="font-bold text-[#202020] flex items-center gap-1.5">
             {activeConv.customerName}
             {activeConv.channel === 'instagram' && activeConv.customerName !== 'Instagram Contact' && activeConv.customerName !== 'Pending' && (
               <span title="Verified Identity"><CheckCheck className="w-3.5 h-3.5 text-blue-500" /></span>
             )}
           </span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-[#111] border border-[#222] text-slate-300 uppercase tracking-wide">
+          <span className="text-xs px-2 py-0.5 rounded-full bg-[#E7F4E8] border border-[#C8E6CA] text-[#026601] uppercase tracking-wide font-bold">
             {activeConv.channel}
           </span>
         </div>
-        <div className="flex items-center gap-2 text-slate-400">
-          <button aria-label="Initiate voice call" className="p-2 hover:bg-[#111] hover:text-white rounded-lg transition-colors"><PhoneCall className="w-4 h-4" /></button>
-          <button aria-label="Conversation options" className="p-2 hover:bg-[#111] hover:text-white rounded-lg transition-colors"><MoreVertical className="w-4 h-4" /></button>
+        <div className="flex items-center gap-2 text-[#5F6962]">
+          <button aria-label="Initiate voice call" className="p-2 hover:bg-[#F5F7F5] hover:text-[#039A01] rounded-lg transition-colors"><PhoneCall className="w-4 h-4" /></button>
+          <button aria-label="Conversation options" className="p-2 hover:bg-[#F5F7F5] hover:text-[#039A01] rounded-lg transition-colors"><MoreVertical className="w-4 h-4" /></button>
         </div>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 bg-[#F5F7F5]">
         {isMessagesLoading ? (
-          <div className="h-full flex flex-col items-center justify-center text-slate-500">
-            <Loader2 className="w-8 h-8 animate-spin mb-4 text-primary" />
+          <div className="h-full flex flex-col items-center justify-center text-[#5F6962]">
+            <Loader2 className="w-8 h-8 animate-spin mb-4 text-[#039A01]" />
             <p>Decrypting conversation history...</p>
           </div>
         ) : (
@@ -208,16 +211,16 @@ export function ConversationThread() {
                 className={`flex flex-col ${msg.sender === 'agent' ? 'items-end' : 'items-start'} ${msg.isAiSuggested ? 'mb-8' : ''}`}
               >
                 {msg.isAiSuggested && (
-                  <div className="text-xs font-bold text-orange-500 mb-1 flex items-center gap-1">
+                  <div className="text-xs font-bold text-[#D97706] mb-1 flex items-center gap-1">
                     <Sparkles className="w-3 h-3" /> AI Suggested Reply
                   </div>
                 )}
 
                 <div className={`max-w-[70%] p-3 rounded-2xl ${msg.sender === 'agent' && !msg.isAiSuggested
-                  ? 'bg-primary text-white rounded-br-sm'
+                  ? 'bg-[#039A01] text-white rounded-br-sm'
                   : msg.isAiSuggested
-                    ? 'bg-[#1a1308] border border-orange-500/30 text-orange-50 rounded-bl-sm shadow-sm'
-                    : 'bg-[#111] border border-[#222] text-slate-200 rounded-bl-sm shadow-sm'
+                    ? 'bg-[#FEFDE6] border border-[#F3EE7B] text-[#202020] rounded-bl-sm shadow-xs'
+                    : 'bg-white border border-[#E1E6E1] text-[#202020] rounded-bl-sm shadow-xs'
                   }`}>
 
                   {msg.attachmentType === 'audio' ? (
@@ -358,24 +361,24 @@ export function ConversationThread() {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-[#050505] border-t border-[#222] shrink-0">
+      <div className="p-4 bg-white border-t border-[#E1E6E1] shrink-0">
         {sendError && (
-          <div className="mb-2 p-2 bg-rose-950/40 border border-rose-800/60 rounded-xl text-rose-400 text-xs flex items-center justify-between">
+          <div className="mb-2 p-2 bg-rose-50 border border-rose-200 rounded-xl text-rose-600 text-xs flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{sendError}</span>
             </div>
-            <button onClick={() => setSendError(null)} className="text-slate-400 hover:text-white ml-2 text-xs">✕</button>
+            <button onClick={() => setSendError(null)} className="text-[#5F6962] hover:text-[#202020] ml-2 text-xs">✕</button>
           </div>
         )}
-        <div className="flex items-end gap-2 bg-[#111] border border-[#222] rounded-2xl p-2 focus-within:border-primary transition-all">
-          <button aria-label="Attach file" className="p-2 text-slate-400 hover:text-white transition-colors"><Paperclip className="w-5 h-5" /></button>
+        <div className="flex items-end gap-2 bg-[#F5F7F5] border border-[#E1E6E1] rounded-2xl p-2 focus-within:border-[#039A01] transition-all">
+          <button aria-label="Attach file" className="p-2 text-[#849389] hover:text-[#202020] transition-colors"><Paperclip className="w-5 h-5" /></button>
           <textarea aria-label="Message input"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
             placeholder="Type your message..."
-            className="flex-1 max-h-32 min-h-[40px] bg-transparent resize-none outline-none text-sm text-white py-2 px-1 placeholder-slate-500"
+            className="flex-1 max-h-32 min-h-[40px] bg-transparent resize-none outline-none text-sm text-[#202020] py-2 px-1 placeholder-[#849389]"
             rows={1}
           />
           <button
@@ -384,7 +387,7 @@ export function ConversationThread() {
               alert('Voice recording requires configured media storage. Please use text messaging for current conversation.');
             }}
             aria-label="Record voice note"
-            className="p-2 text-slate-400 hover:text-orange-500 transition-colors"
+            className="p-2 text-[#849389] hover:text-[#039A01] transition-colors"
             title="Voice Note"
           >
             <Mic className="w-5 h-5" />
@@ -393,7 +396,7 @@ export function ConversationThread() {
             onClick={handleSend}
             aria-label="Send message"
             disabled={!inputText.trim()}
-            className="p-2 bg-primary text-white rounded-xl hover:bg-orange-600 disabled:opacity-50 disabled:hover:bg-primary transition-colors shadow-sm"
+            className="p-2 bg-[#039A01] text-white rounded-xl hover:bg-[#028001] disabled:opacity-50 transition-colors shadow-sm"
           >
             <Send className="w-5 h-5" />
           </button>

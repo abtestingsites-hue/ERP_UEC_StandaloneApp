@@ -96,71 +96,109 @@ export function Navbar() {
   };
 
   return (
-    <header className="h-[60px] bg-[#FFFFFF] border-b border-[#E1E6E1] flex items-center justify-between px-6 shrink-0 relative z-50 text-[#202020]">
+    <header className="h-[64px] bg-white border-b border-[#E1E6E1] flex items-center justify-between px-6 shrink-0 relative z-50 text-[#202020]">
       {/* Global Search */}
       <div className="max-w-md w-full relative group">
-        <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5F6962] group-focus-within:text-[#039A01] transition-colors" />
+        <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#849389] group-focus-within:text-[#039A01] transition-colors" />
         <input 
           aria-label="Global search" 
           type="text" 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search customers, cases, or tickets (Press /)" 
-          className="w-full bg-[#FAFCFA] border border-[#E1E6E1] focus:border-[#039A01] rounded-lg pl-10 pr-4 py-1.5 text-xs outline-none text-[#202020] transition-all placeholder-[#849389]"
+          className="w-full bg-[#F5F7F5] border border-[#E1E6E1] focus:border-[#039A01] rounded-full pl-10 pr-4 py-1.5 text-xs outline-none text-[#202020] transition-all placeholder-[#849389]"
         />
       </div>
 
       {/* Right Utility Stats & Profile */}
       <div className="flex items-center gap-4">
-        {callsInQueue > 0 && (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FFF8E6] border border-[#FBE5AC] text-[#78350F] text-xs font-semibold">
-            <Clock className="w-3.5 h-3.5" />
-            <span>{callsInQueue} In Queue</span>
-          </div>
-        )}
-
-        <div className="relative" ref={notificationsRef}>
-          <button
-            onClick={() => setShowNotifications(!showNotifications)}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#FAFCFA] border border-[#E1E6E1] hover:border-[#039A01] hover:bg-[#E7F4E8] text-[#5F6962] hover:text-[#026601] transition-all relative"
-            aria-label="Notifications"
+        <div className="flex items-center gap-2.5">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#C8E6CA] text-[10px] font-semibold text-[#026601] cursor-pointer bg-[#E7F4E8]"
           >
-            <Bell className="w-4 h-4" />
-          </button>
+            <Activity className="w-3 h-3 text-[#039A01]" />
+            Live Mode
+          </motion.div>
+
+          {isSuperAdmin && (
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              title={`Active Agents: ${agentBreakdown.available} Available, ${agentBreakdown.busy} Busy`}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#C8E6CA] bg-[#E7F4E8] text-[10px] font-medium text-[#026601] cursor-pointer"
+            >
+              <Users className="w-3 h-3 text-[#039A01]" />
+              <span className="font-bold text-[#026601]">{activeAgentsCount !== null ? activeAgentsCount : '2'}</span>
+              <span>Active Agents</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#039A01] animate-pulse ml-0.5"></span>
+            </motion.div>
+          )}
+
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#F8C8C8] bg-[#FDF2F2] text-[10px] font-medium text-[#B91C1C]">
+            <AlertTriangle className="w-3 h-3 text-[#B91C1C]" />
+            {emergencyAlerts || 0} Emergencies
+          </div>
+
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#F3EE7B] bg-[#FEFDE6] text-[10px] font-medium text-[#736902]">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#736902]"></div>
+            {callsInQueue || 0} in Queue
+          </div>
         </div>
 
-        {/* Profile */}
-        <div className="flex items-center gap-3 relative" ref={profileRef}>
-          <div className="text-right hidden sm:block">
-            <p className="text-xs font-bold text-[#202020] leading-tight">{userName}</p>
-            <p className="text-[10px] text-[#5F6962]">{userRole}</p>
-          </div>
-          <div 
-            onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-            className="w-8 h-8 rounded-full bg-[#039A01] text-white flex items-center justify-center font-bold text-xs cursor-pointer shadow-xs hover:scale-105 transition-transform"
-          >
-            {userInitials}
+        <div className="w-px h-6 bg-[#E1E6E1]"></div>
+
+        {/* Clock & Notifications */}
+        <div className="flex items-center gap-4">
+          <div className="text-xs font-semibold flex items-center gap-1.5 text-[#202020]">
+            <Clock className="w-3.5 h-3.5 text-[#5F6962]" />
+            {timeStr}
           </div>
 
-          {showProfileDropdown && (
-            <div className="absolute right-0 top-full mt-2 w-52 bg-[#FFFFFF] border border-[#E1E6E1] rounded-xl shadow-lg overflow-hidden transition-all z-50 text-[#202020]">
-              <a
-                href="/dashboard"
-                onClick={() => setShowProfileDropdown(false)}
-                className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-[#E7F4E8] text-[#026601] text-xs font-medium transition-colors border-b border-[#E1E6E1] no-underline"
-              >
-                Return to ERP Workspace →
-              </a>
-              <button 
-                onClick={handleLogout}
-                className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-[#FDF2F2] hover:text-[#B91C1C] text-[#5F6962] text-xs font-medium transition-colors"
-              >
-                <LogOut className="w-3.5 h-3.5" /> Sign Out
-              </button>
-            </div>
-          )}
+          <div className="relative" ref={notificationsRef}>
+            <button 
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="relative p-1.5 rounded-full hover:bg-[#1a1a1a] transition-colors"
+            >
+              <Bell className="w-4 h-4 text-slate-400" />
+            </button>
+          </div>
+
+          {/* Profile Badge */}
+          <div className="relative" ref={profileRef}>
+            <button 
+              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+              className="flex items-center gap-2.5 p-1 rounded-lg hover:bg-[#F5F7F5] transition-colors"
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#039A01] to-[#026601] flex items-center justify-center font-bold text-xs text-white shadow-xs">
+                {userInitials}
+              </div>
+              <div className="hidden md:flex flex-col text-left">
+                <span className="text-xs font-bold text-[#202020] leading-tight">{userName}</span>
+                <span className="text-[10px] text-[#5F6962] leading-tight">{userRole}</span>
+              </div>
+            </button>
+
+            {/* Profile Dropdown */}
+            {showProfileDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-[#E1E6E1] rounded-xl shadow-lg py-1.5 z-50">
+                <div className="px-3 py-2 border-b border-[#E1E6E1]">
+                  <p className="text-xs font-bold text-[#202020] truncate">{userName}</p>
+                  <p className="text-[10px] text-[#5F6962] truncate">{userRole}</p>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-xs text-rose-600 hover:bg-rose-50 transition-colors"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
   );
 }
+
+export default Navbar;

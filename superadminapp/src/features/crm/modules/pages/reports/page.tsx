@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
-  BarChart3, PieChart, LineChart, Download, Calendar, Users, Briefcase, 
-  FileSpreadsheet, Plus, Table, Play, Settings, Clock, Sparkles, Send, 
+  BarChart3, Download, 
   ChevronRight, ArrowUpRight, ArrowDownRight, Printer, Mail, CalendarDays, Sliders
 } from 'lucide-react';
 import { 
@@ -31,8 +30,6 @@ export default function ReportsPage() {
   const [agentFilter, setAgentFilter] = useState('All');
   const [teamFilter, setTeamFilter] = useState('All');
   const [deptFilter, setDeptFilter] = useState('All');
-  const [channelFilter, setChannelFilter] = useState('All');
-  const [statusFilter, setStatusFilter] = useState('All');
   
   // Customization state
   const [chartType, setChartType] = useState<'bar' | 'line' | 'pie'>('bar');
@@ -355,12 +352,12 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="flex-1 flex overflow-hidden h-full bg-[#050505] text-white">
+    <div className="flex-1 flex overflow-hidden h-full bg-[#F5F7F5] text-[#202020]">
       {/* 1. Left Sidebar: Categories list */}
-      <aside className="w-72 border-r border-[#1e1e1e] bg-[#090909] flex flex-col shrink-0">
-        <div className="p-4 border-b border-[#1e1e1e]">
-          <h2 className="text-sm font-black tracking-wider uppercase text-slate-400 flex items-center gap-2">
-            <BarChart3 className="text-orange-500 w-4 h-4" /> Reports Center
+      <aside className="w-72 border-r border-[#E1E6E1] bg-white flex flex-col shrink-0 shadow-xs">
+        <div className="p-4 border-b border-[#E1E6E1]">
+          <h2 className="text-sm font-bold tracking-wider uppercase text-[#202020] flex items-center gap-2">
+            <BarChart3 className="text-[#039A01] w-4 h-4" /> Reports Center
           </h2>
         </div>
         <div className="flex-1 overflow-y-auto p-3 space-y-4 custom-scrollbar">
@@ -368,7 +365,7 @@ export default function ReportsPage() {
             const cat = categories[catKey];
             return (
               <div key={catKey} className="space-y-1.5">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest px-2 block">
+                <span className="text-[10px] text-[#5F6962] font-bold uppercase tracking-widest px-2 block">
                   {cat.label}
                 </span>
                 <div className="space-y-0.5">
@@ -381,12 +378,12 @@ export default function ReportsPage() {
                       }}
                       className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-bold transition-all border ${
                         selectedReportId === item.id 
-                          ? 'bg-orange-600/15 border-orange-500/20 text-orange-500 shadow-lg shadow-orange-500/5' 
-                          : 'text-slate-400 hover:bg-[#121212] hover:text-white border-transparent'
+                          ? 'bg-[#E7F4E8] border-[#C8E6CA] text-[#026601] shadow-xs' 
+                          : 'text-[#5F6962] hover:bg-[#F5F7F5] hover:text-[#202020] border-transparent'
                       }`}
                     >
                       <span className="truncate max-w-[200px]">{item.name}</span>
-                      <ChevronRight className="w-3.5 h-3.5 opacity-40 shrink-0" />
+                      <ChevronRight className="w-3.5 h-3.5 opacity-40 shrink-0 text-[#039A01]" />
                     </button>
                   ))}
                 </div>
@@ -399,35 +396,35 @@ export default function ReportsPage() {
       {/* 2. Main Content Board */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Advanced Filter Panel */}
-        <header className="border-b border-[#1e1e1e] bg-[#090909] p-4 flex flex-col gap-4 shrink-0">
+        <header className="border-b border-[#E1E6E1] bg-white p-4 flex flex-col gap-4 shrink-0 shadow-xs">
           <div className="flex flex-wrap items-end gap-3.5">
             {/* Start Date */}
             <div className="flex flex-col">
-              <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Start Date</span>
+              <span className="text-[9px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Start Date</span>
               <input aria-label="Report start date" 
                 type="date" 
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1 text-xs text-white outline-none focus:border-orange-500"
+                className="bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1 text-xs text-[#202020] outline-none focus:border-[#039A01]"
               />
             </div>
             {/* End Date */}
             <div className="flex flex-col">
-              <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">End Date</span>
+              <span className="text-[9px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">End Date</span>
               <input aria-label="Report end date" 
                 type="date" 
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1 text-xs text-white outline-none focus:border-orange-500"
+                className="bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1 text-xs text-[#202020] outline-none focus:border-[#039A01]"
               />
             </div>
             {/* Agent filter */}
             <div className="flex flex-col">
-              <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Agent</span>
+              <span className="text-[9px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Agent</span>
               <select 
                 aria-label="Filter by agent" value={agentFilter}
                 onChange={(e) => setAgentFilter(e.target.value)}
-                className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1 text-xs text-white outline-none focus:border-orange-500 w-32"
+                className="bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1 text-xs text-[#202020] outline-none focus:border-[#039A01] w-32"
               >
                 <option value="All">All Agents</option>
                 <option value="Raghav">Raghav</option>
@@ -436,11 +433,11 @@ export default function ReportsPage() {
             </div>
             {/* Team filter */}
             <div className="flex flex-col">
-              <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Team</span>
+              <span className="text-[9px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Team</span>
               <select 
                 aria-label="Filter by team" value={teamFilter}
                 onChange={(e) => setTeamFilter(e.target.value)}
-                className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1 text-xs text-white outline-none focus:border-orange-500 w-32"
+                className="bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1 text-xs text-[#202020] outline-none focus:border-[#039A01] w-32"
               >
                 <option value="All">All Teams</option>
                 <option value="North">North Hub</option>
@@ -449,11 +446,11 @@ export default function ReportsPage() {
             </div>
             {/* Department filter */}
             <div className="flex flex-col">
-              <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Department</span>
+              <span className="text-[9px] text-[#5F6962] font-bold uppercase tracking-wider mb-1">Department</span>
               <select 
                 aria-label="Filter by department" value={deptFilter}
                 onChange={(e) => setDeptFilter(e.target.value)}
-                className="bg-[#141414] border border-[#222] rounded-lg px-2.5 py-1 text-xs text-white outline-none focus:border-orange-500 w-36"
+                className="bg-[#F5F7F5] border border-[#E1E6E1] rounded-lg px-2.5 py-1 text-xs text-[#202020] outline-none focus:border-[#039A01] w-36"
               >
                 <option value="All">All Departments</option>
                 <option value="Sales">Sales Division</option>
@@ -463,7 +460,7 @@ export default function ReportsPage() {
 
             <button 
               onClick={handleGenerateReport}
-              className="bg-orange-600 hover:bg-orange-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs flex items-center gap-1.5 shadow-[0_0_15px_rgba(234,88,12,0.1)] transition-all h-8"
+              className="bg-[#039A01] hover:bg-[#028001] text-white font-bold px-4 py-1.5 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition-all h-8"
             >
               <Sliders className="w-3.5 h-3.5" />
               <span>Apply Filters</span>
@@ -471,30 +468,30 @@ export default function ReportsPage() {
           </div>
 
           {/* Export & Actions Toolbar */}
-          <div className="flex items-center justify-between border-t border-[#1c1c1c] pt-3">
-            <h1 className="text-sm font-bold text-white tracking-wide truncate max-w-[400px]">
+          <div className="flex items-center justify-between border-t border-[#E1E6E1] pt-3">
+            <h1 className="text-sm font-bold text-[#202020] tracking-wide truncate max-w-[400px]">
               {generatedData?.name}
             </h1>
             <div className="flex items-center gap-2">
               <button 
                 onClick={() => setIsScheduleOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#5F6962] hover:text-[#202020] transition-all shadow-xs"
                 title="Schedule email dispatch"
               >
-                <CalendarDays className="w-3.5 h-3.5" />
+                <CalendarDays className="w-3.5 h-3.5 text-[#039A01]" />
                 <span>Schedule</span>
               </button>
               <button 
                 onClick={() => setIsEmailOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#5F6962] hover:text-[#202020] transition-all shadow-xs"
                 title="Email copy"
               >
-                <Mail className="w-3.5 h-3.5" />
+                <Mail className="w-3.5 h-3.5 text-[#039A01]" />
                 <span>Email</span>
               </button>
               <button 
                 onClick={() => window.print()}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#5F6962] hover:text-[#202020] transition-all shadow-xs"
                 title="Print report"
               >
                 <Printer className="w-3.5 h-3.5" />
@@ -502,10 +499,10 @@ export default function ReportsPage() {
               </button>
               <button 
                 onClick={handleExportCSV}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#222] rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] rounded-xl text-xs font-bold text-[#5F6962] hover:text-[#202020] transition-all shadow-xs"
                 title="Export CSV"
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5 text-[#039A01]" />
                 <span>CSV</span>
               </button>
             </div>
@@ -513,20 +510,20 @@ export default function ReportsPage() {
         </header>
 
         {/* Work Area Viewport */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar bg-[#050505]">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar bg-[#F5F7F5]">
           {generatedData && (
             <>
               {/* Dynamic KPI summary row */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
                 {generatedData.kpis.map((kpi, idx) => (
-                  <div key={idx} className="bg-[#0b0b0b] border border-[#1e1e1e] rounded-2xl p-5 flex flex-col justify-between h-[130px] hover:border-[#2b2b2b] transition-all">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{kpi.label}</span>
+                  <div key={idx} className="bg-white border border-[#E1E6E1] rounded-2xl p-5 flex flex-col justify-between h-[130px] hover:border-[#C8E6CA] transition-all shadow-xs">
+                    <span className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">{kpi.label}</span>
                     <div className="flex items-end justify-between mt-2">
-                      <h3 className="text-2xl font-extrabold text-white tracking-tight">{kpi.value}</h3>
+                      <h3 className="text-2xl font-extrabold text-[#202020] tracking-tight">{kpi.value}</h3>
                       <div className={`flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full ${
                         kpi.isPositive 
-                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10' 
-                          : 'bg-rose-500/10 text-rose-400 border border-rose-500/10'
+                          ? 'bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA]' 
+                          : 'bg-rose-50 text-rose-600 border border-rose-200'
                       }`}>
                         {kpi.isPositive ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />}
                         <span>{kpi.change}</span>
@@ -537,25 +534,25 @@ export default function ReportsPage() {
               </div>
 
               {/* Chart customizer area */}
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl space-y-4">
-                <div className="flex items-center justify-between border-b border-[#1c1c1c] pb-3">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Report Visualizations</h3>
-                  <div className="flex items-center bg-[#141414] border border-[#222] p-0.5 rounded-lg">
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl space-y-4 shadow-xs">
+                <div className="flex items-center justify-between border-b border-[#E1E6E1] pb-3">
+                  <h3 className="text-xs font-bold text-[#202020] uppercase tracking-wider">Report Visualizations</h3>
+                  <div className="flex items-center bg-[#F5F7F5] border border-[#E1E6E1] p-0.5 rounded-lg">
                     <button 
                       onClick={() => setChartType('bar')} 
-                      className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${chartType === 'bar' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${chartType === 'bar' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
                     >
                       Bar
                     </button>
                     <button 
                       onClick={() => setChartType('line')} 
-                      className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${chartType === 'line' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${chartType === 'line' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
                     >
                       Line
                     </button>
                     <button 
                       onClick={() => setChartType('pie')} 
-                      className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${chartType === 'pie' ? 'bg-orange-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                      className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${chartType === 'pie' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'}`}
                     >
                       Pie
                     </button>
@@ -566,11 +563,11 @@ export default function ReportsPage() {
                   {chartType === 'line' ? (
                     <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                       <RechartsLineChart data={generatedData.chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1c1c1c" />
-                        <XAxis dataKey="name" stroke="#555" fontSize={10} tickLine={false} />
-                        <YAxis stroke="#555" fontSize={10} tickLine={false} />
-                        <Tooltip contentStyle={{ backgroundColor: '#090909', borderColor: '#222', borderRadius: '8px' }} />
-                        <Line type="monotone" dataKey="value" stroke="#ea580c" strokeWidth={2.5} dot={{ r: 4 }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E1E6E1" />
+                        <XAxis dataKey="name" stroke="#849389" fontSize={10} tickLine={false} />
+                        <YAxis stroke="#849389" fontSize={10} tickLine={false} />
+                        <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E1E6E1', borderRadius: '8px', color: '#202020' }} />
+                        <Line type="monotone" dataKey="value" stroke="#039A01" strokeWidth={2.5} dot={{ r: 4 }} />
                       </RechartsLineChart>
                     </ResponsiveContainer>
                   ) : chartType === 'pie' ? (
@@ -585,23 +582,23 @@ export default function ReportsPage() {
                           paddingAngle={3}
                           dataKey="value"
                         >
-                          {generatedData.chartData.map((entry, index) => (
+                          {generatedData.chartData.map((_entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
-                        <Tooltip contentStyle={{ backgroundColor: '#090909', borderColor: '#222', borderRadius: '8px' }} />
-                        <Legend verticalAlign="bottom" height={36} iconSize={8} formatter={(value) => <span className="text-[10px] text-slate-400 font-bold uppercase">{value}</span>} />
+                        <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E1E6E1', borderRadius: '8px', color: '#202020' }} />
+                        <Legend verticalAlign="bottom" height={36} iconSize={8} formatter={(value) => <span className="text-[10px] text-[#5F6962] font-bold uppercase">{value}</span>} />
                       </RechartsPieChart>
                     </ResponsiveContainer>
                   ) : (
                     <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                       <BarChart data={generatedData.chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1c1c1c" />
-                        <XAxis dataKey="name" stroke="#555" fontSize={10} tickLine={false} />
-                        <YAxis stroke="#555" fontSize={10} tickLine={false} />
-                        <Tooltip contentStyle={{ backgroundColor: '#090909', borderColor: '#222', borderRadius: '8px' }} />
-                        <Bar dataKey="value" fill="#ea580c" radius={[4, 4, 0, 0]}>
-                          {generatedData.chartData.map((entry, index) => (
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E1E6E1" />
+                        <XAxis dataKey="name" stroke="#849389" fontSize={10} tickLine={false} />
+                        <YAxis stroke="#849389" fontSize={10} tickLine={false} />
+                        <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E1E6E1', borderRadius: '8px', color: '#202020' }} />
+                        <Bar dataKey="value" fill="#039A01" radius={[4, 4, 0, 0]}>
+                          {generatedData.chartData.map((_entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Bar>
@@ -612,20 +609,20 @@ export default function ReportsPage() {
               </div>
 
               {/* Data Table Grid */}
-              <div className="bg-[#0b0b0b] border border-[#1e1e1e] p-5 rounded-2xl">
-                <h3 className="text-xs font-bold text-slate-400 mb-4 uppercase tracking-wider">Detailed Data Grid</h3>
-                <div className="border border-[#1c1c1c] rounded-xl overflow-hidden">
+              <div className="bg-white border border-[#E1E6E1] p-5 rounded-2xl shadow-xs">
+                <h3 className="text-xs font-bold text-[#202020] mb-4 uppercase tracking-wider">Detailed Data Grid</h3>
+                <div className="border border-[#E1E6E1] rounded-xl overflow-hidden">
                   <table aria-label="Generated analytics report data table" className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="bg-[#121212] border-b border-[#1c1c1c] text-slate-400 font-bold uppercase tracking-wider">
+                      <tr className="bg-[#F5F7F5] border-b border-[#E1E6E1] text-[#5F6962] font-bold uppercase tracking-wider">
                         {Object.keys(generatedData.tableData[0]).map(key => (
                           <th key={key} className="p-3 font-semibold">{key}</th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#1c1c1c]/50">
+                    <tbody className="divide-y divide-[#E1E6E1]">
                       {generatedData.tableData.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-[#121212]/30 transition-colors text-slate-300">
+                        <tr key={idx} className="hover:bg-[#F5F7F5] transition-colors text-[#202020]">
                           {Object.values(row).map((val: any, cellIdx) => (
                             <td key={cellIdx} className="p-3 font-medium">{String(val)}</td>
                           ))}
