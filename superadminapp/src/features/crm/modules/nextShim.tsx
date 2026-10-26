@@ -19,26 +19,41 @@ export default Link;
 
 export function useRouter() {
   const navigate = useNavigate();
-  return {
-    push: (url: string) => {
-      let mapped = url;
-      if (mapped.startsWith('/') && mapped !== '/' && !mapped.startsWith('/crm') && !mapped.startsWith('/login') && !mapped.startsWith('/portal')) {
-        mapped = '/crm' + mapped;
-      }
-      navigate(mapped);
-    },
-    replace: (url: string) => {
-      let mapped = url;
-      if (mapped.startsWith('/') && mapped !== '/' && !mapped.startsWith('/crm') && !mapped.startsWith('/login') && !mapped.startsWith('/portal')) {
-        mapped = '/crm' + mapped;
-      }
-      navigate(mapped, { replace: true });
-    },
-    back: () => navigate(-1),
-    forward: () => navigate(1),
-    refresh: () => {},
-    prefetch: () => {},
-  };
+  return React.useMemo(
+    () => ({
+      push: (url: string) => {
+        let mapped = url;
+        if (
+          mapped.startsWith('/') &&
+          mapped !== '/' &&
+          !mapped.startsWith('/crm') &&
+          !mapped.startsWith('/login') &&
+          !mapped.startsWith('/portal')
+        ) {
+          mapped = '/crm' + mapped;
+        }
+        navigate(mapped);
+      },
+      replace: (url: string) => {
+        let mapped = url;
+        if (
+          mapped.startsWith('/') &&
+          mapped !== '/' &&
+          !mapped.startsWith('/crm') &&
+          !mapped.startsWith('/login') &&
+          !mapped.startsWith('/portal')
+        ) {
+          mapped = '/crm' + mapped;
+        }
+        navigate(mapped, { replace: true });
+      },
+      back: () => navigate(-1),
+      forward: () => navigate(1),
+      refresh: () => {},
+      prefetch: () => {},
+    }),
+    [navigate]
+  );
 }
 
 export function usePathname() {

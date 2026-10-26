@@ -93,7 +93,10 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         if (activeUser?.role) {
           activeUser.role = String(activeUser.role).toUpperCase();
         }
-        useAuthStore.getState().setUser(activeUser);
+        const currentUserInStore = useAuthStore.getState().user;
+        if (!currentUserInStore || currentUserInStore.id !== activeUser.id || currentUserInStore.role !== activeUser.role) {
+          useAuthStore.getState().setUser(activeUser);
+        }
       } catch (e) { 
         console.warn('[UI Exception Swallowed Fixed]:', e); 
       }
@@ -101,23 +104,35 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
     const currentRole = (activeUser?.role || erpRole || 'ADMIN').toUpperCase();
     const isAgent = currentRole === 'AGENT';
-    const isSuperAdminOrAdmin = currentRole === 'SUPER_ADMIN' || currentRole === 'ADMIN' || currentRole === 'SUPERADMIN';
 
     if (!token && pathname !== "/login") {
-      router.push("/login");
-    } else if (token && pathname === "/login") {
+      router.replace("/login");
+      return;
+    } 
+    
+    if (token && pathname === "/login") {
       if (isAgent) {
-        router.push("/agent/dashboard");
+        router.replace("/agent/dashboard");
       } else {
-        router.push("/dashboard");
+        router.replace("/dashboard");
       }
-    } else if (token && pathname === "/") {
+      return;
+    } 
+    
+    if (token && (pathname === "/" || pathname === "/dashboard" || pathname === "/index.html")) {
       if (isAgent) {
-        router.push("/agent/dashboard");
+        if (pathname !== "/agent/dashboard") {
+          router.replace("/agent/dashboard");
+        } else {
+          setIsAuthenticated(true);
+        }
       } else {
-        router.push("/dashboard");
+        setIsAuthenticated(true);
       }
-    } else if (token && pathname !== "/login") {
+      return;
+    } 
+    
+    if (token && pathname !== "/login") {
       const isAgentPortalPath = pathname === '/agent' || (pathname.startsWith('/agent/') && pathname !== '/agent/profile');
       const isSharedPath = 
         pathname.startsWith('/calendar') || 
@@ -134,14 +149,18 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
       
       // If user is Agent, restrict them to agent routes and shared routes
       if (isAgent && !isAgentPortalPath && !isSharedPath) {
-        router.push('/agent/dashboard');
+        if (pathname !== '/agent/dashboard') {
+          router.replace('/agent/dashboard');
+        } else {
+          setIsAuthenticated(true);
+        }
       } else {
         setIsAuthenticated(true);
       }
     } else {
       setIsAuthenticated(true);
     }
-  }, [pathname, router]);
+  }, [pathname]);
 
   if (isAuthenticated === null) {
     return <div className="min-h-screen bg-[#F5F7F5] flex items-center justify-center">
