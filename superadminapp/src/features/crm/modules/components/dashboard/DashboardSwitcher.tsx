@@ -46,12 +46,13 @@ export function DashboardSwitcher({
   ];
 
   const dashboards = allDashboards.filter(d => allowedTypes.includes(d.type));
+  const allowedTypesKey = allowedTypes.join(',');
   
   useEffect(() => {
     if (!allowedTypes.includes(activeType)) {
       setActiveType(defaultType);
     }
-  }, [allowedTypes, activeType, defaultType, setActiveType]);
+  }, [allowedTypesKey, activeType, defaultType, setActiveType]);
 
   const currentLabel = activeType === 'actions' 
     ? (dashboards[0]?.label || 'Dashboard') 

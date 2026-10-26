@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import {
     Activity,
     AlertCircle,
     ArrowUpRight,
     BarChart3,
+    Building2,
     CheckCircle2,
     Clock,
     ExternalLink,
     Headset,
     Layers,
+    LayoutDashboard,
+    Link2,
     MessageSquare,
     Phone,
     PhoneCall,
@@ -16,12 +20,14 @@ import {
     RefreshCw,
     Search,
     Shield,
+    ShieldCheck,
     Sparkles,
     Users,
     Zap,
 } from 'lucide-react';
 import { PageHeader } from '../../components/PageHeader';
 import { readAuthSession } from '../auth/authStorage';
+import { isSuperAdmin } from '../../utils/permissions';
 import { crmLiveService } from './crmLive.service';
 import { CRMApp } from './CRMApp';
 
@@ -31,11 +37,17 @@ export function CRMWorkspace() {
     const liveBackendUrl = 'https://crm-uec-backend.onrender.com';
 
     const session = readAuthSession();
+    const isSuperAdminUser = isSuperAdmin(session?.user);
     const isCrmUser = session?.user?.provider === 'crm' || (session?.user?.role === 'AGENT' || session?.user?.role === 'CRM');
 
-    // Default CRM users directly to the native CRM application workspace
-    const [viewMode, setViewMode] = useState<'native-crm' | 'telemetry-dashboard'>('native-crm');
-    const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'telephony' | 'omnichannel' | 'live-app'>('overview');
+    // If an Agent lands directly on /crm, redirect them to their agent portal
+    if (isCrmUser && !isSuperAdminUser) {
+        return <Navigate to="/crm/agent/dashboard" replace />;
+    }
+
+    // SuperAdmin always starts in the ERP Command Center view inside the SuperAdmin shell
+    const [viewMode, setViewMode] = useState<'native-crm' | 'telemetry-dashboard'>('telemetry-dashboard');
+    const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'telephony' | 'omnichannel' | 'tickets' | 'app'>('overview');
     const [backendStatus, setBackendStatus] = useState<{ status: string; latencyMs?: number }>({ status: 'CHECKING...' });
     const [callData, setCallData] = useState<{ activeCalls: any[]; queuedCalls: any[]; missedCalls: any[] }>({
         activeCalls: [],
@@ -97,7 +109,32 @@ export function CRMWorkspace() {
 
     if (viewMode === 'native-crm') {
         return (
-            <div className="crm-workspace-native" style={{ width: '100%', height: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#F5F7F5' }}>
+            <div className="crm-workspace-native" style={{ width: '100%', height: '100%', minHeight: 'calc(100vh - 120px)', display: 'flex', flexDirection: 'column', background: '#F5F7F5' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', background: '#ffffff', border: '1px solid #e1e6e1', borderRadius: '12px', marginBottom: '14px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '13px', fontWeight: 700, color: '#039A01' }}>Universal CRM Workspace</span>
+                        <span style={{ fontSize: '11px', padding: '2px 8px', background: '#e7f4e8', color: '#026601', borderRadius: '6px', fontWeight: 600 }}>Interactive Native App</span>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => setViewMode('telemetry-dashboard')}
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '6px 14px',
+                            background: '#f1f5f9',
+                            border: '1px solid #cbd5e1',
+                            borderRadius: '8px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#334155',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        ← Back to Command Center
+                    </button>
+                </div>
                 <div style={{ flex: 1, position: 'relative' }}>
                     <CRMApp />
                 </div>
@@ -106,34 +143,50 @@ export function CRMWorkspace() {
     }
 
     return (
-        <div className="crm-workspace" style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '18px' }}>
+        <div className="crm-workspace" style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '16px' }}>
             <PageHeader
                 eyebrow="BUSINESS DOMAIN · CLIENT RELATIONS & TELEPHONY"
-                title="CRM & Communications Command Center"
-                description="Client relationship lifecycle, omnichannel communications, AI-assisted lead management, and telephony."
+                title="Client Relations & CRM"
+                description="Client relationship lifecycle, omnichannel communications, AI-assisted lead management, and live telephony telemetry."
                 action={
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                        <button
-                            type="button"
-                            onClick={() => setViewMode('native-crm')}
+                        <div
                             style={{
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 gap: '6px',
-                                padding: '7px 14px',
-                                borderRadius: '8px',
+                                padding: '6px 12px',
+                                borderRadius: '20px',
                                 fontSize: '12px',
-                                fontWeight: 700,
-                                background: '#f97316',
-                                border: 'none',
-                                color: '#ffffff',
-                                cursor: 'pointer',
-                                boxShadow: '0 2px 8px rgba(249, 115, 22, 0.3)',
+                                fontWeight: 600,
+                                background: '#FFF1F2',
+                                border: '1px solid #FFE4E6',
+                                color: '#BE123C',
                             }}
                         >
-                            <Shield size={14} />
-                            <span>Open Full CRM Workspace →</span>
-                        </button>
+                            <Link2 size={13} color="#E11D48" />
+                            <span>Client Relations & CRM</span>
+                        </div>
+
+                        <div
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '6px 12px',
+                                borderRadius: '8px',
+                                fontSize: '12px',
+                                fontWeight: 600,
+                                background: '#F8FAFC',
+                                border: '1px solid #E2E8F0',
+                                color: '#334155',
+                            }}
+                        >
+                            <Building2 size={13} />
+                            <span>All Units (Facility-wide)</span>
+                            <span style={{ fontSize: '10px', fontWeight: 800, color: '#039A01', letterSpacing: '0.05em' }}>ORGANIZATION WIDE</span>
+                        </div>
+
                         <div
                             style={{
                                 display: 'inline-flex',
@@ -180,6 +233,28 @@ export function CRMWorkspace() {
                             <span>Refresh</span>
                         </button>
 
+                        <button
+                            type="button"
+                            onClick={() => setViewMode('native-crm')}
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '7px 14px',
+                                borderRadius: '8px',
+                                fontSize: '12px',
+                                fontWeight: 700,
+                                background: '#f97316',
+                                border: 'none',
+                                color: '#ffffff',
+                                cursor: 'pointer',
+                                boxShadow: '0 2px 8px rgba(249, 115, 22, 0.3)',
+                            }}
+                        >
+                            <Shield size={14} />
+                            <span>Full CRM Workspace →</span>
+                        </button>
+
                         {standaloneCrmUrl && (
                             <button
                                 type="button"
@@ -207,127 +282,6 @@ export function CRMWorkspace() {
                 }
             />
 
-            {/* Live KPI Metric Cards */}
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                    gap: '14px',
-                }}
-            >
-                <div
-                    style={{
-                        padding: '16px',
-                        background: '#ffffff',
-                        border: '1px solid #e1e6e1',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-                    }}
-                >
-                    <div>
-                        <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
-                            Live Active Calls
-                        </div>
-                        <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
-                            {callData.activeCalls.length}
-                        </div>
-                        <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: 600, marginTop: '2px' }}>
-                            ● Real-time Telephony
-                        </div>
-                    </div>
-                    <div style={{ padding: '12px', borderRadius: '10px', background: '#ecfdf5', color: '#059669' }}>
-                        <PhoneCall size={22} />
-                    </div>
-                </div>
-
-                <div
-                    style={{
-                        padding: '16px',
-                        background: '#ffffff',
-                        border: '1px solid #e1e6e1',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-                    }}
-                >
-                    <div>
-                        <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
-                            Calls in Queue
-                        </div>
-                        <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
-                            {callData.queuedCalls.length}
-                        </div>
-                        <div style={{ fontSize: '11px', color: '#2563eb', fontWeight: 600, marginTop: '2px' }}>
-                            PBX & SIP Trunk
-                        </div>
-                    </div>
-                    <div style={{ padding: '12px', borderRadius: '10px', background: '#eff6ff', color: '#2563eb' }}>
-                        <Clock size={22} />
-                    </div>
-                </div>
-
-                <div
-                    style={{
-                        padding: '16px',
-                        background: '#ffffff',
-                        border: '1px solid #e1e6e1',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-                    }}
-                >
-                    <div>
-                        <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
-                            Total Active Leads
-                        </div>
-                        <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
-                            {leads.length > 0 ? leads.length : '148'}
-                        </div>
-                        <div style={{ fontSize: '11px', color: '#7c3aed', fontWeight: 600, marginTop: '2px' }}>
-                            Inquiry Pipeline
-                        </div>
-                    </div>
-                    <div style={{ padding: '12px', borderRadius: '10px', background: '#f5f3ff', color: '#7c3aed' }}>
-                        <Users size={22} />
-                    </div>
-                </div>
-
-                <div
-                    style={{
-                        padding: '16px',
-                        background: '#ffffff',
-                        border: '1px solid #e1e6e1',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
-                    }}
-                >
-                    <div>
-                        <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
-                            Omnichannel Channels
-                        </div>
-                        <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
-                            4 Active
-                        </div>
-                        <div style={{ fontSize: '11px', color: '#d97706', fontWeight: 600, marginTop: '2px' }}>
-                            WhatsApp, Calls, SMS, IG
-                        </div>
-                    </div>
-                    <div style={{ padding: '12px', borderRadius: '10px', background: '#fffbeb', color: '#d97706' }}>
-                        <MessageSquare size={22} />
-                    </div>
-                </div>
-            </div>
-
             {/* Navigation Tabs */}
             <div
                 style={{
@@ -336,14 +290,15 @@ export function CRMWorkspace() {
                     gap: '6px',
                     borderBottom: '1px solid #e1e6e1',
                     paddingBottom: '2px',
+                    overflowX: 'auto',
                 }}
             >
                 {[
-                    { id: 'overview', label: 'Command Overview', icon: BarChart3 },
+                    { id: 'overview', label: 'Command Center', icon: LayoutDashboard },
                     { id: 'leads', label: 'Lead Inquiries', icon: Users },
                     { id: 'telephony', label: 'Live Telephony & PBX', icon: Phone },
                     { id: 'omnichannel', label: 'Omnichannel Hub', icon: MessageSquare },
-                    ...(standaloneCrmUrl ? [{ id: 'live-app', label: 'Embedded CRM App', icon: Layers }] : []),
+                    { id: 'crm-app', label: 'Universal CRM App', icon: Layers },
                 ].map((tab) => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
@@ -367,6 +322,7 @@ export function CRMWorkspace() {
                                 marginBottom: '-1px',
                                 cursor: 'pointer',
                                 transition: 'all 120ms ease',
+                                whiteSpace: 'nowrap',
                             }}
                         >
                             <Icon size={15} color={isActive ? '#039A01' : '#666'} />
@@ -376,8 +332,203 @@ export function CRMWorkspace() {
                 })}
             </div>
 
-            {/* Tab 1: Overview */}
+            {/* Tab 1: Command Center Overview */}
             {activeTab === 'overview' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {/* Operational Subheading Matching ERP Domains */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginTop: '2px' }}>
+                        <div style={{ fontSize: '11px', fontWeight: 800, color: '#039A01', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                            CLIENT RELATIONS & TELEPHONY · ALL UNITS (FACILITY-WIDE)
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#111827', margin: 0 }}>
+                                Operational Command Center
+                            </h2>
+                            <button
+                                type="button"
+                                onClick={refreshData}
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    background: '#ffffff',
+                                    border: '1px solid #e1e6e1',
+                                    borderRadius: '8px',
+                                    padding: '6px 12px',
+                                    fontSize: '12px',
+                                    fontWeight: 600,
+                                    color: '#374151',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                <RefreshCw size={13} className={isLoadingData ? 'animate-spin' : ''} />
+                                <span>Refresh</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Live KPI Metric Cards */}
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                            gap: '14px',
+                        }}
+                    >
+                        <div
+                            style={{
+                                padding: '16px',
+                                background: '#ffffff',
+                                border: '1px solid #e1e6e1',
+                                borderRadius: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
+                            }}
+                        >
+                            <div>
+                                <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
+                                    Active Telephony Calls
+                                </div>
+                                <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
+                                    {callData.activeCalls.length}
+                                </div>
+                                <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: 600, marginTop: '2px' }}>
+                                    ● Real-time Telephony
+                                </div>
+                            </div>
+                            <div style={{ padding: '12px', borderRadius: '10px', background: '#ecfdf5', color: '#059669' }}>
+                                <PhoneCall size={22} />
+                            </div>
+                        </div>
+
+                        <div
+                            style={{
+                                padding: '16px',
+                                background: '#ffffff',
+                                border: '1px solid #e1e6e1',
+                                borderRadius: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
+                            }}
+                        >
+                            <div>
+                                <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
+                                    Calls in Queue
+                                </div>
+                                <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
+                                    {callData.queuedCalls.length}
+                                </div>
+                                <div style={{ fontSize: '11px', color: '#2563eb', fontWeight: 600, marginTop: '2px' }}>
+                                    PBX & SIP Trunk
+                                </div>
+                            </div>
+                            <div style={{ padding: '12px', borderRadius: '10px', background: '#eff6ff', color: '#2563eb' }}>
+                                <Clock size={22} />
+                            </div>
+                        </div>
+
+                        <div
+                            style={{
+                                padding: '16px',
+                                background: '#ffffff',
+                                border: '1px solid #e1e6e1',
+                                borderRadius: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
+                            }}
+                        >
+                            <div>
+                                <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
+                                    Total Active Leads
+                                </div>
+                                <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
+                                    {leads.length > 0 ? leads.length : '148'}
+                                </div>
+                                <div style={{ fontSize: '11px', color: '#7c3aed', fontWeight: 600, marginTop: '2px' }}>
+                                    Inquiry Pipeline
+                                </div>
+                            </div>
+                            <div style={{ padding: '12px', borderRadius: '10px', background: '#f5f3ff', color: '#7c3aed' }}>
+                                <Users size={22} />
+                            </div>
+                        </div>
+
+                        <div
+                            style={{
+                                padding: '16px',
+                                background: '#ffffff',
+                                border: '1px solid #e1e6e1',
+                                borderRadius: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
+                            }}
+                        >
+                            <div>
+                                <div style={{ fontSize: '11px', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
+                                    Omnichannel Channels
+                                </div>
+                                <div style={{ fontSize: '24px', fontWeight: 800, color: '#111', marginTop: '4px' }}>
+                                    4 Active
+                                </div>
+                                <div style={{ fontSize: '11px', color: '#d97706', fontWeight: 600, marginTop: '2px' }}>
+                                    WhatsApp, Calls, SMS, IG
+                                </div>
+                            </div>
+                            <div style={{ padding: '12px', borderRadius: '10px', background: '#fffbeb', color: '#d97706' }}>
+                                <MessageSquare size={22} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Quick Workflow Navigation Matching ERP Screenshot */}
+                    <div style={{ background: '#ffffff', border: '1px solid #e1e6e1', borderRadius: '12px', padding: '16px 20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+                            <span style={{ fontSize: '13px', fontWeight: 700, color: '#111827' }}>Quick Workflow Navigation</span>
+                            <span style={{ fontSize: '11px', color: '#64748b' }}>Direct access to integrated core CRM modules and communication registers</span>
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('leads')}
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '8px', border: '1px solid #e1e6e1', background: '#f8fafc', fontSize: '12px', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }}
+                            >
+                                <Users size={14} color="#039A01" />
+                                <span>Lead Inquiries →</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('telephony')}
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '8px', border: '1px solid #e1e6e1', background: '#f8fafc', fontSize: '12px', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }}
+                            >
+                                <Phone size={14} color="#039A01" />
+                                <span>Telephony & PBX →</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('omnichannel')}
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '8px', border: '1px solid #e1e6e1', background: '#f8fafc', fontSize: '12px', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }}
+                            >
+                                <MessageSquare size={14} color="#039A01" />
+                                <span>Omnichannel Hub →</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('crm-app')}
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '8px', border: '1px solid #e1e6e1', background: '#f8fafc', fontSize: '12px', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }}
+                            >
+                                <Layers size={14} color="#039A01" />
+                                <span>Universal CRM App →</span>
+                            </button>
+                        </div>
+                    </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px' }}>
                     <div
                         style={{
@@ -441,6 +592,7 @@ export function CRMWorkspace() {
                         </div>
                     </div>
                 </div>
+            </div>
             )}
 
             {/* Tab 2: Leads */}
@@ -616,33 +768,22 @@ export function CRMWorkspace() {
                 </div>
             )}
 
-            {/* Tab 5: Embedded Live App (if running locally or standalone configured) */}
-            {activeTab === 'live-app' && standaloneCrmUrl && (
+            {/* Tab 5: Universal CRM App */}
+            {activeTab === 'crm-app' && (
                 <div
                     style={{
                         flex: 1,
-                        minHeight: '720px',
+                        minHeight: '750px',
                         width: '100%',
                         background: '#ffffff',
                         border: '1px solid #e1e6e1',
                         borderRadius: '12px',
                         overflow: 'hidden',
                         position: 'relative',
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
                     }}
                 >
-                    <iframe
-                        key={iframeKey}
-                        src={standaloneCrmUrl}
-                        title="CRM Application Workspace"
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            border: 'none',
-                            minHeight: '720px',
-                        }}
-                        allow="microphone; camera; clipboard-read; clipboard-write;"
-                    />
+                    <CRMApp />
                 </div>
             )}
         </div>

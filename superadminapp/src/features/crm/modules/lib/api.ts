@@ -1,8 +1,8 @@
 export const getApiBaseUrl = (): string => {
   const envApiUrl = typeof process !== 'undefined' && process?.env?.NEXT_PUBLIC_API_URL 
     ? process.env.NEXT_PUBLIC_API_URL 
-    : (import.meta as any)?.env?.VITE_CRM_API_URL || (import.meta as any)?.env?.VITE_API_URL;
-  if (envApiUrl && envApiUrl.startsWith('http')) {
+    : (import.meta as any)?.env?.VITE_CRM_API_URL;
+  if (envApiUrl && envApiUrl.startsWith('http') && !envApiUrl.includes('erp-uec-backend')) {
     return envApiUrl.replace(/\/$/, '');
   }
   // CRM API server is hosted at crm-uec-backend.onrender.com (the ERP port 4000 backend does not host CRM telephony/analytics routes)
@@ -40,16 +40,11 @@ class APIClient {
 
   private clearSessionAndRedirect() {
     if (typeof window === 'undefined') return;
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('token');
+    console.warn('[CRM-API] 401 Unauthorized encountered on CRM API endpoint');
+    // Clear CRM tokens without hard redirect to avoid bouncing into an infinite /login loop
     localStorage.removeItem('paramantra_access_token');
     localStorage.removeItem('paramantra_refresh_token');
     localStorage.removeItem('crm_token');
-    localStorage.removeItem('crm_user');
-    localStorage.removeItem('paramantra_user');
-    if (window.location.pathname !== '/login') {
-      window.location.href = '/login';
-    }
   }
 
   async refreshAccessToken(): Promise<string | null> {
@@ -58,7 +53,6 @@ class APIClient {
     this.refreshPromise = (async () => {
       const refreshToken = this.getRefreshToken();
       if (!refreshToken) {
-        this.clearSessionAndRedirect();
         return null;
       }
 
@@ -71,7 +65,6 @@ class APIClient {
         });
 
         if (!res.ok) {
-          this.clearSessionAndRedirect();
           return null;
         }
 
@@ -93,10 +86,8 @@ class APIClient {
 
           return cleanToken;
         }
-        this.clearSessionAndRedirect();
         return null;
       } catch (err) {
-        this.clearSessionAndRedirect();
         return null;
       } finally {
         this.refreshPromise = null;

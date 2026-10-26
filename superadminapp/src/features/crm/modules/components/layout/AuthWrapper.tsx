@@ -108,13 +108,14 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
     const currentRole = (activeUser?.role || erpRole || 'ADMIN').toUpperCase();
     const isAgent = currentRole === 'AGENT';
+    const normalizedPath = (pathname || '').replace(/\/$/, '') || '/';
 
-    if (!token && pathname !== "/login") {
+    if (!token && normalizedPath !== "/login") {
       router.replace("/login");
       return;
     } 
     
-    if (token && pathname === "/login") {
+    if (token && normalizedPath === "/login") {
       if (isAgent) {
         router.replace("/agent/dashboard");
       } else {
@@ -123,9 +124,9 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
       return;
     } 
     
-    if (token && (pathname === "/" || pathname === "/dashboard" || pathname === "/index.html")) {
+    if (token && (normalizedPath === "/" || normalizedPath === "/dashboard" || normalizedPath === "/index.html")) {
       if (isAgent) {
-        if (pathname !== "/agent/dashboard") {
+        if (normalizedPath !== "/agent/dashboard") {
           router.replace("/agent/dashboard");
         } else {
           setIsAuthenticated(true);
@@ -136,24 +137,24 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
       return;
     } 
     
-    if (token && pathname !== "/login") {
-      const isAgentPortalPath = pathname === '/agent' || (pathname.startsWith('/agent/') && pathname !== '/agent/profile');
+    if (token && normalizedPath !== "/login") {
+      const isAgentPortalPath = normalizedPath === '/agent' || (normalizedPath.startsWith('/agent/') && normalizedPath !== '/agent/profile');
       const isSharedPath = 
-        pathname.startsWith('/calendar') || 
-        pathname.startsWith('/targets') || 
-        pathname.startsWith('/call-logs') || 
-        pathname.startsWith('/call-history') || 
-        pathname.startsWith('/call-center') ||
-        pathname.startsWith('/omnichannel') ||
-        pathname.startsWith('/leads') ||
-        pathname.startsWith('/customers') ||
-        pathname.startsWith('/tickets') ||
-        pathname.startsWith('/sop') ||
-        pathname === '/agent/profile';
+        normalizedPath.startsWith('/calendar') || 
+        normalizedPath.startsWith('/targets') || 
+        normalizedPath.startsWith('/call-logs') || 
+        normalizedPath.startsWith('/call-history') || 
+        normalizedPath.startsWith('/call-center') ||
+        normalizedPath.startsWith('/omnichannel') ||
+        normalizedPath.startsWith('/leads') || 
+        normalizedPath.startsWith('/customers') || 
+        normalizedPath.startsWith('/tickets') || 
+        normalizedPath.startsWith('/sop') || 
+        normalizedPath === '/agent/profile';
       
       // If user is Agent, restrict them to agent routes and shared routes
       if (isAgent && !isAgentPortalPath && !isSharedPath) {
-        if (pathname !== '/agent/dashboard') {
+        if (normalizedPath !== '/agent/dashboard') {
           router.replace('/agent/dashboard');
         } else {
           setIsAuthenticated(true);
@@ -190,18 +191,30 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const isExplicitAgent = activeRole === 'AGENT';
   const shouldShowAgentShell = isExplicitAgent;
 
+  // If user is SuperAdmin inside the ERP SuperAdminLayout shell, do not duplicate the ERP sidebar and navbar
+  const isInsideSuperAdminShell = typeof window !== 'undefined' && Boolean(
+    document.querySelector('.app-shell') ||
+    (erpSessionStr && !isExplicitAgent)
+  );
+
   return (
     <SocketProvider>
       {/* Desktop Shell */}
-      <div className="hidden md:flex h-screen overflow-hidden bg-[#F5F7F5] text-[#202020]">
-        {shouldShowAgentShell ? <AgentSidebar /> : <Sidebar />}
-        <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
-          {shouldShowAgentShell ? <AgentNavbar /> : <Navbar />}
-          <main className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] relative text-[#202020]">
-            {children}
-          </main>
+      {isInsideSuperAdminShell ? (
+        <div className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] text-[#202020] relative w-full h-full min-h-[600px]">
+          {children}
         </div>
-      </div>
+      ) : (
+        <div className="hidden md:flex h-screen overflow-hidden bg-[#F5F7F5] text-[#202020]">
+          {shouldShowAgentShell ? <AgentSidebar /> : <Sidebar />}
+          <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
+            {shouldShowAgentShell ? <AgentNavbar /> : <Navbar />}
+            <main className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] relative text-[#202020]">
+              {children}
+            </main>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Shell */}
       <div 

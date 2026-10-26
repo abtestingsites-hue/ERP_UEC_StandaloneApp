@@ -75,7 +75,9 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    const targetUrl = API_BASE_URL.replace(/\/$/, '');
+    const targetUrl = (API_BASE_URL && !API_BASE_URL.includes('erp-uec-backend')
+      ? API_BASE_URL 
+      : 'https://crm-uec-backend.onrender.com').replace(/\/$/, '');
 
     // Initialize the single canonical managed socket if not already created
     if (!globalSocket) {
