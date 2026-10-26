@@ -5,8 +5,8 @@ export function Link({ href, to, children, className, ...props }: any) {
   const target = href || to || '';
   // If target begins with /call-center, /leads, etc., prefix with /crm
   let mappedTarget = target;
-  if (mappedTarget && mappedTarget.startsWith('/') && !mappedTarget.startsWith('/crm') && !mappedTarget.startsWith('/login') && !mappedTarget.startsWith('/portal')) {
-    mappedTarget = '/crm' + (mappedTarget === '/' ? '' : mappedTarget);
+  if (mappedTarget && mappedTarget.startsWith('/') && mappedTarget !== '/' && !mappedTarget.startsWith('/crm') && !mappedTarget.startsWith('/login') && !mappedTarget.startsWith('/portal')) {
+    mappedTarget = '/crm' + mappedTarget;
   }
   return (
     <RouterLink to={mappedTarget} className={className} {...props}>
@@ -22,15 +22,15 @@ export function useRouter() {
   return {
     push: (url: string) => {
       let mapped = url;
-      if (mapped.startsWith('/') && !mapped.startsWith('/crm') && !mapped.startsWith('/login') && !mapped.startsWith('/portal')) {
-        mapped = '/crm' + (mapped === '/' ? '' : mapped);
+      if (mapped.startsWith('/') && mapped !== '/' && !mapped.startsWith('/crm') && !mapped.startsWith('/login') && !mapped.startsWith('/portal')) {
+        mapped = '/crm' + mapped;
       }
       navigate(mapped);
     },
     replace: (url: string) => {
       let mapped = url;
-      if (mapped.startsWith('/') && !mapped.startsWith('/crm') && !mapped.startsWith('/login') && !mapped.startsWith('/portal')) {
-        mapped = '/crm' + (mapped === '/' ? '' : mapped);
+      if (mapped.startsWith('/') && mapped !== '/' && !mapped.startsWith('/crm') && !mapped.startsWith('/login') && !mapped.startsWith('/portal')) {
+        mapped = '/crm' + mapped;
       }
       navigate(mapped, { replace: true });
     },

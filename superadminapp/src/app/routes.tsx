@@ -108,6 +108,8 @@ export function AppRoutes() {
 			<Route path="client-portal/*" element={<Navigate to="/portal" replace />} />
 			<Route path="patient-portal/*" element={<Navigate to="/portal" replace />} />
 
+			<Route path="index.html" element={<IndexRedirect />} />
+
 			<Route element={<AuthLayout />}>
 				<Route path="login" element={<Login />} />
 			</Route>
@@ -121,6 +123,7 @@ export function AppRoutes() {
 
 				<Route element={<SuperAdminLayout />}>
 					<Route index element={<IndexRedirect />} />
+					<Route path="index.html" element={<IndexRedirect />} />
 					<Route path="dashboard" element={<DashboardGuard><Dashboard /></DashboardGuard>} />
 					<Route path="inventory/*" element={<DomainGuard domainId="inventory"><InventoryWorkspace /></DomainGuard>} />
 					<Route path="admission/*" element={<DomainGuard domainId="admission"><AdmissionWorkspace /></DomainGuard>} />
