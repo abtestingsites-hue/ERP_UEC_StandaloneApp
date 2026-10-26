@@ -54,79 +54,70 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     let token = localStorage.getItem("crm_token");
     let userStr = localStorage.getItem("crm_user");
 
-    // Also check session storage fallback if user authenticated via ERP login
-    if (!token) {
+    // 1. First check if ERP session exists in sessionStorage
+    const erpSessionStr = typeof window !== "undefined" ? sessionStorage.getItem("superadmin-erp-session") : null;
+    let erpRole = '';
+    if (erpSessionStr) {
       try {
-        const erpSessionStr = sessionStorage.getItem("superadmin-erp-session");
-        if (erpSessionStr) {
-          const erpSession = JSON.parse(erpSessionStr);
-          if (erpSession?.accessToken) {
-            token = erpSession.accessToken;
-            localStorage.setItem("crm_token", token);
-            localStorage.setItem("paramantra_access_token", token);
-            if (erpSession.user) {
-              const uObj = {
-                id: erpSession.user.id,
-                email: erpSession.user.email,
-                name: erpSession.user.name,
-                role: erpSession.user.role ? (typeof erpSession.user.role === 'string' ? erpSession.user.role : erpSession.user.role.name) : 'ADMIN',
-              };
-              userStr = JSON.stringify(uObj);
-              localStorage.setItem("crm_user", userStr);
-              localStorage.setItem("paramantra_user", userStr);
-            }
+        const erpSession = JSON.parse(erpSessionStr);
+        if (erpSession?.accessToken) {
+          token = erpSession.accessToken;
+          localStorage.setItem("crm_token", token);
+          localStorage.setItem("paramantra_access_token", token);
+          if (erpSession.user) {
+            const rawRole = erpSession.user.role 
+              ? (typeof erpSession.user.role === 'string' ? erpSession.user.role : erpSession.user.role.name) 
+              : 'ADMIN';
+            erpRole = rawRole.toUpperCase();
+            const uObj = {
+              id: erpSession.user.id,
+              email: erpSession.user.email,
+              name: erpSession.user.name,
+              role: erpRole,
+            };
+            userStr = JSON.stringify(uObj);
+            localStorage.setItem("crm_user", userStr);
+            localStorage.setItem("paramantra_user", userStr);
           }
         }
       } catch (e) {
-        console.warn('Could not read ERP session fallback:', e);
+        console.warn('Could not read ERP session:', e);
       }
     }
-    
+
+    // 2. Parse current user & normalize role
+    let activeUser: any = null;
     if (userStr) {
       try {
-        const user = JSON.parse(userStr);
-        useAuthStore.getState().setUser(user);
-      } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
+        activeUser = JSON.parse(userStr);
+        if (activeUser?.role) {
+          activeUser.role = String(activeUser.role).toUpperCase();
+        }
+        useAuthStore.getState().setUser(activeUser);
+      } catch (e) { 
+        console.warn('[UI Exception Swallowed Fixed]:', e); 
+      }
     }
+
+    const currentRole = (activeUser?.role || erpRole || 'ADMIN').toUpperCase();
+    const isAgent = currentRole === 'AGENT';
+    const isSuperAdminOrAdmin = currentRole === 'SUPER_ADMIN' || currentRole === 'ADMIN' || currentRole === 'SUPERADMIN';
 
     if (!token && pathname !== "/login") {
       router.push("/login");
     } else if (token && pathname === "/login") {
-      let role = 'ADMIN';
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          role = user.role || 'ADMIN';
-        } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
-      }
-      
-      if (role === 'AGENT') {
+      if (isAgent) {
         router.push("/agent/dashboard");
       } else {
         router.push("/dashboard");
       }
     } else if (token && pathname === "/") {
-      let role = 'ADMIN';
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          role = user.role || 'ADMIN';
-        } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
-      }
-      if (role === 'AGENT') {
+      if (isAgent) {
         router.push("/agent/dashboard");
       } else {
         router.push("/dashboard");
       }
     } else if (token && pathname !== "/login") {
-      let role = 'ADMIN';
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          role = user.role || 'ADMIN';
-        } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
-      }
-      
       const isAgentPortalPath = pathname === '/agent' || (pathname.startsWith('/agent/') && pathname !== '/agent/profile');
       const isSharedPath = 
         pathname.startsWith('/calendar') || 
@@ -141,10 +132,9 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         pathname.startsWith('/sop') ||
         pathname === '/agent/profile';
       
-      if (role === 'AGENT' && !isAgentPortalPath && !isSharedPath) {
+      // If user is Agent, restrict them to agent routes and shared routes
+      if (isAgent && !isAgentPortalPath && !isSharedPath) {
         router.push('/agent/dashboard');
-      } else if (role !== 'AGENT' && isAgentPortalPath) {
-        router.push('/dashboard');
       } else {
         setIsAuthenticated(true);
       }
@@ -154,8 +144,8 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   }, [pathname, router]);
 
   if (isAuthenticated === null) {
-    return <div className="min-h-screen bg-[#000] flex items-center justify-center">
-      <span className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></span>
+    return <div className="min-h-screen bg-[#F5F7F5] flex items-center justify-center">
+      <span className="w-8 h-8 border-2 border-[#039A01]/20 border-t-[#039A01] rounded-full animate-spin"></span>
     </div>;
   }
 
@@ -163,8 +153,19 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  // Use the actual role to determine the shell, defaulting to path check if role isn't loaded yet
-  const shouldShowAgentShell = userRole === 'AGENT' || (!userRole && (pathname === '/agent' || pathname.startsWith('/agent/')));
+  // Determine active role dynamically from auth store or storage
+  const storedUserStr = typeof window !== 'undefined' ? localStorage.getItem('crm_user') : null;
+  let activeRole = (userRole || '').toUpperCase();
+  if (!activeRole && storedUserStr) {
+    try {
+      activeRole = (JSON.parse(storedUserStr).role || '').toUpperCase();
+    } catch (_) {}
+  }
+
+  // Only show the Agent shell if the user is genuinely an AGENT
+  // Super Admins and Admins ALWAYS see the full admin Sidebar & Navbar
+  const isExplicitAgent = activeRole === 'AGENT';
+  const shouldShowAgentShell = isExplicitAgent;
 
   return (
     <SocketProvider>
