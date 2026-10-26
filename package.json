@@ -5,6 +5,7 @@
   "description": "Unified runner for ERP Backend, Frontend, and Standalone Micro-Apps",
   "scripts": {
     "dev": "npm run start:all",
+    "build": "npm --prefix superadminapp run build",
     "start:all": "concurrently -k -p \"[{name}]\" -n \"BACKEND,FRONTEND,SUPERADMIN,NURSING,HOMECARE,VISITOR,UNCF,HR,INVENTORY,FINANCE,CRM\" -c \"magenta,blue,red,cyan,green,yellow,white,dim,brightMagenta,brightBlue,brightGreen\" \"npm run --prefix Backend dev\" \"npm run --prefix Frontend dev\" \"npm run --prefix superadminapp dev\" \"npm run --prefix NursingApp dev\" \"npm run --prefix HomeCareApp dev\" \"npm run --prefix VisitorApp dev\" \"npm run --prefix UNCFDonationsApp dev\" \"npm run --prefix HRApp dev\" \"npm run --prefix InventoryApp dev\" \"npm run --prefix FinanceBillingApp dev\" \"npm run --prefix CRMApp dev\"",
     "start:core": "concurrently -k -p \"[{name}]\" -n \"BACKEND,FRONTEND\" -c \"magenta,blue\" \"npm run --prefix Backend dev\" \"npm run --prefix Frontend dev\"",
     "start:backend": "npm run --prefix Backend dev"

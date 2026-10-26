@@ -7,7 +7,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Universal Nature Care & Cure Foundation - ERP</title>
+    <script>
+      window.addEventListener('vite:preloadError', function () {
+        var key = 'vite_preload_retry';
+        var last = sessionStorage.getItem(key);
+        var now = Date.now();
+        if (!last || now - parseInt(last, 10) > 10000) {
+          sessionStorage.setItem(key, now.toString());
+          window.location.reload();
+        }
+      });
+      window.addEventListener('error', function (e) {
+        if (e && e.target && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
+          var key = 'asset_error_retry';
+          var last = sessionStorage.getItem(key);
+          var now = Date.now();
+          if (!last || now - parseInt(last, 10) > 10000) {
+            sessionStorage.setItem(key, now.toString());
+            window.location.reload();
+          }
+        }
+      }, true);
+    </script>
   </head>
   <body>
     <script>
