@@ -86,19 +86,36 @@ export default function SuperAdminConsolePage() {
   useEffect(() => {
     try {
       const stored = localStorage.getItem('crm_user');
+      let role = '';
       if (stored) {
         const parsed = JSON.parse(stored);
-        const normalizedRole = String(parsed.role || '').toUpperCase();
-        if (normalizedRole === 'SUPER_ADMIN' || normalizedRole === 'ADMIN' || normalizedRole.includes('ADMIN')) {
-          setIsSuperAdmin(true);
+        role = String(parsed.role || '').toUpperCase();
+      }
+      if (!role && typeof window !== 'undefined') {
+        const erpStr = sessionStorage.getItem('superadmin-erp-session') || localStorage.getItem('superadmin-erp-session');
+        if (erpStr) {
+          const parsed = JSON.parse(erpStr);
+          const rawRole = parsed?.user?.role ? (typeof parsed.user.role === 'string' ? parsed.user.role : parsed.user.role.name) : 'ADMIN';
+          role = String(rawRole).toUpperCase();
         }
+      }
+      if (role === 'SUPER_ADMIN' || role === 'ADMIN' || role.includes('ADMIN')) {
+        setIsSuperAdmin(true);
       }
     } catch (_) {}
     setIsLoadingAuth(false);
   }, []);
 
   const getHeaders = () => {
-    const token = localStorage.getItem('paramantra_access_token') || '';
+    let token = localStorage.getItem('paramantra_access_token') || localStorage.getItem('crm_token') || '';
+    if (!token && typeof window !== 'undefined') {
+      const erpStr = sessionStorage.getItem('superadmin-erp-session') || localStorage.getItem('superadmin-erp-session');
+      if (erpStr) {
+        try {
+          token = JSON.parse(erpStr)?.accessToken || '';
+        } catch (_) {}
+      }
+    }
     return {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',

@@ -191,10 +191,14 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const isExplicitAgent = activeRole === 'AGENT';
   const shouldShowAgentShell = isExplicitAgent;
 
+  const rawErpSessionStr = typeof window !== 'undefined' 
+    ? (sessionStorage.getItem("superadmin-erp-session") || localStorage.getItem("superadmin-erp-session")) 
+    : null;
+
   // If user is SuperAdmin inside the ERP SuperAdminLayout shell, do not duplicate the ERP sidebar and navbar
   const isInsideSuperAdminShell = typeof window !== 'undefined' && Boolean(
     document.querySelector('.app-shell') ||
-    (erpSessionStr && !isExplicitAgent)
+    (rawErpSessionStr && !isExplicitAgent)
   );
 
   return (
