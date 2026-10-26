@@ -70,7 +70,10 @@ export const profileService = {
 				status: String(item.status || 'PRESENT'),
 				note: item.note ? String(item.note) : null,
 			}))
-			return { logs, isStaffLinked: true }
+			const isStaffLinked = res.data?.meta?.isStaffLinked !== undefined
+				? Boolean(res.data.meta.isStaffLinked)
+				: true
+			return { logs, isStaffLinked }
 		} catch (err: unknown) {
 			const errorObj = err as { response?: { status?: number; data?: { message?: string } } }
 			const isNotLinked = errorObj.response?.status === 404 || errorObj.response?.data?.message?.includes('No staff profile')
@@ -105,7 +108,10 @@ export const profileService = {
 				remarks: item.remarks ? String(item.remarks) : '',
 				createdAt: item.createdAt ? String(item.createdAt).slice(0, 10) : '',
 			}))
-			return { requests, isStaffLinked: true }
+			const isStaffLinked = res.data?.meta?.isStaffLinked !== undefined
+				? Boolean(res.data.meta.isStaffLinked)
+				: true
+			return { requests, isStaffLinked }
 		} catch (err: unknown) {
 			const errorObj = err as { response?: { status?: number; data?: { message?: string } } }
 			const isNotLinked = errorObj.response?.status === 404 || errorObj.response?.data?.message?.includes('No staff profile')

@@ -681,9 +681,15 @@ export const MyProfileModal: React.FC<MyProfileModalProps> = ({
 											{!isCheckedInToday ? (
 												<button
 													onClick={() => handleMarkAttendance('CHECK_IN')}
-													disabled={isSubmittingAttendance}
+													disabled={isSubmittingAttendance || !isStaffLinked}
 													className="inv-btn inv-btn--primary"
-													style={{ padding: '8px 18px', fontSize: 13 }}
+													style={{
+														padding: '8px 18px',
+														fontSize: 13,
+														opacity: !isStaffLinked ? 0.6 : 1,
+														cursor: !isStaffLinked ? 'not-allowed' : 'pointer',
+													}}
+													title={!isStaffLinked ? 'Staff profile required to record personal attendance' : undefined}
 												>
 													<LogIn size={15} />
 													{isSubmittingAttendance ? 'Processing...' : 'Clock In / Check In'}
@@ -691,7 +697,7 @@ export const MyProfileModal: React.FC<MyProfileModalProps> = ({
 											) : !isCheckedOutToday ? (
 												<button
 													onClick={() => handleMarkAttendance('CHECK_OUT')}
-													disabled={isSubmittingAttendance}
+													disabled={isSubmittingAttendance || !isStaffLinked}
 													className="inv-btn"
 													style={{
 														background: 'var(--status-error-text)',
@@ -699,7 +705,10 @@ export const MyProfileModal: React.FC<MyProfileModalProps> = ({
 														border: '1px solid var(--status-error-text)',
 														padding: '8px 18px',
 														fontSize: 13,
+														opacity: !isStaffLinked ? 0.6 : 1,
+														cursor: !isStaffLinked ? 'not-allowed' : 'pointer',
 													}}
+													title={!isStaffLinked ? 'Staff profile required to record personal attendance' : undefined}
 												>
 													<LogOut size={15} />
 													{isSubmittingAttendance ? 'Processing...' : 'Clock Out / Check Out'}
@@ -857,8 +866,14 @@ export const MyProfileModal: React.FC<MyProfileModalProps> = ({
 
 										<button
 											onClick={() => setShowLeaveForm(!showLeaveForm)}
+											disabled={!isStaffLinked}
 											className="inv-btn inv-btn--primary"
-											style={{ fontSize: 13 }}
+											style={{
+												fontSize: 13,
+												opacity: !isStaffLinked ? 0.6 : 1,
+												cursor: !isStaffLinked ? 'not-allowed' : 'pointer',
+											}}
+											title={!isStaffLinked ? 'Staff profile required to apply for personal leave' : undefined}
 										>
 											<CalendarPlus size={15} />
 											{showLeaveForm ? 'Cancel Application' : 'Request Leave'}
