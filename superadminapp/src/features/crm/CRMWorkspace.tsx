@@ -27,6 +27,7 @@ import { readAuthSession } from '../auth/authStorage';
 import { isSuperAdmin } from '../../utils/permissions';
 import { useAuthStore } from './modules/store/authStore';
 import { AuthWrapper } from './modules/components/layout/AuthWrapper';
+import { ensureCrmAuthSession } from './modules/lib/api';
 import './modules/pages/globals.css';
 
 // Real CRM Page Modules
@@ -89,28 +90,9 @@ export function CRMWorkspace() {
     const [refreshKey, setRefreshKey] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
-    // Synchronize SSO tokens and role into localStorage for CRM modules
+    // Safely synchronize authentic CRM tokens without overwriting with ERP access token
     useEffect(() => {
-        if (session?.accessToken) {
-            localStorage.setItem('crm_token', session.accessToken);
-            localStorage.setItem('paramantra_access_token', session.accessToken);
-            const rawRole = session.user?.role
-                ? typeof session.user.role === 'string'
-                    ? session.user.role
-                    : session.user.role.name
-                : 'ADMIN';
-            const role = String(rawRole).toUpperCase();
-            const uObj = {
-                id: session.user?.id || 'erp-superadmin',
-                email: session.user?.email || 'admin@uec.com',
-                name: session.user?.name || 'Administrator',
-                role: role,
-            };
-            const uStr = JSON.stringify(uObj);
-            localStorage.setItem('crm_user', uStr);
-            localStorage.setItem('paramantra_user', uStr);
-            useAuthStore.getState().setUser(uObj);
-        }
+        ensureCrmAuthSession();
     }, [session?.accessToken]);
 
     const handleTabChange = (tabId: string) => {
@@ -145,7 +127,7 @@ export function CRMWorkspace() {
     ];
 
     return (
-        <div className="crm-workspace inventory-workspace crm-light-theme" style={{ width: '100%', minHeight: '100%' }}>
+        <div className="crm-workspace inventory-workspace crm-light-theme" style={{ width: '100%', maxWidth: '100%', minHeight: '100%', overflowX: 'hidden' }}>
             <PageHeader
                 eyebrow="BUSINESS DOMAIN · CLIENT RELATIONS & CRM"
                 title="Client Relations & CRM"
@@ -188,7 +170,7 @@ export function CRMWorkspace() {
             />
 
             {/* Navigation Tabs Bar */}
-            <div className="inv-tabs-nav-bar" style={{ marginTop: '16px', borderBottom: '1px solid #DCE5DD', overflowX: 'auto' }}>
+            <div className="inv-tabs-nav-bar" style={{ marginTop: '16px', borderBottom: '1px solid #DCE5DD', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                 <nav className="inv-tabs-list" aria-label="CRM Workspaces" style={{ display: 'flex', whiteSpace: 'nowrap', gap: '4px' }}>
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
@@ -209,7 +191,7 @@ export function CRMWorkspace() {
             </div>
 
             {/* Tab Body: Renders the real CRM module inside AuthWrapper */}
-            <div className="inv-tab-body" key={refreshKey} style={{ marginTop: '16px', minHeight: '500px' }}>
+            <div className="inv-tab-body" key={refreshKey} style={{ marginTop: '16px', minHeight: 'auto', width: '100%', maxWidth: '100%' }}>
                 <AuthWrapper>
                     <Suspense fallback={<CrmTabLoading />}>
                         {activeTab === 'overview' && (

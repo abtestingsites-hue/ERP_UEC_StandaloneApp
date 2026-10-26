@@ -619,7 +619,7 @@ export function CallWidget() {
 
   if (!activeCall && callState === 'IDLE' && !showFeedbackModal && !showConversionModal) {
     return (
-      <div className="text-center w-full max-w-md">
+      <div className="text-center w-full max-w-md px-2">
         <div className="w-24 h-24 bg-[#E7F4E8] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xs border border-[#C8E6CA]">
            <Phone className="w-10 h-10 text-[#026601]" />
         </div>
@@ -641,7 +641,7 @@ export function CallWidget() {
 
   return (
     <>
-      <div className="w-full max-w-sm bg-white/95 backdrop-blur-xl border border-[#E1E6E1] rounded-3xl p-6 shadow-xl relative overflow-hidden text-[#202020]">
+      <div className="w-full max-w-sm bg-white/95 backdrop-blur-xl border border-[#E1E6E1] rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl relative overflow-hidden text-[#202020]">
         {/* Background Glow Effect */}
         <div className={`absolute -top-24 -left-24 w-48 h-48 rounded-full blur-3xl opacity-20 pointer-events-none transition-colors duration-1000 ${
           callState === 'CONNECTED' ? 'bg-emerald-500' : 
@@ -762,7 +762,7 @@ export function CallWidget() {
           )}
           {/* Action triggers: Pre-Call/Active-Call Customer History & Intake */}
           {activeCall && (
-            <div className="w-full flex gap-2 mt-4">
+            <div className="w-full flex flex-col sm:flex-row gap-2 mt-4">
               <button
                 type="button"
                 onClick={() => setShowCustomerHistory(true)}

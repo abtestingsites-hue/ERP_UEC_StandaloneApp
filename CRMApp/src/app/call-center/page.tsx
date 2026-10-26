@@ -202,46 +202,46 @@ export default function CallCenterPage() {
   };
 
   return (
-    <div className="h-full flex flex-col p-6 overflow-hidden">
-      <header className="mb-6 flex justify-between items-end shrink-0">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Call Center</h1>
-          <p className="text-slate-500 mt-1">Manage active WebRTC calls, queue board, and live interactions.</p>
+    <div className="w-full flex-1 flex flex-col p-3 sm:p-5 lg:p-6 min-h-0 overflow-y-auto lg:overflow-hidden">
+      <header className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 sm:gap-4 shrink-0">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Call Center</h1>
+          <p className="text-slate-500 mt-0.5 sm:mt-1 text-xs sm:text-sm">Manage active WebRTC calls, queue board, and live interactions.</p>
         </div>
 
         {/* Tabs */}
-        <div className="flex bg-[#111] border border-[#222] rounded-lg p-1">
+        <div className="flex bg-[#111] border border-[#222] rounded-lg p-1 overflow-x-auto max-w-full custom-scrollbar">
           <button
             onClick={() => setActiveTab('inbound')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'inbound' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${activeTab === 'inbound' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <Phone className="w-4 h-4" /> Inbound
+            <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Inbound
           </button>
           <button
             onClick={() => setActiveTab('outbound')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'outbound' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${activeTab === 'outbound' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <PhoneOutgoing className="w-4 h-4" /> Outbound
+            <PhoneOutgoing className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Outbound
           </button>
           <button
             onClick={() => setActiveTab('internal')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'internal' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${activeTab === 'internal' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <Users className="w-4 h-4" /> Internal
+            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Internal
           </button>
           <button
             onClick={() => setActiveTab('queue')}
-            className={`px-6 py-2 rounded-md text-sm font-bold flex items-center gap-2 transition-colors ${activeTab === 'queue' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${activeTab === 'queue' ? 'bg-[#222] text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <Activity className="w-4 h-4 text-emerald-400" /> Queue Engine
+            <Activity className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" /> Queue Engine
           </button>
         </div>
       </header>
 
-      <div className="flex-1 flex gap-6 min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row gap-4 sm:gap-6 min-h-0">
 
         {/* Left Side: Dynamic Content based on Tab */}
-        <div className="w-1/2 flex flex-col bg-[#050505] border border-[#222] rounded-2xl shadow-lg overflow-hidden">
+        <div className="w-full lg:w-1/2 flex flex-col bg-[#050505] border border-[#222] rounded-2xl shadow-lg overflow-hidden min-h-[380px] lg:min-h-0">
           {activeTab === 'queue' && (
             <QueueOperationsView />
           )}

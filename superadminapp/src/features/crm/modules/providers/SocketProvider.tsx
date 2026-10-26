@@ -6,7 +6,7 @@ import { useAuthStore } from '../store/authStore';
 import { useConversationStore } from '../store/conversationStore';
 import { useCallStore } from '../store/useCallStore';
 import { useAnalyticsStore } from '../store/useAnalyticsStore';
-import { apiFetch, API_BASE_URL } from '../lib/api';
+import { apiFetch, API_BASE_URL, isCrmToken, ensureCrmAuthSession } from '../lib/api';
 
 interface SocketContextProps {
   socket: Socket | null;
@@ -37,7 +37,9 @@ export const getStoredToken = (): string => {
   const token =
     localStorage.getItem('paramantra_access_token') ||
     localStorage.getItem('crm_token');
-  return token ? token.trim().replace(/^["']|["']$/g, '') : '';
+  if (!token) return '';
+  const clean = token.trim().replace(/^["']|["']$/g, '');
+  return isCrmToken(clean) ? clean : '';
 };
 
 /**
@@ -121,11 +123,23 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
       globalSocket.on('connect_error', (err: any) => {
         console.warn('[AGENT-SOCKET] Connection/Handshake error:', err?.message);
+        if (err?.message?.includes('AUTH_REJECTED')) {
+          ensureCrmAuthSession().then((freshToken) => {
+            if (freshToken && globalSocket) {
+              globalSocket.auth = {
+                token: freshToken,
+                agentId: user?.agentId || user?.id,
+              };
+              globalSocket.connect();
+            }
+          });
+          return;
+        }
         const freshToken = getStoredToken();
         if (globalSocket) {
           globalSocket.auth = {
             token: freshToken,
-            agentId: user.agentId || user.id,
+            agentId: user?.agentId || user?.id,
           };
         }
       });
@@ -449,11 +463,12 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       const { status, incomingCall, setIncomingCall } = useCallStore.getState();
       const token = getStoredToken();
       if (!token) return;
-      if (status === 'AVAILABLE' && !incomingCall && user?.id) {
+      const targetAgentId = user?.agentId || user?.id;
+      if (status === 'AVAILABLE' && !incomingCall && targetAgentId) {
         try {
           let baseUrl = process.env.NEXT_PUBLIC_API_URL || `${API_BASE_URL}`;
           if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
-          const apiUrl = `${baseUrl}/telephony/my-ringing-call?agentId=${user.id}`;
+          const apiUrl = `${baseUrl}/telephony/my-ringing-call?agentId=${targetAgentId}`;
 
           const res = await apiFetch(apiUrl);
           if (res.ok) {
@@ -463,9 +478,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
               setIncomingCall(data.call);
             }
           }
-        } catch (e) {
-          console.warn('[UI Polling Exception Swallowed]:', e);
-        }
+        } catch (_) {}
       }
     }, 5000);
 

@@ -14,6 +14,7 @@ import { AdminTicketToast } from "../../components/tickets/AdminTicketToast";
 import { MobileHeader } from "./MobileHeader";
 import { MobileDrawer } from "./MobileDrawer";
 import { MobileBottomNav } from "./MobileBottomNav";
+import { ensureCrmAuthSession, isCrmToken } from "../../lib/api";
 
 export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -62,27 +63,19 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     if (erpSessionStr) {
       try {
         const erpSession = JSON.parse(erpSessionStr);
-        if (erpSession?.accessToken) {
-          token = erpSession.accessToken;
-          localStorage.setItem("crm_token", token);
-          localStorage.setItem("paramantra_access_token", token);
-          sessionStorage.setItem("superadmin-erp-session", erpSessionStr);
-          localStorage.setItem("superadmin-erp-session", erpSessionStr);
-          if (erpSession.user) {
-            const rawRole = erpSession.user.role 
-              ? (typeof erpSession.user.role === 'string' ? erpSession.user.role : erpSession.user.role.name) 
-              : 'ADMIN';
-            erpRole = rawRole.toUpperCase();
-            const uObj = {
-              id: erpSession.user.id,
-              email: erpSession.user.email,
-              name: erpSession.user.name,
-              role: erpRole,
-            };
-            userStr = JSON.stringify(uObj);
-            localStorage.setItem("crm_user", userStr);
-            localStorage.setItem("paramantra_user", userStr);
-          }
+        if (erpSession?.user) {
+          const rawRole = erpSession.user.role 
+            ? (typeof erpSession.user.role === 'string' ? erpSession.user.role : erpSession.user.role.name) 
+            : 'ADMIN';
+          erpRole = String(rawRole).toUpperCase();
+        }
+        // Only trigger session acquisition if no valid CRM token currently exists
+        if (!isCrmToken(token)) {
+          ensureCrmAuthSession().then(newToken => {
+            if (newToken) {
+              setIsAuthenticated(true);
+            }
+          });
         }
       } catch (e) {
         console.warn('Could not read ERP session:', e);
@@ -210,7 +203,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   if (isInsideSuperAdminShell) {
     return (
       <SocketProvider>
-        <div className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] text-[#202020] relative w-full h-full min-h-[600px]">
+        <div className="flex-1 flex flex-col bg-[#F5F7F5] text-[#202020] relative w-full h-auto min-h-0 overflow-visible">
           {children}
         </div>
         <IncomingCallModal />

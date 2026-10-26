@@ -144,56 +144,56 @@ export default function AgentCallCenter() {
   };
 
   return (
-    <div className="h-full flex flex-col p-6 overflow-hidden bg-[#F5F7F5] text-[#202020]">
+    <div className="w-full flex-1 flex flex-col p-3 sm:p-5 lg:p-6 bg-[#F5F7F5] text-[#202020] min-h-0 overflow-y-auto lg:overflow-hidden">
       {/* Header */}
-      <header className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end shrink-0 gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#202020]">Call Center</h1>
-          <p className="text-[#5F6962] mt-1 text-sm">Manage active WebRTC calls, queue board, and live interactions.</p>
+      <header className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 sm:gap-4 shrink-0">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#202020]">Call Center</h1>
+          <p className="text-[#5F6962] mt-0.5 sm:mt-1 text-xs sm:text-sm">Manage active WebRTC calls, queue board, and live interactions.</p>
         </div>
 
         {/* 4 Tabs: Inbound, Outbound, Internal, Queue Engine */}
-        <div className="flex bg-white border border-[#E1E6E1] rounded-xl p-1 shadow-xs">
+        <div className="flex bg-white border border-[#E1E6E1] rounded-xl p-1 shadow-xs overflow-x-auto max-w-full custom-scrollbar">
           <button
             onClick={() => setActiveTab('inbound')}
-            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
+            className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'inbound' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
             }`}
           >
-            <Phone className="w-4 h-4" /> Inbound
+            <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Inbound
           </button>
           <button
             onClick={() => setActiveTab('outbound')}
-            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
+            className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'outbound' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
             }`}
           >
-            <PhoneOutgoing className="w-4 h-4" /> Outbound
+            <PhoneOutgoing className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Outbound
           </button>
           <button
             onClick={() => setActiveTab('internal')}
-            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
+            className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'internal' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
             }`}
           >
-            <Users className="w-4 h-4" /> Internal
+            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Internal
           </button>
           <button
             onClick={() => setActiveTab('queue')}
-            className={`px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors ${
+            className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 sm:gap-2 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'queue' ? 'bg-[#039A01] text-white shadow-xs' : 'text-[#5F6962] hover:text-[#202020]'
             }`}
           >
-            <Activity className="w-4 h-4" /> Queue Engine
+            <Activity className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Queue Engine
           </button>
         </div>
       </header>
 
-      {/* Balanced 50/50 Two Panel Layout (Strictly Side-by-Side) */}
-      <div className="flex-1 flex flex-row gap-6 min-h-0 overflow-hidden">
+      {/* Two Panel Layout: Stacks on mobile, Side-by-Side on desktop */}
+      <div className="flex-1 flex flex-col lg:flex-row gap-4 sm:gap-6 min-h-0 overflow-y-auto lg:overflow-hidden">
 
-        {/* Left Side (50%): Dynamic Content based on Tab */}
-        <div className="w-1/2 flex-1 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs overflow-hidden min-h-0">
+        {/* Left Side: Dynamic Content based on Tab */}
+        <div className="w-full lg:w-1/2 flex-1 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs overflow-hidden min-h-[380px] lg:min-h-0">
           {activeTab === 'queue' && (
             <QueueOperationsView />
           )}
@@ -359,8 +359,8 @@ export default function AgentCallCenter() {
           )}
         </div>
 
-        {/* Right Side (50%): Active WebRTC Phone System */}
-        <div className="w-1/2 flex-1 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs p-8 items-center justify-center min-h-0">
+        {/* Right Side: Active WebRTC Phone System */}
+        <div className="w-full lg:w-1/2 flex-1 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-xs p-4 sm:p-6 lg:p-8 items-center justify-center min-h-[320px] lg:min-h-0">
           <CallWidget />
         </div>
 
