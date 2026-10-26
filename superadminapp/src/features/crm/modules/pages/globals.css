@@ -103,3 +103,177 @@
     opacity: 0 !important;
   }
 }
+
+/* ==========================================================================
+   ERP LIGHT THEME ADAPTATION FOR CRM MODULES
+   Seamlessly maps dark CRM utility classes to clean ERP minimalist palette
+   ========================================================================== */
+
+.crm-workspace,
+.crm-root,
+.crm-light-theme {
+  background-color: #F5F7F5 !important;
+  color: #202020 !important;
+  color-scheme: light !important;
+}
+
+/* 1. Canvas Background Overrides */
+.crm-workspace .bg-\[\#000\],
+.crm-workspace .bg-\[\#000000\],
+.crm-workspace .bg-\[\#050505\],
+.crm-workspace .bg-\[\#070707\],
+.crm-workspace .bg-\[\#080808\],
+.crm-workspace .bg-\[\#0a0a0a\],
+.crm-workspace .bg-\[\#0c0c0e\],
+.crm-root .bg-\[\#000\],
+.crm-root .bg-\[\#000000\],
+.crm-root .bg-\[\#050505\],
+.crm-root .bg-\[\#070707\],
+.crm-root .bg-\[\#080808\],
+.crm-root .bg-\[\#0a0a0a\],
+.crm-root .bg-\[\#0c0c0e\] {
+  background-color: #F5F7F5 !important;
+  color: #202020 !important;
+}
+
+/* 2. Card / Surface / Container Overrides */
+.crm-workspace .bg-\[\#0f0f11\],
+.crm-workspace .bg-\[\#111\],
+.crm-workspace .bg-\[\#111111\],
+.crm-workspace .bg-\[\#141416\],
+.crm-workspace .bg-\[\#18181b\],
+.crm-workspace .bg-\[\#1a1a1a\],
+.crm-workspace .bg-\[\#1e1e22\],
+.crm-workspace .bg-\[\#121214\],
+.crm-workspace .bg-\[\#171717\],
+.crm-workspace .bg-zinc-900,
+.crm-workspace .bg-zinc-950,
+.crm-workspace .bg-neutral-900,
+.crm-workspace .bg-neutral-950,
+.crm-root .bg-\[\#0f0f11\],
+.crm-root .bg-\[\#111\],
+.crm-root .bg-\[\#111111\],
+.crm-root .bg-\[\#141416\],
+.crm-root .bg-\[\#18181b\],
+.crm-root .bg-\[\#1a1a1a\],
+.crm-root .bg-\[\#1e1e22\],
+.crm-root .bg-\[\#121214\],
+.crm-root .bg-\[\#171717\],
+.crm-root .bg-zinc-900,
+.crm-root .bg-zinc-950,
+.crm-root .bg-neutral-900,
+.crm-root .bg-neutral-950 {
+  background-color: #FFFFFF !important;
+  color: #202020 !important;
+}
+
+/* 3. Subtle / Muted Surface Overrides */
+.crm-workspace .bg-\[\#161618\],
+.crm-workspace .bg-\[\#202022\],
+.crm-workspace .bg-zinc-800,
+.crm-root .bg-\[\#161618\],
+.crm-root .bg-\[\#202022\],
+.crm-root .bg-zinc-800 {
+  background-color: #EFF3EF !important;
+  color: #202020 !important;
+}
+
+/* 4. Border Overrides */
+.crm-workspace .border-\[\#222\],
+.crm-workspace .border-\[\#1c1c1c\],
+.crm-workspace .border-\[\#282828\],
+.crm-workspace .border-\[\#333\],
+.crm-workspace .border-\[\#2a2a2d\],
+.crm-workspace .border-\[\#27272a\],
+.crm-workspace .border-zinc-800,
+.crm-workspace .border-neutral-800,
+.crm-root .border-\[\#222\],
+.crm-root .border-\[\#1c1c1c\],
+.crm-root .border-\[\#282828\],
+.crm-root .border-\[\#333\],
+.crm-root .border-\[\#2a2a2d\],
+.crm-root .border-\[\#27272a\],
+.crm-root .border-zinc-800,
+.crm-root .border-neutral-800 {
+  border-color: #E1E6E1 !important;
+}
+
+/* 5. Typography Color Mapping */
+.crm-workspace .text-white,
+.crm-workspace .text-slate-100,
+.crm-workspace .text-slate-200,
+.crm-workspace .text-zinc-100,
+.crm-workspace .text-zinc-200,
+.crm-root .text-white,
+.crm-root .text-slate-100,
+.crm-root .text-slate-200,
+.crm-root .text-zinc-100,
+.crm-root .text-zinc-200 {
+  color: #202020 !important;
+}
+
+.crm-workspace .text-slate-300,
+.crm-workspace .text-slate-400,
+.crm-workspace .text-slate-500,
+.crm-workspace .text-zinc-400,
+.crm-workspace .text-zinc-500,
+.crm-root .text-slate-300,
+.crm-root .text-slate-400,
+.crm-root .text-slate-500,
+.crm-root .text-zinc-400,
+.crm-root .text-zinc-500 {
+  color: #5F6962 !important;
+}
+
+/* 6. Table Layouts */
+.crm-workspace table thead,
+.crm-root table thead {
+  background-color: #F5F7F5 !important;
+  color: #5F6962 !important;
+  border-bottom: 1px solid #E1E6E1 !important;
+}
+
+.crm-workspace table thead th,
+.crm-root table thead th {
+  color: #5F6962 !important;
+}
+
+.crm-workspace table tbody tr,
+.crm-root table tbody tr {
+  background-color: #FFFFFF !important;
+  color: #202020 !important;
+  border-bottom: 1px solid #E1E6E1 !important;
+}
+
+.crm-workspace table tbody tr:hover,
+.crm-root table tbody tr:hover {
+  background-color: #F5F7F5 !important;
+}
+
+/* 7. Inputs, Selects, and Textareas */
+.crm-workspace input:not([type="checkbox"]):not([type="radio"]),
+.crm-workspace select,
+.crm-workspace textarea,
+.crm-root input:not([type="checkbox"]):not([type="radio"]),
+.crm-root select,
+.crm-root textarea {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E1E6E1 !important;
+  color: #202020 !important;
+}
+
+.crm-workspace input::placeholder,
+.crm-workspace textarea::placeholder,
+.crm-root input::placeholder,
+.crm-root textarea::placeholder {
+  color: #849389 !important;
+}
+
+/* 8. Full Width Adaptation */
+.crm-workspace .max-w-6xl,
+.crm-workspace .max-w-7xl,
+.crm-root .max-w-6xl,
+.crm-root .max-w-7xl {
+  max-width: 100% !important;
+}
+

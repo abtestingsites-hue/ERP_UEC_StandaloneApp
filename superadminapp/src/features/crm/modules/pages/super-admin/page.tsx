@@ -354,8 +354,8 @@ export default function SuperAdminConsolePage() {
 
   if (isLoadingAuth) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[#000] text-slate-400 text-xs">
-        <span className="w-5 h-5 border-2 border-primary/20 border-t-primary rounded-full animate-spin mr-2" />
+      <div className="h-screen flex items-center justify-center bg-[#F5F7F5] text-[#5F6962] text-xs">
+        <span className="w-5 h-5 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin mr-2" />
         Verifying administrative authorization...
       </div>
     );
@@ -363,12 +363,12 @@ export default function SuperAdminConsolePage() {
 
   if (!isSuperAdmin) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center bg-[#000] text-white p-6">
+      <div className="h-screen flex flex-col items-center justify-center bg-[#F5F7F5] text-[#202020] p-6">
         <div className="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-4">
           <Lock className="w-6 h-6 text-rose-500" />
         </div>
         <h2 className="text-lg font-bold mb-1">Access Restricted: Super Admin Only</h2>
-        <p className="text-xs text-slate-400 max-w-md text-center mb-6">
+        <p className="text-xs text-[#5F6962] max-w-md text-center mb-6">
           The Platform Governance Console requires elevated Super Admin credentials. Contact platform administration if you believe this is an error.
         </p>
       </div>
@@ -379,20 +379,20 @@ export default function SuperAdminConsolePage() {
   const allProducts = ['CRM', 'ERP'];
 
   return (
-    <div className="min-h-screen bg-[#000] text-white flex flex-col">
+    <div className="min-h-screen bg-[#F5F7F5] text-[#202020] flex flex-col w-full">
       {/* Top Console Bar */}
-      <div className="border-b border-[#222] bg-[#050505] px-8 py-5 flex items-center justify-between sticky top-0 z-30">
+      <div className="border-b border-[#E1E6E1] bg-white px-8 py-5 flex items-center justify-between sticky top-0 z-30">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="p-1.5 rounded-lg bg-primary/10 border border-primary/20 text-primary">
-              <ShieldCheck className="w-5 h-5" />
+            <span className="p-1.5 rounded-lg bg-[#E7F4E8] border border-[#C8E6CA] text-[#039A01]">
+              <ShieldCheck className="w-5 h-5 text-[#039A01]" />
             </span>
-            <h1 className="text-lg font-bold tracking-tight">Super Admin Console</h1>
-            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+            <h1 className="text-lg font-bold tracking-tight text-[#202020]">Super Admin Console</h1>
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#E7F4E8] border border-[#C8E6CA] text-[#026601]">
               OPERATIONAL
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#5F6962] mt-1">
             Global Platform Governance, Multi-Unit Isolation & Integration Management
           </p>
         </div>
@@ -401,16 +401,16 @@ export default function SuperAdminConsolePage() {
           <button
             onClick={fetchAllData}
             disabled={isRefreshing}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#111] hover:bg-[#1a1a1a] border border-[#282828] text-xs text-slate-300 transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] text-xs text-[#202020] font-medium transition-colors shadow-xs"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 text-[#039A01] ${isRefreshing ? 'animate-spin' : ''}`} />
             Refresh
           </button>
         </div>
       </div>
 
       {/* Tabs Bar */}
-      <div className="border-b border-[#1c1c1c] bg-[#080808] px-8 flex gap-6 text-xs font-medium">
+      <div className="border-b border-[#E1E6E1] bg-white px-8 flex gap-6 text-xs font-medium overflow-x-auto">
         {[
           { key: 'overview', label: 'Platform Overview', icon: Activity },
           { key: 'database', label: 'Database Health', icon: Database },
@@ -427,11 +427,11 @@ export default function SuperAdminConsolePage() {
               onClick={() => setActiveTab(tab.key as any)}
               className={`flex items-center gap-2 py-3 border-b-2 transition-colors ${
                 isActive
-                  ? 'border-primary text-white font-bold'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+                  ? 'border-[#039A01] text-[#039A01] font-bold'
+                  : 'border-transparent text-[#5F6962] hover:text-[#202020]'
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-primary' : 'text-slate-500'}`} />
+              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#039A01]' : 'text-[#849389]'}`} />
               {tab.label}
             </button>
           );
@@ -439,20 +439,20 @@ export default function SuperAdminConsolePage() {
       </div>
 
       {/* Content Body */}
-      <div className="flex-1 p-8 overflow-y-auto">
+      <div className="flex-1 p-6 md:p-8 overflow-y-auto w-full">
         {/* ==================================================== */}
         {/* TAB 1: PLATFORM OVERVIEW */}
         {/* ==================================================== */}
         {activeTab === 'overview' && (
-          <div className="space-y-6 max-w-6xl">
+          <div className="space-y-6 w-full">
             {/* Top Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-[#080808] border border-[#222] rounded-xl p-4">
-                <div className="flex items-center justify-between text-slate-400 text-xs mb-2">
+              <div className="bg-white border border-[#E1E6E1] rounded-xl p-4 shadow-xs">
+                <div className="flex items-center justify-between text-[#5F6962] text-xs mb-2">
                   <span>Database Engine</span>
-                  <Database className="w-4 h-4 text-emerald-400" />
+                  <Database className="w-4 h-4 text-[#039A01]" />
                 </div>
-                <div className="text-xl font-bold text-white mb-1">
+                <div className="text-xl font-bold text-[#202020] mb-1">
                   {overview?.database?.status || 'HEALTHY'}
                 </div>
                 <div className="text-[10px] text-slate-500">

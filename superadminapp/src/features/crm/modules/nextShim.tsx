@@ -1,13 +1,26 @@
 import React from 'react';
 import { Link as RouterLink, useNavigate, useLocation, useSearchParams as useReactSearchParams } from 'react-router-dom';
 
-export function Link({ href, to, children, className, ...props }: any) {
-  const target = href || to || '';
-  // If target begins with /call-center, /leads, etc., prefix with /crm
-  let mappedTarget = target;
-  if (mappedTarget && mappedTarget.startsWith('/') && mappedTarget !== '/' && !mappedTarget.startsWith('/crm') && !mappedTarget.startsWith('/login') && !mappedTarget.startsWith('/portal')) {
-    mappedTarget = '/crm' + mappedTarget;
+function resolveTargetUrl(target: string, currentPath: string): string {
+  if (!target || !target.startsWith('/') || target === '/' || target.startsWith('/login') || target.startsWith('/portal')) {
+    return target;
   }
+  const isAgentMode = currentPath.startsWith('/crm/agent') || currentPath.startsWith('/agent');
+  if (isAgentMode) {
+    if (target.startsWith('/crm/agent')) return target;
+    const clean = target.replace(/^\/crm/, '').replace(/^\/agent/, '');
+    return `/crm/agent${clean.startsWith('/') ? clean : `/${clean}`}`;
+  }
+  if (!target.startsWith('/crm')) {
+    return '/crm' + target;
+  }
+  return target;
+}
+
+export function Link({ href, to, children, className, ...props }: any) {
+  const location = useLocation();
+  const target = href || to || '';
+  const mappedTarget = resolveTargetUrl(target, location.pathname);
   return (
     <RouterLink to={mappedTarget} className={className} {...props}>
       {children}
@@ -19,32 +32,17 @@ export default Link;
 
 export function useRouter() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return React.useMemo(
     () => ({
       push: (url: string) => {
-        let mapped = url;
-        if (
-          mapped.startsWith('/') &&
-          mapped !== '/' &&
-          !mapped.startsWith('/crm') &&
-          !mapped.startsWith('/login') &&
-          !mapped.startsWith('/portal')
-        ) {
-          mapped = '/crm' + mapped;
-        }
+        const mapped = resolveTargetUrl(url, currentPath);
         navigate(mapped);
       },
       replace: (url: string) => {
-        let mapped = url;
-        if (
-          mapped.startsWith('/') &&
-          mapped !== '/' &&
-          !mapped.startsWith('/crm') &&
-          !mapped.startsWith('/login') &&
-          !mapped.startsWith('/portal')
-        ) {
-          mapped = '/crm' + mapped;
-        }
+        const mapped = resolveTargetUrl(url, currentPath);
         navigate(mapped, { replace: true });
       },
       back: () => navigate(-1),
@@ -52,7 +50,7 @@ export function useRouter() {
       refresh: () => {},
       prefetch: () => {},
     }),
-    [navigate]
+    [navigate, currentPath]
   );
 }
 

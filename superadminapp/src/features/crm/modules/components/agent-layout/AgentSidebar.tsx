@@ -14,15 +14,15 @@ export function AgentSidebar() {
 
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/agent/dashboard' },
-    { icon: CheckSquare, label: 'SOP & Daily Ops', href: '/sop' },
+    { icon: CheckSquare, label: 'SOP & Daily Ops', href: '/agent/sop' },
     { icon: Phone, label: 'Call Center', href: '/agent/call-center' },
-    { icon: PhoneCall, label: 'Call Logs', href: '/call-logs' },
+    { icon: PhoneCall, label: 'Call Logs', href: '/agent/call-logs' },
     { icon: MessageSquare, label: 'Messaging Hub', href: '/agent/omnichannel' },
     { icon: FileText, label: 'Tickets', href: '/agent/tickets' },
     { icon: Activity, label: 'AI Call Summary', href: '/agent/ai-summary' },
     { icon: Mic, label: 'AI Call Record', href: '/agent/ai-records' },
-    { icon: Calendar, label: 'Calendar Log', href: '/calendar' },
-    { icon: Target, label: 'Target Management', href: '/targets' },
+    { icon: Calendar, label: 'Calendar Log', href: '/agent/calendar' },
+    { icon: Target, label: 'Target Management', href: '/agent/targets' },
     { icon: FileText, label: 'Reports', href: '/agent/reports' },
     { icon: UserRound, label: 'Customer Data', href: '/agent/customers' },
   ];

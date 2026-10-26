@@ -16,8 +16,8 @@ export default function AgentLeadsLayout({ children }: { children: React.ReactNo
   ];
 
   return (
-    <div className="flex flex-col h-full bg-[#050505]">
-      <div className="border-b border-[#222] bg-[#0a0a0a] px-6 py-4 pt-6">
+    <div className="flex flex-col h-full bg-[#F5F7F5] text-[#202020]">
+      <div className="border-b border-[#E1E6E1] bg-white px-6 py-4 pt-6">
         <div className="flex gap-6">
           {tabs.map(tab => {
             const isActive = pathname === tab.href;
@@ -27,7 +27,7 @@ export default function AgentLeadsLayout({ children }: { children: React.ReactNo
                 key={tab.href}
                 href={tab.href}
                 className={`flex items-center gap-2 pb-4 -mb-4 px-2 border-b-2 transition-colors ${
-                  isActive ? 'border-primary text-primary' : 'border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                  isActive ? 'border-[#039A01] text-[#039A01] font-semibold' : 'border-transparent text-[#5F6962] hover:text-[#202020]'
                 }`}
               >
                 <Icon className="w-4 h-4" />

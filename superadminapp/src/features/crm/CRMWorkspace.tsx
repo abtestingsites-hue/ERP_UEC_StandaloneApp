@@ -1,18 +1,25 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { useSearchParams, Navigate } from 'react-router-dom';
 import {
+    Activity,
     BarChart3,
     Building2,
     CalendarDays,
     CheckSquare,
     Headset,
     LayoutDashboard,
+    Megaphone,
     MessageSquare,
+    Mic,
     PhoneCall,
     RefreshCw,
+    Settings,
     ShieldCheck,
+    Target,
+    UserCheck,
     UserPlus,
     Users,
+    Zap,
 } from 'lucide-react';
 import { PageHeader } from '../../components/PageHeader';
 import { useActiveUnit } from '../../context/useActiveUnit';
@@ -20,6 +27,7 @@ import { readAuthSession } from '../auth/authStorage';
 import { isSuperAdmin } from '../../utils/permissions';
 import { useAuthStore } from './modules/store/authStore';
 import { AuthWrapper } from './modules/components/layout/AuthWrapper';
+import './modules/pages/globals.css';
 
 // Real CRM Page Modules
 const DashboardSwitcher = lazy(() =>
@@ -34,6 +42,14 @@ const CustomersPage = lazy(() => import('./modules/pages/customers/page'));
 const TicketsPage = lazy(() => import('./modules/pages/tickets/page'));
 const CalendarPage = lazy(() => import('./modules/pages/calendar/page'));
 const ReportsPage = lazy(() => import('./modules/pages/reports/page'));
+const TargetsPage = lazy(() => import('./modules/pages/targets/page'));
+const SopPage = lazy(() => import('./modules/pages/sop/page'));
+const AiRecordsPage = lazy(() => import('./modules/pages/ai-records/page'));
+const AiSummaryPage = lazy(() => import('./modules/pages/ai-summary/page'));
+const MarketingPage = lazy(() => import('./modules/pages/marketing/page'));
+const AgentsDirectoryPage = lazy(() => import('./modules/pages/agents/page'));
+const AutomationPage = lazy(() => import('./modules/pages/automation/page'));
+const SettingsPage = lazy(() => import('./modules/pages/settings/page'));
 
 function CrmTabLoading() {
     return (
@@ -117,11 +133,19 @@ export function CRMWorkspace() {
         { id: 'customers', label: 'Customer Directory', icon: Users },
         { id: 'tickets', label: 'Service Tickets', icon: CheckSquare },
         { id: 'calendar', label: 'Appointments & Schedule', icon: CalendarDays },
+        { id: 'targets', label: 'Target Management', icon: Target },
+        { id: 'sop', label: 'SOP & Daily Ops', icon: CheckSquare },
+        { id: 'ai-records', label: 'AI Call Records', icon: Mic },
+        { id: 'ai-summary', label: 'AI Summaries', icon: Activity },
+        { id: 'marketing', label: 'Marketing Hub', icon: Megaphone },
+        { id: 'agents', label: 'Agents & Staff', icon: UserCheck },
+        { id: 'automation', label: 'Automation & Rules', icon: Zap },
         { id: 'reports', label: 'Analytics & Reports', icon: BarChart3 },
+        { id: 'settings', label: 'CRM Settings', icon: Settings },
     ];
 
     return (
-        <div className="crm-workspace inventory-workspace" style={{ width: '100%', minHeight: '100%' }}>
+        <div className="crm-workspace inventory-workspace crm-light-theme" style={{ width: '100%', minHeight: '100%' }}>
             <PageHeader
                 eyebrow="BUSINESS DOMAIN · CLIENT RELATIONS & CRM"
                 title="Client Relations & CRM"
@@ -164,8 +188,8 @@ export function CRMWorkspace() {
             />
 
             {/* Navigation Tabs Bar */}
-            <div className="inv-tabs-nav-bar" style={{ marginTop: '16px', borderBottom: '1px solid #DCE5DD' }}>
-                <nav className="inv-tabs-list" aria-label="CRM Workspaces">
+            <div className="inv-tabs-nav-bar" style={{ marginTop: '16px', borderBottom: '1px solid #DCE5DD', overflowX: 'auto' }}>
+                <nav className="inv-tabs-list" aria-label="CRM Workspaces" style={{ display: 'flex', whiteSpace: 'nowrap', gap: '4px' }}>
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
                         const isActive = activeTab === tab.id;
@@ -215,8 +239,32 @@ export function CRMWorkspace() {
                         {activeTab === 'calendar' && (
                             <CalendarPage />
                         )}
+                        {activeTab === 'targets' && (
+                            <TargetsPage />
+                        )}
+                        {activeTab === 'sop' && (
+                            <SopPage />
+                        )}
+                        {activeTab === 'ai-records' && (
+                            <AiRecordsPage />
+                        )}
+                        {activeTab === 'ai-summary' && (
+                            <AiSummaryPage />
+                        )}
+                        {activeTab === 'marketing' && (
+                            <MarketingPage />
+                        )}
+                        {activeTab === 'agents' && (
+                            <AgentsDirectoryPage />
+                        )}
+                        {activeTab === 'automation' && (
+                            <AutomationPage />
+                        )}
                         {activeTab === 'reports' && (
                             <ReportsPage />
+                        )}
+                        {activeTab === 'settings' && (
+                            <SettingsPage />
                         )}
                     </Suspense>
                 </AuthWrapper>

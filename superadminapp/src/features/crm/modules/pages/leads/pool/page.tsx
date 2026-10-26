@@ -183,24 +183,24 @@ export default function LeadPoolPage() {
   }, [leads, searchTerm, statusFilter]);
 
   return (
-    <div className="p-4 md:p-6 bg-[#050505] min-h-screen text-white w-full">
+    <div className="p-4 md:p-6 bg-[#F5F7F5] min-h-screen text-[#202020] w-full">
       <div className="w-full space-y-6">
         
         {/* Toast Notification */}
         {toastMessage && (
-          <div className="p-3 px-4 bg-orange-500/10 border border-orange-500/30 rounded-xl text-orange-400 text-xs flex items-center gap-2 shadow-lg animate-in fade-in">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
+          <div className="p-3 px-4 bg-[#E7F4E8] border border-[#C8E6CA] rounded-xl text-[#026601] text-xs flex items-center gap-2 shadow-sm animate-in fade-in">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-[#039A01]" />
             <span>{toastMessage}</span>
           </div>
         )}
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#222]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E1E6E1]">
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="text-2xl font-bold tracking-tight text-white">Lead Data</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-[#202020]">Lead Data</h1>
             </div>
-            <p className="text-slate-400 text-xs mt-1">
+            <p className="text-[#5F6962] text-xs mt-1">
               Structured client enquiries, requested care service requirements, and persistent disposition tracking.
             </p>
           </div>
@@ -208,21 +208,21 @@ export default function LeadPoolPage() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={reloadLeads}
-              className="p-2.5 bg-[#141416] hover:bg-[#1e1e22] text-slate-400 hover:text-white border border-[#222] rounded-xl transition-colors"
+              className="p-2.5 bg-white hover:bg-[#F5F7F5] text-[#5F6962] hover:text-[#202020] border border-[#E1E6E1] rounded-xl transition-colors shadow-xs"
               title="Refresh Leads"
             >
-              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-orange-400' : ''}`} />
+              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#039A01]' : ''}`} />
             </button>
             <button 
               onClick={handleOpenManualEntry}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-[#18181b] hover:bg-[#222] border border-[#333] hover:border-orange-500/50 rounded-xl text-xs font-bold text-white transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-[#039A01] hover:bg-[#028001] text-white rounded-xl text-xs font-bold transition-all shadow-sm shadow-[#039A01]/20"
             >
-              <Plus className="w-4 h-4 text-orange-400" />
+              <Plus className="w-4 h-4" />
               Manual Enquiry Entry
             </button>
             <Link href="/leads/upload">
-              <button className="flex items-center justify-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white shadow-md shadow-orange-600/20 rounded-xl text-xs font-bold transition-all">
-                <UploadCloud className="w-4 h-4" />
+              <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-[#F5F7F5] border border-[#E1E6E1] text-[#202020] rounded-xl text-xs font-bold transition-all shadow-xs">
+                <UploadCloud className="w-4 h-4 text-[#039A01]" />
                 Upload Leads
               </button>
             </Link>
@@ -230,26 +230,26 @@ export default function LeadPoolPage() {
         </div>
 
         {/* Toolbar: Search & Filter */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-[#0c0c0e] border border-[#222] p-3 rounded-2xl">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-white border border-[#E1E6E1] p-3 rounded-2xl shadow-xs">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5F6962]" />
             <input 
               aria-label="Search leads by name, phone, or service" 
               type="text"
               placeholder="Search enquiries by customer name, phone, service, or patient details..."
-              className="w-full bg-[#141416] border border-[#222] rounded-xl py-2 pl-9 pr-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
+              className="w-full bg-[#FCFDFC] border border-[#E1E6E1] rounded-xl py-2 pl-9 pr-4 text-xs text-[#202020] placeholder-[#849389] focus:outline-none focus:border-[#039A01] transition-colors"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
           <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            <Filter className="w-3.5 h-3.5 text-[#5F6962] shrink-0" />
             <select
               aria-label="Status filter"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#141416] border border-[#222] text-xs text-slate-300 rounded-xl px-3 py-2 outline-none focus:border-orange-500"
+              className="bg-white border border-[#E1E6E1] text-xs text-[#202020] rounded-xl px-3 py-2 outline-none focus:border-[#039A01]"
             >
               <option value="ALL">All Statuses ({leads.length})</option>
               <option value="NEW">New</option>
@@ -263,9 +263,9 @@ export default function LeadPoolPage() {
         </div>
 
         {/* Primary Lead Data Table — 6 Columns */}
-        <div className="hidden md:block bg-[#0f0f11] border border-[#222] rounded-2xl overflow-hidden shadow-2xl">
+        <div className="hidden md:block bg-white border border-[#E1E6E1] rounded-2xl overflow-hidden shadow-xs">
           <table aria-label="Lead Data Table" className="w-full text-left text-xs">
-            <thead className="bg-[#141416] border-b border-[#222] text-slate-400 uppercase font-semibold">
+            <thead className="bg-[#F5F7F5] border-b border-[#E1E6E1] text-[#5F6962] uppercase font-semibold text-[11px] tracking-wider">
               <tr>
                 <th scope="col" className="px-5 py-3.5">Enquiry Name</th>
                 <th scope="col" className="px-5 py-3.5">What Are They Looking For?</th>
@@ -275,20 +275,20 @@ export default function LeadPoolPage() {
                 <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e1e22]">
+            <tbody className="divide-y divide-[#E1E6E1]">
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-slate-500">
-                    <div className="w-6 h-6 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mx-auto mb-2" />
+                  <td colSpan={6} className="px-6 py-16 text-center text-[#5F6962]">
+                    <div className="w-6 h-6 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin mx-auto mb-2" />
                     Loading structured lead records...
                   </td>
                 </tr>
               ) : filteredLeads.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-slate-500">
-                    <AlertCircle className="w-8 h-8 mx-auto mb-2 opacity-40 text-slate-400" />
-                    <p className="font-semibold text-slate-300">No lead records found</p>
-                    <p className="text-[11px] text-slate-500 mt-1">Try clearing your filters or create a new structured enquiry.</p>
+                  <td colSpan={6} className="px-6 py-16 text-center text-[#5F6962]">
+                    <AlertCircle className="w-8 h-8 mx-auto mb-2 opacity-40 text-[#849389]" />
+                    <p className="font-semibold text-[#202020]">No lead records found</p>
+                    <p className="text-[11px] text-[#5F6962] mt-1">Try clearing your filters or create a new structured enquiry.</p>
                   </td>
                 </tr>
               ) : filteredLeads.map((lead) => {
@@ -297,21 +297,21 @@ export default function LeadPoolPage() {
                 const summaryText = lead.enquirySummary || (serviceLabel ? `Service: ${serviceLabel}` : 'Details not recorded');
 
                 return (
-                  <tr key={lead.id} className="hover:bg-[#141416]/80 transition-colors group">
+                  <tr key={lead.id} className="hover:bg-[#F5F7F5] transition-colors group">
                     {/* Enquiry Name */}
                     <td className="px-5 py-4">
                       <div className="flex flex-col">
-                        <span className="font-bold text-white text-sm group-hover:text-orange-400 transition-colors">
+                        <span className="font-bold text-[#202020] text-sm group-hover:text-[#039A01] transition-colors">
                           {lead.customerName || 'Unknown Contact'}
                         </span>
                         {lead.patientName && (
-                          <span className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
-                            <HeartPulse className="w-3 h-3 text-rose-400" />
-                            Patient: <strong className="text-slate-300">{lead.patientName}</strong>
+                          <span className="text-[11px] text-[#5F6962] flex items-center gap-1 mt-0.5">
+                            <HeartPulse className="w-3 h-3 text-rose-500" />
+                            Patient: <strong className="text-[#202020]">{lead.patientName}</strong>
                             {lead.patientAge ? ` (${lead.patientAge} yrs)` : ''}
                           </span>
                         )}
-                        <span className="text-[10px] text-slate-500 mt-0.5">
+                        <span className="text-[10px] text-[#849389] mt-0.5">
                           Created: {new Date(lead.createdAt).toLocaleDateString()}
                         </span>
                       </div>
@@ -388,26 +388,26 @@ export default function LeadPoolPage() {
                         {/* View/Edit Structured Intake */}
                         <button
                           onClick={() => handleOpenEditIntake(lead)}
-                          className="p-1.5 rounded-lg bg-[#18181b] hover:bg-[#222] text-slate-300 hover:text-white border border-[#2a2a2d] hover:border-orange-500/40 transition-colors"
+                          className="p-1.5 rounded-lg bg-white hover:bg-[#F5F7F5] text-[#5F6962] hover:text-[#202020] border border-[#E1E6E1] hover:border-[#039A01] transition-colors shadow-xs"
                           title="View / Edit Enquiry Details"
                         >
-                          <FileText className="w-3.5 h-3.5 text-orange-400" />
+                          <FileText className="w-3.5 h-3.5 text-[#039A01]" />
                         </button>
 
                         {/* Customer History Drawer */}
                         <button
                           onClick={() => handleOpenCustomerHistory(lead.phoneNumber)}
-                          className="p-1.5 rounded-lg bg-[#18181b] hover:bg-[#222] text-slate-300 hover:text-white border border-[#2a2a2d] hover:border-blue-500/40 transition-colors"
+                          className="p-1.5 rounded-lg bg-white hover:bg-[#F5F7F5] text-[#5F6962] hover:text-[#202020] border border-[#E1E6E1] hover:border-[#039A01] transition-colors shadow-xs"
                           title="Customer Call History & Messaging Timeline"
                         >
-                          <History className="w-3.5 h-3.5 text-blue-400" />
+                          <History className="w-3.5 h-3.5 text-blue-600" />
                         </button>
 
                         {/* Call / Claim */}
                         {lead.status === 'NEW' ? (
                           <button
                             onClick={() => handleClaim(lead.id)}
-                            className="px-2.5 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm shadow-orange-600/20"
+                            className="px-2.5 py-1.5 rounded-lg bg-[#039A01] hover:bg-[#028001] text-white text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm shadow-[#039A01]/20"
                             title="Claim and Call"
                           >
                             <Phone className="w-3 h-3" />
@@ -416,10 +416,10 @@ export default function LeadPoolPage() {
                         ) : (
                           <button
                             onClick={() => handleCallLead(lead)}
-                            className="p-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 transition-colors"
+                            className="p-1.5 rounded-lg bg-[#E7F4E8] hover:bg-[#d5ebd7] text-[#026601] border border-[#C8E6CA] transition-colors"
                             title="Call Lead"
                           >
-                            <Phone className="w-3.5 h-3.5" />
+                            <Phone className="w-3.5 h-3.5 text-[#039A01]" />
                           </button>
                         )}
                       </div>
@@ -434,21 +434,21 @@ export default function LeadPoolPage() {
         {/* Mobile Cards View */}
         <div className="block md:hidden space-y-3">
           {isLoading ? (
-            <div className="text-center py-12 bg-[#111] border border-[#222] rounded-2xl text-slate-500">
-              <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <div className="text-center py-12 bg-white border border-[#E1E6E1] rounded-2xl text-[#5F6962]">
+              <div className="w-5 h-5 border-2 border-[#C8E6CA] border-t-[#039A01] rounded-full animate-spin mx-auto mb-2" />
               <p className="text-xs">Loading leads...</p>
             </div>
           ) : filteredLeads.length === 0 ? (
-            <div className="text-center py-12 bg-[#111] border border-[#222] rounded-2xl text-slate-500">
-              <AlertCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-              <p className="font-semibold text-slate-300">No leads found</p>
+            <div className="text-center py-12 bg-white border border-[#E1E6E1] rounded-2xl text-[#5F6962]">
+              <AlertCircle className="w-8 h-8 mx-auto mb-2 opacity-50 text-[#849389]" />
+              <p className="font-semibold text-[#202020]">No leads found</p>
             </div>
           ) : (
             filteredLeads.map((lead) => (
-              <div key={lead.id} className="bg-[#0f0f11] border border-[#222] rounded-2xl p-4 space-y-3">
+              <div key={lead.id} className="bg-white border border-[#E1E6E1] rounded-2xl p-4 space-y-3 shadow-xs">
                 <div className="flex justify-between items-start gap-2">
                   <div>
-                    <h3 className="font-bold text-sm text-white">{lead.customerName}</h3>
+                    <h3 className="font-bold text-sm text-[#202020]">{lead.customerName}</h3>
                     <p className="font-mono text-xs text-slate-400">{lead.phoneNumber}</p>
                     {lead.patientName && (
                       <p className="text-[11px] text-rose-400 mt-0.5">Patient: {lead.patientName}</p>

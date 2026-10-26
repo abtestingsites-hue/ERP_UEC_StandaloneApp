@@ -150,6 +150,9 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         normalizedPath.startsWith('/customers') || 
         normalizedPath.startsWith('/tickets') || 
         normalizedPath.startsWith('/sop') || 
+        normalizedPath.startsWith('/ai-records') || 
+        normalizedPath.startsWith('/ai-summary') || 
+        normalizedPath.startsWith('/reports') || 
         normalizedPath === '/agent/profile';
       
       // If user is Agent, restrict them to agent routes and shared routes
@@ -186,9 +189,12 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     } catch (_) {}
   }
 
-  // Only show the Agent shell if the user is genuinely an AGENT
-  // Super Admins and Admins ALWAYS see the full admin Sidebar & Navbar
-  const isExplicitAgent = activeRole === 'AGENT';
+  // Only show the Agent shell if the user is genuinely an AGENT or visiting an agent route
+  const isAgentPortalRoute = typeof window !== 'undefined' && (
+    window.location.pathname.startsWith('/crm/agent') || 
+    window.location.pathname.startsWith('/agent')
+  );
+  const isExplicitAgent = activeRole === 'AGENT' || activeRole.includes('AGENT') || isAgentPortalRoute;
   const shouldShowAgentShell = isExplicitAgent;
 
   const rawErpSessionStr = typeof window !== 'undefined' 
@@ -201,29 +207,36 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     (rawErpSessionStr && !isExplicitAgent)
   );
 
-  return (
-    <SocketProvider>
-      {/* Desktop Shell */}
-      {isInsideSuperAdminShell ? (
+  if (isInsideSuperAdminShell) {
+    return (
+      <SocketProvider>
         <div className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] text-[#202020] relative w-full h-full min-h-[600px]">
           {children}
         </div>
-      ) : (
-        <div className="hidden md:flex h-screen overflow-hidden bg-[#F5F7F5] text-[#202020]">
-          {shouldShowAgentShell ? <AgentSidebar /> : <Sidebar />}
-          <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
-            {shouldShowAgentShell ? <AgentNavbar /> : <Navbar />}
-            <main className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] relative text-[#202020]">
-              {children}
-            </main>
-          </div>
-        </div>
-      )}
+        <IncomingCallModal />
+        <LiveCallPanel />
+        <AdminTicketToast />
+      </SocketProvider>
+    );
+  }
 
-      {/* Mobile Shell */}
+  return (
+    <SocketProvider>
+      {/* Desktop Shell */}
+      <div className="hidden md:flex h-screen overflow-hidden bg-[#F5F7F5] text-[#202020]">
+        {shouldShowAgentShell ? <AgentSidebar /> : <Sidebar />}
+        <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
+          {shouldShowAgentShell ? <AgentNavbar /> : <Navbar />}
+          <main className="flex-1 flex flex-col overflow-hidden bg-[#F5F7F5] relative text-[#202020]">
+            {children}
+          </main>
+        </div>
+      </div>
+
+      {/* Standalone Mobile Shell */}
       <div 
         data-crm-mobile-shell="true"
-        className="crm-mobile-shell flex md:hidden flex-col h-screen overflow-hidden bg-[#000000] text-white relative"
+        className="crm-mobile-shell flex md:hidden flex-col h-screen overflow-hidden bg-[#F5F7F5] text-[#202020] relative"
       >
         <MobileHeader 
           shouldShowAgentShell={shouldShowAgentShell} 
@@ -236,7 +249,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
           shouldShowAgentShell={shouldShowAgentShell}
         />
         
-        <main className="flex-1 overflow-y-auto bg-[#000000] text-white relative pb-16">
+        <main className="flex-1 overflow-y-auto bg-[#F5F7F5] text-[#202020] relative pb-16">
           {children}
         </main>
 
