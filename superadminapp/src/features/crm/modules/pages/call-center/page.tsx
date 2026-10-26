@@ -234,10 +234,10 @@ export default function CallCenterPage() {
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col lg:flex-row gap-4 sm:gap-6 min-h-0">
+      <div className="flex-1 crm-callcenter-layout flex flex-col lg:flex-row gap-4 sm:gap-6 min-h-0">
 
         {/* Left Side: Dynamic Content based on Tab */}
-        <div className="w-full lg:w-1/2 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-sm overflow-hidden min-h-[380px] lg:min-h-0">
+        <div className="crm-callcenter-left w-full lg:w-1/2 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-sm overflow-hidden min-h-[380px] lg:min-h-0">
           {activeTab === 'queue' && (
             <QueueOperationsView />
           )}
@@ -395,7 +395,7 @@ export default function CallCenterPage() {
         </div>
 
         {/* Right Side: Active WebRTC Phone System */}
-        <div className="w-full lg:w-1/2 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-sm p-4 sm:p-6 lg:p-8 items-center justify-center min-h-[320px] lg:min-h-0">
+        <div className="crm-callcenter-right w-full lg:w-1/2 flex flex-col bg-white border border-[#E1E6E1] rounded-2xl shadow-sm p-4 sm:p-6 lg:p-8 items-center justify-center min-h-[320px] lg:min-h-0">
           <CallWidget />
         </div>
       </div>

@@ -88,3 +88,33 @@ body {
   border-width: 0;
 }
 
+/* Responsive Call Center Layout */
+.crm-callcenter-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.25rem;
+  min-height: 0;
+}
+
+.crm-callcenter-left {
+  width: 100%;
+  min-height: 380px;
+}
+
+.crm-callcenter-right {
+  width: 100%;
+  min-height: 320px;
+}
+
+@media (min-width: 1024px) {
+  .crm-callcenter-layout {
+    flex-direction: row !important;
+  }
+  .crm-callcenter-left,
+  .crm-callcenter-right {
+    width: 50% !important;
+    min-height: 0 !important;
+  }
+}
+
