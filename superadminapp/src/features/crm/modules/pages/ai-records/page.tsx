@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Mic, Play, Download, Search, Filter, PhoneIncoming, PhoneOutgoing, Clock } from 'lucide-react';
+import { apiFetch } from '../../lib/api';
 
 export default function AIRecordsPage() {
   const [records, setRecords] = useState<any[]>([]);
@@ -22,8 +23,7 @@ export default function AIRecordsPage() {
           }
         } catch (e) { console.warn('[UI Exception Swallowed Fixed]:', e); }
 
-        const { apiFetch } = require('@/lib/api');
-        const res = await apiFetch('/telephony/history');
+        const res = await apiFetch('/api/v1/telephony/history');
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         

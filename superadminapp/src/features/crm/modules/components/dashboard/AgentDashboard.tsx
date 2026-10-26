@@ -36,15 +36,24 @@ export function AgentDashboard({ metrics: initialMetrics }: AgentDashboardProps)
   // Load real agent dashboard metrics from backend
   const loadDashboardData = useCallback(async () => {
     try {
-      const res = await api.get('/analytics/agent-dashboard');
+      let res: any = null;
+      try {
+        res = await api.get('/api/v1/analytics/agent-dashboard');
+      } catch (_) {
+        try {
+          res = await api.get('/dashboard/analytics?type=agent_performance');
+        } catch (__) {
+          // Graceful fallback if endpoint not implemented on backend
+        }
+      }
       if (res) {
         setDashboardData(res);
         if (res.header?.shiftDurationSeconds) {
           setElapsedSeconds(res.header.shiftDurationSeconds);
         }
       }
-    } catch (err: any) {
-      console.warn('Could not fetch agent-dashboard endpoint:', err);
+    } catch (_) {
+      // Graceful fallback without crashing agent interface
     }
   }, []);
 
