@@ -140,20 +140,33 @@ export function NumericKeypad({ onCallInitiated }: NumericKeypadProps) {
 
     setIsDialing(true);
     setErrorMessage(null);
+    setSuccessNotice(null);
 
     try {
-      const res = await apiFetch('/telephony/outbound-call', {
+      let currentAgentId = null;
+      try {
+        const stored = localStorage.getItem('crm_user');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          currentAgentId = parsed.agentId || parsed.id;
+        }
+      } catch (_) {}
+
+      const res = await apiFetch('/telephony/calls/outbound', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ to: normalized })
+        body: JSON.stringify({ 
+          to: normalized,
+          agentId: currentAgentId
+        })
       });
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.message || 'Call initiation failed. Please verify provider connectivity.');
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || data.success === false) {
+        throw new Error(data.message || data.error || data.reason || 'Call initiation failed. Please verify provider connectivity.');
       }
 
-      const data = await res.json();
       setSuccessNotice('Connecting call...');
       if (onCallInitiated) {
         onCallInitiated({ ...data, to: normalized });

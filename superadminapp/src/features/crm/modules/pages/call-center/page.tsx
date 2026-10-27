@@ -170,6 +170,10 @@ export default function CallCenterPage() {
 
       if (res.ok) {
         const data = await res.json();
+        if (data.success === false || !data.token) {
+          alert(data.message || data.reason || 'Failed to initiate outbound call.');
+          return;
+        }
         const finalRoomName = data.roomName || data.callSid || `room_${Date.now()}`;
         setActiveCall({
           callSid: finalRoomName,
@@ -186,8 +190,8 @@ export default function CallCenterPage() {
           serverUrl: data.serverUrl || data.wsUrl
         });
       } else {
-        console.error('Failed to dial outbound');
-        alert('Failed to initiate outbound call.');
+        const errData = await res.json().catch(() => ({}));
+        alert(errData.message || 'Failed to initiate outbound call.');
       }
     } catch (e) {
       console.error('Error dialing out:', e);
