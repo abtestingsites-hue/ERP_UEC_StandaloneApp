@@ -253,18 +253,18 @@ export function VisitorPassesTab({
                         No visitor passes matching criteria.
                     </div>
                 ) : (
-                    <div style={{ overflowX: 'auto' }}>
+                    <div className="erp-table-responsive">
                         <table className="erp-table" style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr style={{ borderBottom: '1px solid var(--border-color)', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                                    <th style={{ padding: '0.75rem 1rem' }}>PASS ID</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>VISITOR DETAILS</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>CATEGORY</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>HOST & DEPARTMENT</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>PURPOSE</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>STATUS</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>CHECK-IN</th>
-                                    <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>ACTIONS</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '13%' }}>PASS ID</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '18%' }}>VISITOR DETAILS</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '14%', textAlign: 'center' }}>CATEGORY</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '17%' }}>HOST & DEPARTMENT</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '14%' }}>PURPOSE</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '8%', textAlign: 'center' }}>STATUS</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '8%', textAlign: 'center' }}>CHECK-IN</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '8%', textAlign: 'right' }}>ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -275,7 +275,7 @@ export function VisitorPassesTab({
                                     return (
                                         <tr key={pass.id} style={{ borderBottom: '1px solid var(--border-color)', fontSize: '0.85rem' }}>
                                             <td style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>
-                                                <span style={{ fontFamily: 'monospace', color: '#d97706' }}>
+                                                <span style={{ fontFamily: 'monospace', color: '#d97706', whiteSpace: 'nowrap' }}>
                                                     {formatVisitorPassNumber(pass.passNumber, pass.id)}
                                                 </span>
                                             </td>
@@ -285,8 +285,8 @@ export function VisitorPassesTab({
                                                     <Phone size={11} /> {pass.visitor?.mobile}
                                                 </div>
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem' }}>
-                                                <span style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: 4, background: 'rgba(0,0,0,0.05)' }}>
+                                            <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
+                                                <span style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: 4, background: 'rgba(0,0,0,0.05)', whiteSpace: 'nowrap' }}>
                                                     {pass.visitor?.category || 'GUEST'}
                                                 </span>
                                             </td>
@@ -306,7 +306,7 @@ export function VisitorPassesTab({
                                                     </div>
                                                 )}
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem' }}>
+                                            <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
                                                 <span
                                                     style={{
                                                         fontSize: '0.75rem',
@@ -318,13 +318,14 @@ export function VisitorPassesTab({
                                                             : isCompleted
                                                             ? 'rgba(100, 116, 139, 0.15)'
                                                             : 'rgba(245, 158, 11, 0.15)',
-                                                        color: isInside ? '#10b981' : isCompleted ? '#64748b' : '#f59e0b'
+                                                        color: isInside ? '#10b981' : isCompleted ? '#64748b' : '#f59e0b',
+                                                        whiteSpace: 'nowrap'
                                                     }}
                                                 >
                                                     {pass.status}
                                                 </span>
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                                            <td style={{ padding: '0.75rem 1rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', whiteSpace: 'nowrap' }}>
                                                 {pass.checkInAt
                                                     ? new Date(pass.checkInAt).toLocaleTimeString('en-IN', { timeStyle: 'short' })
                                                     : pass.expectedAt

@@ -210,46 +210,54 @@ export function CashboxLedgerTab({
 						<p>Try widening the date range or record a new cashbox voucher.</p>
 					</div>
 				) : (
-					<div style={{ overflowX: 'auto' }}>
-						<table className="data-table" style={{ width: '100%' }}>
+					<div className="erp-table-responsive" style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+						<table className="erp-table data-table" style={{ width: '100%', minWidth: '850px', borderCollapse: 'collapse', textAlign: 'left' }}>
 							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Voucher #</th>
-									<th>Type</th>
-									<th>Party (Payer / Payee)</th>
-									<th>Category</th>
-									<th>Mode</th>
-									<th style={{ textAlign: 'right' }}>Amount (₹)</th>
-									<th>Status</th>
-									<th style={{ textAlign: 'center' }}>Actions</th>
+								<tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+									<th style={{ width: '110px', padding: '0.65rem 0.85rem' }}>Date</th>
+									<th style={{ width: '140px', padding: '0.65rem 0.85rem' }}>Voucher #</th>
+									<th style={{ width: '110px', textAlign: 'center', padding: '0.65rem 0.85rem' }}>Type</th>
+									<th style={{ width: '22%', padding: '0.65rem 0.85rem' }}>Party (Payer / Payee)</th>
+									<th style={{ width: '16%', padding: '0.65rem 0.85rem' }}>Category</th>
+									<th style={{ width: '100px', padding: '0.65rem 0.85rem' }}>Mode</th>
+									<th style={{ width: '130px', textAlign: 'right', padding: '0.65rem 0.85rem' }}>Amount (₹)</th>
+									<th style={{ width: '130px', textAlign: 'center', padding: '0.65rem 0.85rem' }}>Status</th>
+									<th style={{ width: '140px', textAlign: 'center', padding: '0.65rem 0.85rem' }}>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 								{filteredTransactions.map((t) => (
-									<tr key={t.id}>
-										<td style={{ whiteSpace: 'nowrap' }}>{t.date}</td>
-										<td>
+									<tr key={t.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+										<td style={{ whiteSpace: 'nowrap', padding: '0.65rem 0.85rem', fontSize: '0.85rem', color: '#475569' }}>
+											{t.date}
+										</td>
+										<td style={{ padding: '0.65rem 0.85rem' }}>
 											<span
 												style={{
 													fontWeight: 700,
 													color: '#0F969C',
 													cursor: 'pointer',
+													fontSize: '0.85rem',
 												}}
 												onClick={() => onSelectTransaction(t)}
 											>
 												{t.receiptNo}
 											</span>
 										</td>
-										<td>
+										<td style={{ textAlign: 'center', padding: '0.65rem 0.85rem' }}>
 											{(() => {
 												const isIncome = t.type === 'INCOME' || String(t.type).toUpperCase() === 'RECEIPT'
 												return (
 													<span
 														style={{
 															fontWeight: 700,
-															fontSize: '0.75rem',
+															fontSize: '0.725rem',
+															padding: '0.2rem 0.5rem',
+															borderRadius: '4px',
+															backgroundColor: isIncome ? '#f0fdfa' : '#fef2f2',
+															border: `1px solid ${isIncome ? '#99f6e4' : '#fecaca'}`,
 															color: isIncome ? '#0F969C' : '#dc2626',
+															display: 'inline-block',
 														}}
 													>
 														{isIncome ? 'RECEIPT' : 'EXPENSE'}
@@ -257,18 +265,18 @@ export function CashboxLedgerTab({
 												)
 											})()}
 										</td>
-										<td>
-											<span style={{ fontWeight: 600, color: '#0f172a' }}>
+										<td style={{ padding: '0.65rem 0.85rem' }}>
+											<span style={{ fontWeight: 600, color: '#0f172a', fontSize: '0.875rem' }}>
 												{t.clientName}
 											</span>
 										</td>
-										<td>
-											<span style={{ fontSize: '0.8rem', color: '#475569' }}>
+										<td style={{ padding: '0.65rem 0.85rem' }}>
+											<span style={{ fontSize: '0.825rem', color: '#475569' }}>
 												{t.category}
 											</span>
 										</td>
-										<td>
-											<span style={{ fontSize: '0.8rem', color: '#64748b' }}>
+										<td style={{ padding: '0.65rem 0.85rem' }}>
+											<span style={{ fontSize: '0.825rem', color: '#64748b' }}>
 												{t.mode}
 											</span>
 										</td>
@@ -276,6 +284,8 @@ export function CashboxLedgerTab({
 											style={{
 												textAlign: 'right',
 												fontWeight: 700,
+												fontSize: '0.875rem',
+												padding: '0.65rem 0.85rem',
 												color:
 													t.type === 'INCOME' || String(t.type).toUpperCase() === 'RECEIPT'
 														? '#0F969C'
@@ -285,7 +295,7 @@ export function CashboxLedgerTab({
 											{t.type === 'INCOME' || String(t.type).toUpperCase() === 'RECEIPT' ? '+' : '-'}₹
 											{Math.abs(t.amount).toFixed(2)}
 										</td>
-										<td>
+										<td style={{ textAlign: 'center', padding: '0.65rem 0.85rem' }}>
 											<span
 												className={`status-badge status-badge--${
 													t.status === 'APPROVED'
@@ -294,12 +304,13 @@ export function CashboxLedgerTab({
 															? 'warning'
 															: 'pending'
 												}`}
+												style={{ display: 'inline-block' }}
 											>
 												{t.status}
 											</span>
 										</td>
-										<td style={{ textAlign: 'center' }}>
-											<div style={{ display: 'inline-flex', gap: '0.35rem' }}>
+										<td style={{ textAlign: 'center', padding: '0.65rem 0.85rem' }}>
+											<div style={{ display: 'inline-flex', gap: '0.35rem', justifyContent: 'center' }}>
 												<button
 													type="button"
 													className="button secondary button--small"

@@ -123,89 +123,89 @@ export function ManagerOverviewTab({
             )}
 
             {/* Operational & Financial KPI Ribbon */}
-            <div className="adm-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 14 }}>
-                <div className="adm-kpi-card" onClick={() => onNavigateTab('allocations')} style={{ cursor: 'pointer' }}>
-                    <div className="adm-kpi-card__header">
-                        <span className="adm-kpi-card__label">Active Client Allocations</span>
-                        <div className="adm-kpi-card__icon" style={{ background: '#ecfdf5', color: '#059669' }}>
+            <div className="adm-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
+                <div className="adm-kpi-card" onClick={() => onNavigateTab('allocations')} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8, padding: '16px 18px', background: '#ffffff', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div className="adm-kpi-card__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span className="adm-kpi-card__label" style={{ fontSize: 12, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Active Client Allocations</span>
+                        <div className="adm-kpi-card__icon" style={{ background: '#ecfdf5', color: '#059669', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Users size={18} />
                         </div>
                     </div>
-                    <div className="adm-kpi-card__value" style={{ color: '#059669' }}>
+                    <div className="adm-kpi-card__value" style={{ color: '#059669', fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
                         {activeAllocations.length}
                     </div>
-                    <div className="adm-kpi-card__meta">Caregivers deployed: {allocatedStaffCount}</div>
+                    <div className="adm-kpi-card__meta" style={{ fontSize: 12, color: '#64748b' }}>Caregivers deployed: <strong>{allocatedStaffCount}</strong></div>
                 </div>
 
-                <div className="adm-kpi-card" onClick={() => onNavigateTab('contracts')} style={{ cursor: 'pointer' }}>
-                    <div className="adm-kpi-card__header">
-                        <span className="adm-kpi-card__label">Active Service Contracts</span>
-                        <div className="adm-kpi-card__icon" style={{ background: '#f0fdfa', color: '#0f969c' }}>
+                <div className="adm-kpi-card" onClick={() => onNavigateTab('contracts')} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8, padding: '16px 18px', background: '#ffffff', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div className="adm-kpi-card__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span className="adm-kpi-card__label" style={{ fontSize: 12, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Active Service Contracts</span>
+                        <div className="adm-kpi-card__icon" style={{ background: '#f0fdfa', color: '#0f969c', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <FileSignature size={18} />
                         </div>
                     </div>
-                    <div className="adm-kpi-card__value" style={{ color: '#0f969c' }}>
+                    <div className="adm-kpi-card__value" style={{ color: '#0f969c', fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
                         {admissions.length}
                     </div>
-                    <div className="adm-kpi-card__meta">Agreed rate packages active</div>
+                    <div className="adm-kpi-card__meta" style={{ fontSize: 12, color: '#64748b' }}>Agreed rate packages active</div>
                 </div>
 
-                <div className="adm-kpi-card" onClick={() => onNavigateTab('roster')} style={{ cursor: 'pointer' }}>
-                    <div className="adm-kpi-card__header">
-                        <span className="adm-kpi-card__label">Today's Visits Scheduled</span>
-                        <div className="adm-kpi-card__header-right">
-                            <Clock size={16} color="#2563eb" />
+                <div className="adm-kpi-card" onClick={() => onNavigateTab('roster')} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8, padding: '16px 18px', background: '#ffffff', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div className="adm-kpi-card__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span className="adm-kpi-card__label" style={{ fontSize: 12, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Today's Visits Scheduled</span>
+                        <div className="adm-kpi-card__icon" style={{ background: '#eff6ff', color: '#2563eb', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Clock size={18} />
                         </div>
                     </div>
-                    <div className="adm-kpi-card__value" style={{ color: '#2563eb' }}>
+                    <div className="adm-kpi-card__value" style={{ color: '#2563eb', fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
                         {scheduledVisitsCount}
                     </div>
-                    <div className="adm-kpi-card__meta">
+                    <div className="adm-kpi-card__meta" style={{ fontSize: 12, color: '#64748b' }}>
                         {inProgressVisitsCount} in-progress · {completedVisitsCount} awaiting review
                     </div>
                 </div>
 
-                <div className="adm-kpi-card" onClick={() => onNavigateTab('roster')} style={{ cursor: 'pointer' }}>
-                    <div className="adm-kpi-card__header">
-                        <span className="adm-kpi-card__label">Supervisor Verified</span>
-                        <div className="adm-kpi-card__icon" style={{ background: '#ecfdf5', color: '#16a34a' }}>
+                <div className="adm-kpi-card" onClick={() => onNavigateTab('roster')} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8, padding: '16px 18px', background: '#ffffff', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div className="adm-kpi-card__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span className="adm-kpi-card__label" style={{ fontSize: 12, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Supervisor Verified</span>
+                        <div className="adm-kpi-card__icon" style={{ background: '#ecfdf5', color: '#16a34a', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <ShieldCheck size={18} />
                         </div>
                     </div>
-                    <div className="adm-kpi-card__value" style={{ color: '#16a34a' }}>
+                    <div className="adm-kpi-card__value" style={{ color: '#16a34a', fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
                         {verifiedVisitsCount}
                     </div>
-                    <div className="adm-kpi-card__meta">
+                    <div className="adm-kpi-card__meta" style={{ fontSize: 12, color: '#64748b' }}>
                         Approved according to policy
                     </div>
                 </div>
 
-                <div className="adm-kpi-card" onClick={() => onNavigateTab('roster')} style={{ cursor: 'pointer' }}>
-                    <div className="adm-kpi-card__header">
-                        <span className="adm-kpi-card__label">SLA Overdue Visits</span>
-                        <div className="adm-kpi-card__icon" style={{ background: '#fef2f2', color: '#dc2626' }}>
+                <div className="adm-kpi-card" onClick={() => onNavigateTab('roster')} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8, padding: '16px 18px', background: '#ffffff', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div className="adm-kpi-card__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span className="adm-kpi-card__label" style={{ fontSize: 12, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>SLA Overdue Visits</span>
+                        <div className="adm-kpi-card__icon" style={{ background: '#fef2f2', color: '#dc2626', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <AlertTriangle size={18} />
                         </div>
                     </div>
-                    <div className="adm-kpi-card__value" style={{ color: overdueVisitsCount > 0 ? '#dc2626' : '#64748b' }}>
+                    <div className="adm-kpi-card__value" style={{ color: overdueVisitsCount > 0 ? '#dc2626' : '#64748b', fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
                         {overdueVisitsCount}
                     </div>
-                    <div className="adm-kpi-card__meta">
+                    <div className="adm-kpi-card__meta" style={{ fontSize: 12, color: '#64748b' }}>
                         {overdueVisitsCount > 0 ? 'Urgent attention required' : 'Zero SLA breaches'}
                     </div>
                 </div>
 
-                <div className="adm-kpi-card" onClick={() => onNavigateTab('contracts')} style={{ cursor: 'pointer' }}>
-                    <div className="adm-kpi-card__header">
-                        <span className="adm-kpi-card__label">Finance Billed Invoices</span>
-                        <div className="adm-kpi-card__icon" style={{ background: '#f8fafc', color: '#2563eb' }}>
+                <div className="adm-kpi-card" onClick={() => onNavigateTab('contracts')} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8, padding: '16px 18px', background: '#ffffff', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div className="adm-kpi-card__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <span className="adm-kpi-card__label" style={{ fontSize: 12, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Finance Billed Invoices</span>
+                        <div className="adm-kpi-card__icon" style={{ background: '#f8fafc', color: '#2563eb', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Receipt size={18} />
                         </div>
                     </div>
-                    <div className="adm-kpi-card__value" style={{ color: '#0f172a' }}>
+                    <div className="adm-kpi-card__value" style={{ color: '#0f172a', fontSize: 26, fontWeight: 800, lineHeight: 1.2 }}>
                         ₹{totalBilledRevenue.toLocaleString()}
                     </div>
-                    <div className="adm-kpi-card__meta">
+                    <div className="adm-kpi-card__meta" style={{ fontSize: 12, color: '#64748b' }}>
                         {invoices.length} invoices handed off to Finance
                     </div>
                 </div>
@@ -268,12 +268,12 @@ export function ManagerOverviewTab({
                         <table className="adm-table">
                             <thead>
                                 <tr>
-                                    <th>Ref / Title</th>
-                                    <th>Client / Patient</th>
-                                    <th>Assigned Caregiver</th>
-                                    <th>Scheduled Time</th>
-                                    <th>Status</th>
-                                    <th>Completed At</th>
+                                    <th style={{ width: '22%' }}>Ref / Title</th>
+                                    <th style={{ width: '22%' }}>Client / Patient</th>
+                                    <th style={{ width: '18%' }}>Assigned Caregiver</th>
+                                    <th style={{ width: '14%' }}>Scheduled Time</th>
+                                    <th style={{ width: '12%', textAlign: 'center' }}>Status</th>
+                                    <th style={{ width: '12%', textAlign: 'right' }}>Completed At</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -298,7 +298,7 @@ export function ManagerOverviewTab({
                                             <td>
                                                 {t.dueDate ? new Date(t.dueDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Today'}
                                             </td>
-                                            <td>
+                                            <td style={{ textAlign: 'center' }}>
                                                 <span
                                                     className={`adm-badge ${
                                                         normStatus === 'APPROVED'
@@ -313,7 +313,7 @@ export function ManagerOverviewTab({
                                                     {normStatus === 'APPROVED' ? 'VERIFIED' : normStatus}
                                                 </span>
                                             </td>
-                                            <td style={{ fontSize: 12, color: '#64748b' }}>
+                                            <td style={{ fontSize: 12, color: '#64748b', textAlign: 'right' }}>
                                                 {t.completedAt ? new Date(t.completedAt).toLocaleTimeString() : '—'}
                                             </td>
                                         </tr>

@@ -299,11 +299,11 @@ export function PatientDailyCostTab({
 						<p>Record a new daily expense item or adjust your search filter.</p>
 					</div>
 				) : (
-					<div style={{ overflowX: 'auto' }}>
-						<table className="data-table" style={{ width: '100%' }}>
+					<div className="erp-table-responsive" style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+						<table className="erp-table data-table" style={{ width: '100%', minWidth: '950px', borderCollapse: 'collapse', textAlign: 'left' }}>
 							<thead>
-								<tr>
-									<th style={{ width: '40px', textAlign: 'center' }}>
+								<tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+									<th style={{ width: '48px', textAlign: 'center', padding: '0.65rem 0.5rem' }}>
 										<input
 											type="checkbox"
 											checked={
@@ -315,24 +315,24 @@ export function PatientDailyCostTab({
 											title="Select all unbilled"
 										/>
 									</th>
-									<th>Cost #</th>
-									<th>Date</th>
-									<th>Patient / Resident</th>
-									<th>Service</th>
-									<th>Category & Item</th>
-									<th style={{ textAlign: 'right' }}>Qty</th>
-									<th style={{ textAlign: 'right' }}>Rate (₹)</th>
-									<th style={{ textAlign: 'right' }}>Amount (₹)</th>
-									<th>Status</th>
-									<th>Invoice Ref</th>
+									<th style={{ width: '110px', padding: '0.65rem 0.85rem' }}>Cost #</th>
+									<th style={{ width: '110px', padding: '0.65rem 0.85rem' }}>Date</th>
+									<th style={{ width: '18%', padding: '0.65rem 0.85rem' }}>Patient / Resident</th>
+									<th style={{ width: '12%', padding: '0.65rem 0.85rem' }}>Service</th>
+									<th style={{ width: '22%', padding: '0.65rem 0.85rem' }}>Category & Item</th>
+									<th style={{ width: '60px', textAlign: 'right', padding: '0.65rem 0.85rem' }}>Qty</th>
+									<th style={{ width: '100px', textAlign: 'right', padding: '0.65rem 0.85rem' }}>Rate (₹)</th>
+									<th style={{ width: '110px', textAlign: 'right', padding: '0.65rem 0.85rem' }}>Amount (₹)</th>
+									<th style={{ width: '110px', textAlign: 'center', padding: '0.65rem 0.85rem' }}>Status</th>
+									<th style={{ width: '120px', padding: '0.65rem 0.85rem' }}>Invoice Ref</th>
 								</tr>
 							</thead>
 							<tbody>
 								{filteredEntries.map((e) => {
 									const isUnbilled = e.status === 'DRAFT' || e.status === 'REVIEWED'
 									return (
-										<tr key={e.id}>
-											<td style={{ textAlign: 'center' }}>
+										<tr key={e.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ textAlign: 'center', padding: '0.65rem 0.5rem' }}>
 												{isUnbilled ? (
 													<input
 														type="checkbox"
@@ -340,52 +340,57 @@ export function PatientDailyCostTab({
 														onChange={() => toggleSelectEntry(e.id)}
 													/>
 												) : (
-													<CheckCircle2 size={14} color="#94a3b8" />
+													<span title="Billed" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+														<CheckCircle2 size={15} color="#0F969C" />
+													</span>
 												)}
 											</td>
-											<td>
-												<strong style={{ color: '#0F969C' }}>{e.costNo}</strong>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ color: '#0F969C', fontSize: '0.85rem' }}>{e.costNo}</strong>
 											</td>
-											<td style={{ whiteSpace: 'nowrap' }}>
+											<td style={{ whiteSpace: 'nowrap', padding: '0.65rem 0.85rem', fontSize: '0.85rem', color: '#475569' }}>
 												{e.costDate ? new Date(e.costDate).toLocaleDateString('en-IN') : '-'}
 											</td>
-											<td>
-												<span style={{ fontWeight: 600, color: '#0f172a' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<span style={{ fontWeight: 600, color: '#0f172a', fontSize: '0.875rem' }}>
 													{e.patientName}
 												</span>
 											</td>
-											<td>
-												<span style={{ fontSize: '0.8rem', color: '#475569' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<span style={{ fontSize: '0.825rem', color: '#475569' }}>
 													{e.serviceType}
 												</span>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<div>
-													<span style={{ fontWeight: 600, fontSize: '0.8rem' }}>{e.category}</span>
-													<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
-														{e.description}
-													</p>
+													<span style={{ fontWeight: 600, fontSize: '0.825rem', color: '#1e293b' }}>{e.category}</span>
+													{e.description && (
+														<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+															{e.description}
+														</p>
+													)}
 												</div>
 											</td>
-											<td style={{ textAlign: 'right' }}>{e.quantity}</td>
-											<td style={{ textAlign: 'right' }}>₹{Number(e.rate || 0).toFixed(2)}</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', padding: '0.65rem 0.85rem', fontSize: '0.85rem' }}>{e.quantity}</td>
+											<td style={{ textAlign: 'right', padding: '0.65rem 0.85rem', fontSize: '0.85rem', color: '#475569' }}>₹{Number(e.rate || 0).toFixed(2)}</td>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', fontSize: '0.875rem', color: '#0F969C' }}>
 												₹{Number(e.amount || 0).toFixed(2)}
 											</td>
-											<td>
+											<td style={{ textAlign: 'center', padding: '0.65rem 0.85rem' }}>
 												<span
 													className={`status-badge status-badge--${
 														e.status === 'INVOICED' || e.status === 'PAID'
 															? 'active'
 															: 'pending'
 													}`}
+													style={{ display: 'inline-block' }}
 												>
 													{e.status}
 												</span>
 											</td>
-											<td>
-												<span style={{ fontSize: '0.8rem', color: '#64748b' }}>
-													{e.invoiceRefNo || '-'}
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<span style={{ fontSize: '0.8rem', color: e.invoiceRefNo ? '#0F969C' : '#94a3b8', fontWeight: e.invoiceRefNo ? 600 : 400 }}>
+													{e.invoiceRefNo || 'Unbilled'}
 												</span>
 											</td>
 										</tr>

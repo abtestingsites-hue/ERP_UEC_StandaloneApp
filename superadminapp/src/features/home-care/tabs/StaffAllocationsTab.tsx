@@ -143,13 +143,13 @@ export function StaffAllocationsTab({
                     <table className="adm-table">
                         <thead>
                             <tr>
-                                <th>Ref / Client</th>
-                                <th>Assigned Caregiver</th>
-                                <th>Care Type / Service</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th style={{ width: '20%' }}>Ref / Client</th>
+                                <th style={{ width: '20%' }}>Assigned Caregiver</th>
+                                <th style={{ width: '18%' }}>Care Type / Service</th>
+                                <th style={{ width: '12%', textAlign: 'center' }}>Start Date</th>
+                                <th style={{ width: '12%', textAlign: 'center' }}>End Date</th>
+                                <th style={{ width: '10%', textAlign: 'center' }}>Status</th>
+                                <th style={{ width: '8%', textAlign: 'right' }}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -175,13 +175,13 @@ export function StaffAllocationsTab({
                                             <div style={{ fontWeight: 600 }}>{alloc.service || 'Home Care Service'}</div>
                                             <div style={{ fontSize: 11, color: '#64748b' }}>Type: {alloc.type}</div>
                                         </td>
-                                        <td>
+                                        <td style={{ textAlign: 'center' }}>
                                             {alloc.startDate ? new Date(alloc.startDate).toLocaleDateString() : '—'}
                                         </td>
-                                        <td>
+                                        <td style={{ textAlign: 'center' }}>
                                             {alloc.endDate ? new Date(alloc.endDate).toLocaleDateString() : 'Ongoing'}
                                         </td>
-                                        <td>
+                                        <td style={{ textAlign: 'center' }}>
                                             <span
                                                 className={`adm-badge ${
                                                     alloc.status === 'ALLOCATED' || alloc.status === 'ACTIVE'
@@ -194,11 +194,11 @@ export function StaffAllocationsTab({
                                                 {alloc.status}
                                             </span>
                                         </td>
-                                        <td>
+                                        <td style={{ textAlign: 'right' }}>
                                             <button
                                                 type="button"
                                                 className="adm-btn adm-btn--secondary"
-                                                style={{ fontSize: 11, padding: '3px 8px' }}
+                                                style={{ fontSize: 11, padding: '4px 10px', whiteSpace: 'nowrap' }}
                                                 onClick={() => onReassign(alloc)}
                                             >
                                                 Reassign / Edit

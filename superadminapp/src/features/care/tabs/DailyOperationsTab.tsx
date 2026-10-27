@@ -341,30 +341,30 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
             )}
 
             {/* Top Command Bar */}
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl backdrop-blur-md">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs">
                 {/* Date Controls */}
                 <div className="flex flex-wrap items-center gap-2">
                     <button
                         type="button"
                         onClick={() => handleShiftDate(-1)}
-                        className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                        className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer border border-slate-200"
                         title="Previous Day"
                     >
                         <ChevronLeft size={16} />
                     </button>
-                    <div className="flex items-center gap-2 bg-slate-950/60 border border-slate-800 rounded-xl px-3 py-1.5 text-sm font-semibold text-slate-200">
-                        <Calendar size={15} className="text-emerald-400" />
+                    <div className="flex items-center gap-2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-700">
+                        <Calendar size={15} className="text-emerald-600" />
                         <input
                             type="date"
                             value={selectedDate}
                             onChange={(e) => setSelectedDate(e.target.value)}
-                            className="bg-transparent text-slate-200 focus:outline-none cursor-pointer"
+                            className="bg-transparent text-slate-800 focus:outline-none cursor-pointer text-xs font-semibold"
                         />
                     </div>
                     <button
                         type="button"
                         onClick={() => handleShiftDate(1)}
-                        className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                        className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer border border-slate-200"
                         title="Next Day"
                     >
                         <ChevronRight size={16} />
@@ -372,10 +372,10 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                     <button
                         type="button"
                         onClick={() => setSelectedDate(todayStr)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                             selectedDate === todayStr
-                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                                : 'bg-slate-800 hover:bg-slate-700 text-slate-400'
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-300'
+                                : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200'
                         }`}
                     >
                         Today
@@ -384,7 +384,7 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                         type="button"
                         onClick={loadTasks}
                         disabled={isLoading}
-                        className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                        className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer border border-slate-200"
                         title="Reload Operations Register"
                     >
                         <RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />
@@ -392,21 +392,21 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex items-center gap-3 w-full lg:w-auto">
+                <div className="flex items-center gap-2.5">
                     <button
                         type="button"
                         onClick={() => setIsExpenseModalOpen(true)}
-                        className="flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-semibold rounded-xl text-xs shadow-lg shadow-amber-500/10 transition-all cursor-pointer"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg text-xs shadow-xs transition-colors cursor-pointer"
                     >
-                        <IndianRupee size={15} />
+                        <IndianRupee size={14} />
                         <span>Charge Patient Expense</span>
                     </button>
                     <button
                         type="button"
                         onClick={() => setIsNewTaskModalOpen(true)}
-                        className="flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold rounded-xl text-xs transition-colors cursor-pointer"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-xs shadow-xs transition-colors cursor-pointer"
                     >
-                        <Plus size={15} />
+                        <Plus size={14} />
                         <span>Add Task</span>
                     </button>
                 </div>
@@ -422,16 +422,16 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                             key={dept}
                             type="button"
                             onClick={() => setSelectedDept(dept)}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                                 isSelected
-                                    ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
-                                    : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-800'
+                                    ? 'bg-emerald-600 text-white shadow-xs'
+                                    : 'bg-white hover:bg-slate-50 text-slate-600 border border-slate-200'
                             }`}
                         >
                             <span>{dept}</span>
                             <span
-                                className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
-                                    isSelected ? 'bg-slate-950/30 text-slate-950' : 'bg-slate-800 text-slate-400'
+                                className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
                                 }`}
                             >
                                 {count}
@@ -443,65 +443,65 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
 
             {/* Metrics KPI Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                <div className="bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl backdrop-blur-sm">
-                    <div className="flex items-center justify-between text-slate-400 text-xs">
-                        <span>Total Operations</span>
+                <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+                    <div className="flex items-center justify-between text-slate-500 text-xs">
+                        <span className="font-semibold uppercase tracking-wider text-[11px]">Total Operations</span>
                         <Activity size={14} className="text-slate-400" />
                     </div>
-                    <div className="text-xl font-bold text-slate-100 mt-1">{metrics.total}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">Automated + Assigned</div>
+                    <div className="text-2xl font-extrabold text-slate-800 mt-1">{metrics.total}</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Automated + Assigned</div>
                 </div>
 
-                <div className="bg-emerald-950/20 border border-emerald-800/40 p-3.5 rounded-xl backdrop-blur-sm">
-                    <div className="flex items-center justify-between text-emerald-400 text-xs">
-                        <span>Completed</span>
-                        <CheckCircle2 size={14} className="text-emerald-400" />
+                <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+                    <div className="flex items-center justify-between text-emerald-700 text-xs">
+                        <span className="font-semibold uppercase tracking-wider text-[11px]">Completed</span>
+                        <CheckCircle2 size={14} className="text-emerald-600" />
                     </div>
-                    <div className="text-xl font-bold text-emerald-300 mt-1">
+                    <div className="text-2xl font-extrabold text-emerald-600 mt-1">
                         {metrics.completed}{' '}
-                        <span className="text-xs font-normal text-emerald-400">({metrics.completionRate}%)</span>
+                        <span className="text-xs font-semibold text-emerald-700">({metrics.completionRate}%)</span>
                     </div>
-                    <div className="text-[11px] text-emerald-400/70 mt-0.5">Execution verified</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Execution verified</div>
                 </div>
 
-                <div className="bg-sky-950/20 border border-sky-800/40 p-3.5 rounded-xl backdrop-blur-sm">
-                    <div className="flex items-center justify-between text-sky-400 text-xs">
-                        <span>In Progress</span>
-                        <Clock size={14} className="text-sky-400" />
+                <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+                    <div className="flex items-center justify-between text-sky-700 text-xs">
+                        <span className="font-semibold uppercase tracking-wider text-[11px]">In Progress</span>
+                        <Clock size={14} className="text-sky-600" />
                     </div>
-                    <div className="text-xl font-bold text-sky-300 mt-1">{metrics.inProgress}</div>
-                    <div className="text-[11px] text-sky-400/70 mt-0.5">Being executed</div>
+                    <div className="text-2xl font-extrabold text-sky-600 mt-1">{metrics.inProgress}</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Being executed</div>
                 </div>
 
-                <div className="bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl backdrop-blur-sm">
-                    <div className="flex items-center justify-between text-slate-400 text-xs">
-                        <span>Pending</span>
-                        <Sparkles size={14} className="text-amber-400" />
+                <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+                    <div className="flex items-center justify-between text-slate-500 text-xs">
+                        <span className="font-semibold uppercase tracking-wider text-[11px]">Pending</span>
+                        <Sparkles size={14} className="text-amber-500" />
                     </div>
-                    <div className="text-xl font-bold text-slate-200 mt-1">{metrics.pending}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">Scheduled for today</div>
+                    <div className="text-2xl font-extrabold text-slate-700 mt-1">{metrics.pending}</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Scheduled for today</div>
                 </div>
 
-                <div className="bg-rose-950/20 border border-rose-800/40 p-3.5 rounded-xl backdrop-blur-sm">
-                    <div className="flex items-center justify-between text-rose-400 text-xs">
-                        <span>Missed / Issues</span>
-                        <AlertTriangle size={14} className="text-rose-400" />
+                <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+                    <div className="flex items-center justify-between text-rose-700 text-xs">
+                        <span className="font-semibold uppercase tracking-wider text-[11px]">Missed / Issues</span>
+                        <AlertTriangle size={14} className="text-rose-500" />
                     </div>
-                    <div className="text-xl font-bold text-rose-300 mt-1">{metrics.missed}</div>
-                    <div className="text-[11px] text-rose-400/70 mt-0.5">Attention needed</div>
+                    <div className="text-2xl font-extrabold text-rose-600 mt-1">{metrics.missed}</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Attention needed</div>
                 </div>
             </div>
 
             {/* Phased Routine Task Cards */}
             {isLoading ? (
-                <div className="p-12 text-center text-slate-400 bg-slate-900/30 rounded-2xl border border-slate-800/60">
-                    <RefreshCw className="animate-spin mx-auto mb-3 text-emerald-400" size={28} />
+                <div className="p-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">
+                    <RefreshCw className="animate-spin mx-auto mb-3 text-emerald-600" size={28} />
                     <p className="text-sm font-medium">Loading daily operations and routine care schedule...</p>
                 </div>
             ) : filteredTasks.length === 0 ? (
-                <div className="p-12 text-center text-slate-400 bg-slate-900/30 rounded-2xl border border-slate-800/60">
-                    <Calendar className="mx-auto mb-3 text-slate-600" size={32} />
-                    <p className="text-sm font-semibold text-slate-300">No operations found for this date & department filter.</p>
+                <div className="p-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">
+                    <Calendar className="mx-auto mb-3 text-slate-400" size={32} />
+                    <p className="text-sm font-semibold text-slate-700">No operations found for this date & department filter.</p>
                     <p className="text-xs text-slate-500 mt-1">Click "Add Task" to create a custom operation or reset your filter.</p>
                 </div>
             ) : (
@@ -511,7 +511,7 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                         const phaseMeta = PHASE_LABELS[phaseKey] || {
                             label: phaseKey.replace(/_/g, ' '),
                             time: 'Daily Schedule',
-                            badgeClass: 'bg-slate-700/20 text-slate-300 border-slate-700'
+                            badgeClass: 'bg-slate-100 text-slate-700 border-slate-300'
                         };
 
                         return (
@@ -519,8 +519,8 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                 {/* Phase Header */}
                                 <div className="flex items-center justify-between px-1">
                                     <div className="flex items-center gap-2.5">
-                                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                                        <h3 className="text-sm font-bold text-slate-100 tracking-wide uppercase">
+                                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
+                                        <h3 className="text-sm font-bold text-slate-800 tracking-wide uppercase">
                                             {phaseMeta.label}
                                         </h3>
                                         <span
@@ -538,9 +538,9 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {phaseTasks.map((task) => {
                                         const deptColor = DEPARTMENT_COLORS[task.department] || {
-                                            text: 'text-slate-300',
-                                            bg: 'bg-slate-800',
-                                            border: 'border-slate-700'
+                                            text: 'text-slate-700',
+                                            bg: 'bg-slate-100',
+                                            border: 'border-slate-300'
                                         };
                                         const isCompleted = task.status === 'COMPLETED';
                                         const isMissed = task.status === 'MISSED';
@@ -551,12 +551,12 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                                 key={task.id}
                                                 className={`p-4 rounded-xl border transition-all ${
                                                     isCompleted
-                                                        ? 'bg-slate-900/40 border-slate-800/60 opacity-90'
+                                                        ? 'bg-slate-50 border-slate-200 opacity-90'
                                                         : isMissed
-                                                        ? 'bg-rose-950/20 border-rose-800/40'
+                                                        ? 'bg-rose-50/50 border-rose-200'
                                                         : isInProgress
-                                                        ? 'bg-sky-950/20 border-sky-800/40'
-                                                        : 'bg-slate-900/70 border-slate-800 hover:border-slate-700'
+                                                        ? 'bg-sky-50/50 border-sky-200'
+                                                        : 'bg-white border-slate-200 shadow-xs hover:border-slate-300'
                                                 }`}
                                             >
                                                 {/* Header & Department Tag */}
@@ -576,7 +576,7 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                                         </div>
                                                         <h4
                                                             className={`text-sm font-semibold leading-snug ${
-                                                                isCompleted ? 'text-slate-300 line-through' : 'text-slate-100'
+                                                                isCompleted ? 'text-slate-400 line-through' : 'text-slate-800'
                                                             }`}
                                                         >
                                                             {task.title}
@@ -592,12 +592,12 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                                         }
                                                         className={`text-xs font-bold rounded-lg px-2.5 py-1 focus:outline-none cursor-pointer border ${
                                                             isCompleted
-                                                                ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/60'
+                                                                ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
                                                                 : isInProgress
-                                                                ? 'bg-sky-950/60 text-sky-300 border-sky-700/60'
+                                                                ? 'bg-sky-50 text-sky-700 border-sky-300'
                                                                 : isMissed
-                                                                ? 'bg-rose-950/60 text-rose-300 border-rose-700/60'
-                                                                : 'bg-slate-800 text-slate-300 border-slate-700'
+                                                                ? 'bg-rose-50 text-rose-700 border-rose-300'
+                                                                : 'bg-white text-slate-700 border-slate-300'
                                                         }`}
                                                     >
                                                         <option value="PENDING">PENDING</option>
@@ -608,13 +608,13 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                                 </div>
 
                                                 {/* Assignee & Meta Bar */}
-                                                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/60 text-xs">
-                                                    <div className="flex items-center gap-1.5 text-slate-400">
-                                                        <User size={13} className="text-slate-500" />
+                                                <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-slate-100 text-xs">
+                                                    <div className="flex items-center gap-1.5 text-slate-500 min-w-[180px]">
+                                                        <User size={13} className="text-slate-400 shrink-0" />
                                                         <select
                                                             value={task.assignedStaffId || ''}
                                                             onChange={(e) => handleAssignStaff(task.id, e.target.value)}
-                                                            className="bg-slate-950/40 text-slate-300 border border-slate-800 rounded px-2 py-0.5 text-xs focus:outline-none cursor-pointer max-w-[160px]"
+                                                            className="bg-white text-slate-700 border border-slate-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:border-emerald-600 cursor-pointer w-full max-w-[170px]"
                                                         >
                                                             <option value="">Unassigned</option>
                                                             {staffList.map((st) => (
@@ -626,9 +626,9 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                                     </div>
 
                                                     {/* Remarks Trigger or Completed At */}
-                                                    <div className="text-[11px] text-slate-500">
+                                                    <div className="text-[11px] text-slate-500 flex items-center gap-2">
                                                         {task.completedAt ? (
-                                                            <span className="text-emerald-400 font-medium">
+                                                            <span className="text-emerald-700 font-medium">
                                                                 Done at{' '}
                                                                 {new Date(task.completedAt).toLocaleTimeString('en-IN', {
                                                                     hour: '2-digit',
@@ -641,7 +641,7 @@ export function DailyOperationsTab({ activeUnitId }: DailyOperationsTabProps) {
                                                                 placeholder="Add notes..."
                                                                 defaultValue={task.remarks || ''}
                                                                 onBlur={(e) => handleSaveRemarks(task.id, e.target.value)}
-                                                                className="bg-transparent text-slate-400 placeholder:text-slate-600 focus:text-slate-200 focus:outline-none border-b border-transparent focus:border-slate-600 text-right text-xs"
+                                                                className="bg-slate-50 text-slate-700 placeholder:text-slate-400 focus:text-slate-900 focus:bg-white focus:outline-none border border-slate-200 focus:border-slate-400 rounded px-2 py-0.5 text-xs text-right min-w-[130px]"
                                                             />
                                                         )}
                                                     </div>

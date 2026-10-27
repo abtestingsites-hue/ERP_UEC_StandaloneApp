@@ -2073,6 +2073,65 @@
   gap: 12px;
 }
 
+.inv-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.inv-form-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  display: block;
+}
+
+.inv-input,
+.inv-form-field input,
+.inv-form-field select,
+.inv-form-field textarea {
+  width: 100%;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.inv-input:focus,
+.inv-form-field input:focus,
+.inv-form-field select:focus,
+.inv-form-field textarea:focus {
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+}
+
+.inv-textarea {
+  width: 100%;
+  min-height: 72px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.inv-textarea:focus {
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+}
+
 .inv-form-group {
   display: flex;
   flex-direction: column;
@@ -2479,28 +2538,51 @@
 
 .adm-kpi-card {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  flex-direction: column;
+  gap: 8px;
   padding: 16px;
-  background: var(--surface-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-card, 0 1px 3px rgba(0,0,0,0.05));
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
-.adm-kpi-card:hover {
-  box-shadow: var(--shadow-md);
+.adm-kpi-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.adm-kpi-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-sm);
+.adm-kpi-card__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.adm-kpi-card__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.adm-kpi-card__value {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.adm-kpi-card__meta {
+  font-size: 12px;
+  color: var(--text-secondary, #64748b);
+  margin-top: 2px;
 }
 
 .adm-kpi-icon--blue {
@@ -2854,7 +2936,8 @@
   animation: admFadeIn 0.15s ease-out;
 }
 
-.adm-modal-container {
+.adm-modal-container,
+.adm-modal {
   background: #ffffff;
   border-radius: 12px;
   width: 100%;
@@ -2862,6 +2945,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  border: 1px solid #e2e8f0;
   overflow: hidden;
   animation: admSlideUp 0.15s ease-out;
 }
@@ -4385,3 +4469,171 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* ==========================================================================
+   GLOBAL ADAPTATION & CONSISTENCY: TABLES, OVERLAYS & FORMS
+   ========================================================================== */
+
+/* Unified Table Wrappers and Containers */
+.adm-table-wrap,
+.adm-table-container,
+.erp-table-responsive,
+.inv-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.04));
+  margin-bottom: 1rem;
+}
+
+/* Unified ERP Table Layout & Alignment */
+.erp-table,
+.adm-table,
+.inv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+  letter-spacing: normal;
+}
+
+.erp-table thead,
+.adm-table thead,
+.inv-table thead {
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border-default, #e2e8f0);
+}
+
+.erp-table th,
+.adm-table th,
+.inv-table th {
+  padding: 12px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #64748b);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.erp-table td,
+.adm-table td,
+.inv-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-default, #e2e8f0);
+  color: var(--text-primary, #1e293b);
+  vertical-align: middle;
+  font-size: 13px;
+}
+
+.erp-table tbody tr:hover,
+.adm-table tbody tr:hover,
+.inv-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.erp-table th:last-child,
+.erp-table td:last-child,
+.adm-table th.text-right,
+.adm-table td.text-right,
+.inv-table th.text-right,
+.inv-table td.text-right {
+  text-align: right;
+}
+
+/* Unified Modal Overlays */
+.adm-modal-overlay,
+.erp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  z-index: 1050;
+  overflow-y: auto;
+  animation: admFadeIn 0.15s ease-out;
+}
+
+.erp-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-default, #e2e8f0);
+  overflow: hidden;
+  animation: admSlideUp 0.15s ease-out;
+}
+
+/* Unified Form Controls for Modals */
+.adm-form-input,
+.erp-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-default, #e2e8f0);
+  background-color: #ffffff;
+  color: var(--text-primary, #0f172a);
+  font-size: 13px;
+  line-height: 1.5;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.adm-form-input:focus,
+.erp-input:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+}
+
+.adm-form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.adm-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal Title Icon Alignment */
+.adm-modal-icon {
+  width: 22px;
+  height: 22px;
+  color: #059669;
+  flex-shrink: 0;
+}
+
+.adm-modal-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.adm-modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.adm-modal-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+

@@ -262,58 +262,6 @@ export function HomeCareWorkspace() {
                 description="Client intake, service contracts, agreed rates, caregiver allocations, and operational home visit execution."
                 action={
                     <div className="adm-header-action-group" style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                        {/* Role Perspective Switcher */}
-                        <div
-                            style={{
-                                display: 'inline-flex',
-                                background: '#f1f5f9',
-                                padding: 3,
-                                borderRadius: 8,
-                                border: '1px solid #e2e8f0'
-                            }}
-                        >
-                            <button
-                                type="button"
-                                onClick={() => handleRoleToggle('manager')}
-                                style={{
-                                    border: 'none',
-                                    padding: '5px 12px',
-                                    borderRadius: 6,
-                                    fontSize: 12,
-                                    fontWeight: 700,
-                                    cursor: 'pointer',
-                                    background: roleMode === 'manager' ? '#ffffff' : 'transparent',
-                                    color: roleMode === 'manager' ? '#0f172a' : '#64748b',
-                                    boxShadow: roleMode === 'manager' ? '0 1px 2px rgba(0,0,0,0.06)' : 'none',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 5
-                                }}
-                            >
-                                <UserCheck size={14} /> Home Care Manager
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => handleRoleToggle('staff')}
-                                style={{
-                                    border: 'none',
-                                    padding: '5px 12px',
-                                    borderRadius: 6,
-                                    fontSize: 12,
-                                    fontWeight: 700,
-                                    cursor: 'pointer',
-                                    background: roleMode === 'staff' ? '#ffffff' : 'transparent',
-                                    color: roleMode === 'staff' ? '#0f172a' : '#64748b',
-                                    boxShadow: roleMode === 'staff' ? '0 1px 2px rgba(0,0,0,0.06)' : 'none',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 5
-                                }}
-                            >
-                                <User size={14} /> Caregiver / Staff
-                            </button>
-                        </div>
-
                         {/* Unit Scope Badge */}
                         <div className="adm-scope-badge" title="Active Operating Scope">
                             <Building2 size={14} />

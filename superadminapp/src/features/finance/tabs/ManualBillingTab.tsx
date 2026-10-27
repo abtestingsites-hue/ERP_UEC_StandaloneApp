@@ -545,7 +545,7 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 			const opt = {
 				margin: [8, 8, 8, 8] as [number, number, number, number],
 				filename: `Bill_${safeName}_${refNo}.pdf`,
-				image: { type: 'jpeg', quality: 0.98 },
+				image: { type: 'jpeg' as const, quality: 0.98 },
 				html2canvas: { scale: 2, useCORS: true, logging: false },
 				jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
 			}
@@ -1786,40 +1786,43 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 						)}
 
 						<div>
-							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155' }}>
 								Billing Month
 							</label>
 							<input
 								type="month"
 								value={billingMonthYear}
 								onChange={(e) => setBillingMonthYear(e.target.value)}
+								style={{ width: '100%', height: '40px', padding: '0 0.65rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 							/>
 						</div>
 
 						<div>
-							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155' }}>
 								{billType === 'HOME_CARE' ? 'Service Start Date' : 'Contract Start Date'}
 							</label>
 							<input
 								type="date"
 								value={contractStartDate}
 								onChange={(e) => setContractStartDate(e.target.value)}
+								style={{ width: '100%', height: '40px', padding: '0 0.65rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 							/>
 						</div>
 
 						<div>
-							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155' }}>
 								{billType === 'HOME_CARE' ? 'Service End Date' : 'Contract End Date'}
 							</label>
 							<input
 								type="date"
 								value={contractEndDate}
 								onChange={(e) => setContractEndDate(e.target.value)}
+								style={{ width: '100%', height: '40px', padding: '0 0.65rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 							/>
 						</div>
 
 						<div>
-							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155' }}>
 								Billing Frequency & Days
 							</label>
 							<div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -1827,7 +1830,7 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 									className="filter-select"
 									value={billingFrequency}
 									onChange={(e) => setBillingFrequency(e.target.value)}
-									style={{ flex: 1, height: '42px' }}
+									style={{ flex: 1, height: '40px', fontSize: '0.85rem' }}
 								>
 									<option value="Monthly">Monthly</option>
 									<option value="Bi-Weekly">Bi-Weekly</option>
@@ -1840,13 +1843,13 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 									value={billingDays}
 									onChange={(e) => setBillingDays(e.target.value)}
 									placeholder="Days"
-									style={{ width: '70px' }}
+									style={{ width: '80px', height: '40px', padding: '0 0.5rem', textAlign: 'center', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 								/>
 							</div>
 						</div>
 
 						<div>
-							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155' }}>
 								{billType === 'HOME_CARE' ? 'Client / Family Sponsor Name' : 'Guardian / Sponsor Name'}
 							</label>
 							<input
@@ -1854,11 +1857,12 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 								value={guardianName}
 								onChange={(e) => setGuardianName(e.target.value)}
 								placeholder="e.g. Ramesh Kumar (Son)"
+								style={{ width: '100%', height: '40px', padding: '0 0.65rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 							/>
 						</div>
 
 						<div>
-							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+							<label className="field-label" style={{ marginBottom: '0.35rem', display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155' }}>
 								Contact Phone & City
 							</label>
 							<div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -1867,14 +1871,14 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 									value={guardianContact}
 									onChange={(e) => setGuardianContact(e.target.value)}
 									placeholder="Phone # / Mobile"
-									style={{ flex: 1 }}
+									style={{ flex: 1, height: '40px', padding: '0 0.65rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 								/>
 								<input
 									type="text"
 									value={guardianCity}
 									onChange={(e) => setGuardianCity(e.target.value)}
 									placeholder="City"
-									style={{ width: '100px' }}
+									style={{ width: '110px', height: '40px', padding: '0 0.65rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
 								/>
 							</div>
 						</div>
@@ -1903,301 +1907,313 @@ export function ManualBillingTab({ onInvoiceGenerated }: ManualBillingTabProps) 
 						</p>
 					</div>
 
-					<div style={{ overflowX: 'auto' }}>
-						<table className="data-table" style={{ width: '100%' }}>
+					<div className="erp-table-responsive" style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+						<table className="erp-table data-table" style={{ width: '100%', minWidth: '700px', borderCollapse: 'collapse', textAlign: 'left' }}>
 							<thead>
-								<tr>
-									<th>
+								<tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+									<th style={{ width: billType === 'ELDER_CARE' ? '44%' : '52%', padding: '0.65rem 0.85rem' }}>
 										{billType === 'HOME_CARE'
 											? 'Service / Domiciliary Care Component'
 											: 'Service / Facility Item'}
 									</th>
-									<th style={{ width: '160px' }}>Charge Rate (₹)</th>
+									<th style={{ width: '180px', padding: '0.65rem 0.85rem' }}>Charge Rate (₹)</th>
 									{billType === 'ELDER_CARE' && (
-										<th style={{ width: '160px', color: '#ea580c' }}>Elder Subsidy (₹)</th>
+										<th style={{ width: '180px', padding: '0.65rem 0.85rem', color: '#ea580c' }}>Elder Subsidy (₹)</th>
 									)}
-									<th style={{ textAlign: 'right', width: '140px' }}>Net Item (₹)</th>
+									<th style={{ textAlign: 'right', width: '160px', padding: '0.65rem 0.85rem' }}>Net Item (₹)</th>
 								</tr>
 							</thead>
 							<tbody>
 								{billType === 'HOME_CARE' ? (
 									<>
-										<tr>
-											<td>
-												<strong>Home Nursing & Caregiver Attendant Fee</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Home Nursing & Caregiver Attendant Fee</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Dedicated bedside attendant / nurse for specified shift duration ({homeCareShift})
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={homeNursingRate}
 													onChange={(e) => setHomeNursingRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{homeNursingRate.toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Doctor Home Visits & Clinical Assessment</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Doctor Home Visits & Clinical Assessment</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Periodic physician domiciliary review, vitals check & prescription audit
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={doctorVisitRate}
 													onChange={(e) => setDoctorVisitRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{doctorVisitRate.toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Physiotherapy & Rehabilitation at Home</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Physiotherapy & Rehabilitation at Home</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Bedside mobility, stroke recovery & therapeutic exercises
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={physioHomeRate}
 													onChange={(e) => setPhysioHomeRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{physioHomeRate.toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Home Medical Equipment Rental</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Home Medical Equipment Rental</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Oxygen concentrator, motorized hospital bed, suction machine, air mattress
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={equipmentRentalRate}
 													onChange={(e) => setEquipmentRentalRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{equipmentRentalRate.toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Medical Consumables & Care Supplies</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Medical Consumables & Care Supplies</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Hygiene supplies, dressing packs, gloves, adult diapers, catheter kits
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={homeConsumablesRate}
 													onChange={(e) => setHomeConsumablesRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{homeConsumablesRate.toFixed(2)}
 											</td>
 										</tr>
 
 										<tr>
-											<td>
-												<strong>Domiciliary Travel & Conveyance</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Domiciliary Travel & Conveyance</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Staff transit allowance & travel conveyance to client residence
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={conveyanceRate}
 													onChange={(e) => setConveyanceRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{conveyanceRate.toFixed(2)}
 											</td>
 										</tr>
 									</>
 								) : (
 									<>
-										<tr>
-											<td>
-												<strong>Room Boarding / Accommodation</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
-													Standard monthly boarding stay
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Room Boarding / Accommodation</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+													Standard monthly boarding stay ({bedSharing})
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={boardingRate}
 													onChange={(e) => setBoardingRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={boardingSubsidy}
 													onChange={(e) => setBoardingSubsidy(Number(e.target.value))}
-													style={{ backgroundColor: '#fff7ed', borderColor: '#fdba74' }}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{(boardingRate - boardingSubsidy).toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Care Staff & Nursing Support</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Care Staff & Nursing Support</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Daily attendant & care monitoring
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={careStaffRate}
 													onChange={(e) => setCareStaffRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={careStaffSubsidy}
 													onChange={(e) => setCareStaffSubsidy(Number(e.target.value))}
-													style={{ backgroundColor: '#fff7ed', borderColor: '#fdba74' }}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{(careStaffRate - careStaffSubsidy).toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Physiotherapy & Rehabilitation</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Physiotherapy & Rehabilitation</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Mobility and therapeutic exercises
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={therapyRate}
 													onChange={(e) => setTherapyRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={therapySubsidy}
 													onChange={(e) => setTherapySubsidy(Number(e.target.value))}
-													style={{ backgroundColor: '#fff7ed', borderColor: '#fdba74' }}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{(therapyRate - therapySubsidy).toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Food, Nutrition & Dietetics</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Food, Nutrition & Dietetics</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													3-course nutritious meals and tea
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={foodRate}
 													onChange={(e) => setFoodRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={foodSubsidy}
 													onChange={(e) => setFoodSubsidy(Number(e.target.value))}
-													style={{ backgroundColor: '#fff7ed', borderColor: '#fdba74' }}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: '6px' }}
 												/>
 											</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{(foodRate - foodSubsidy).toFixed(2)}
 											</td>
 										</tr>
 
-										<tr>
-											<td>
-												<strong>Utilities, Power & Water</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+										<tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Utilities, Power & Water</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Air conditioning, hot water, generator backup
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={utilityRate}
 													onChange={(e) => setUtilityRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td>-</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ padding: '0.65rem 0.85rem', color: '#94a3b8', fontStyle: 'italic' }}>None</td>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{utilityRate.toFixed(2)}
 											</td>
 										</tr>
 
 										<tr>
-											<td>
-												<strong>Medical Consumables & Hygiene</strong>
-												<p style={{ margin: '0.1rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
+												<strong style={{ fontSize: '0.875rem', color: '#1e293b' }}>Medical Consumables & Hygiene</strong>
+												<p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#64748b' }}>
 													Gloves, sanitizers, adult diapers, cotton
 												</p>
 											</td>
-											<td>
+											<td style={{ padding: '0.65rem 0.85rem' }}>
 												<input
 													type="number"
 													min="0"
 													value={medicalConsumablesRate}
 													onChange={(e) => setMedicalConsumablesRate(Number(e.target.value))}
+													style={{ width: '100%', height: '36px', padding: '0.4rem 0.6rem', textAlign: 'right', fontWeight: 600, border: '1px solid #cbd5e1', borderRadius: '6px' }}
 												/>
 											</td>
-											<td>-</td>
-											<td style={{ textAlign: 'right', fontWeight: 700 }}>
+											<td style={{ padding: '0.65rem 0.85rem', color: '#94a3b8', fontStyle: 'italic' }}>None</td>
+											<td style={{ textAlign: 'right', fontWeight: 700, padding: '0.65rem 0.85rem', color: '#0F969C' }}>
 												₹{medicalConsumablesRate.toFixed(2)}
 											</td>
 										</tr>

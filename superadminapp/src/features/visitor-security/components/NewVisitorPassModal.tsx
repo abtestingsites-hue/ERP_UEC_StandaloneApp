@@ -175,8 +175,8 @@ function NewVisitorPassModalContent({
     };
 
     return (
-        <div className="adm-modal-backdrop">
-            <div className="adm-modal" style={{ maxWidth: 640 }}>
+        <div className="adm-modal-backdrop" role="dialog" aria-modal="true">
+            <div className="adm-modal-container adm-modal-container--md" style={{ maxWidth: 640 }}>
                 <div className="adm-modal-header">
                     <div>
                         <h3 className="adm-modal-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -186,12 +186,12 @@ function NewVisitorPassModalContent({
                             Register new visitor, verify contact details, and create security access pass.
                         </p>
                     </div>
-                    <button type="button" className="adm-modal-close" onClick={onClose} disabled={isSubmitting}>
+                    <button type="button" className="adm-modal-close-btn" onClick={onClose} disabled={isSubmitting} aria-label="Close">
                         <X size={18} />
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
                     <div className="adm-modal-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                         {error && (
                             <div className="adm-alert adm-alert--error" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

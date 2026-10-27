@@ -173,64 +173,65 @@ function DonationReceiptDrawerContent({
                         <div
                             style={{
                                 background: 'rgba(0, 0, 0, 0.02)',
+                                border: '1px solid var(--border-color)',
                                 borderRadius: '8px',
-                                padding: '1rem',
+                                padding: '1.25rem',
                                 marginBottom: '1.25rem',
                                 fontSize: '0.9rem'
                             }}
                         >
-                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.4rem' }}>
                                 Received With Thanks From
                             </div>
-                            <div style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+                            <div style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
                                 {donor?.name || 'Anonymous Donor'}
                             </div>
                             {donor?.fatherOrHusbandName && (
-                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                                    Relation: {donor.fatherOrHusbandName}
+                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.2rem' }}>
+                                    Relation / Care Of: <strong>{donor.fatherOrHusbandName}</strong>
                                 </div>
                             )}
                             {donor?.residentialAddress && (
-                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
+                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.2rem', lineHeight: 1.4 }}>
                                     Address: {donor.residentialAddress}
                                 </div>
                             )}
-                            <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.4rem', fontSize: '0.85rem' }}>
-                                {donor?.panNumber && <span>PAN: <strong style={{ fontFamily: 'monospace' }}>{donor.panNumber}</strong></span>}
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginTop: '0.6rem', fontSize: '0.85rem', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '0.5rem' }}>
+                                {donor?.panNumber && <span>PAN: <strong style={{ fontFamily: 'monospace', color: '#0f766e' }}>{donor.panNumber}</strong></span>}
                                 {donor?.mobile && <span>Mobile: <strong>{donor.mobile}</strong></span>}
-                                {donor?.isCorporate && <span style={{ color: '#0284c7', fontWeight: 600 }}>[Corporate / CSR]</span>}
+                                {donor?.isCorporate && <span style={{ color: '#0284c7', fontWeight: 700, background: 'rgba(2,132,199,0.1)', padding: '2px 8px', borderRadius: 4 }}>Corporate / CSR Contribution</span>}
                             </div>
                         </div>
 
                         {/* Amount & Purpose */}
                         <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem', marginBottom: '1rem' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.5rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.5rem', flexWrap: 'wrap', gap: 8 }}>
                                 <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Amount Received:</span>
-                                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#10b981' }}>
+                                <span style={{ fontSize: '1.6rem', fontWeight: 800, color: '#10b981' }}>
                                     ₹{donation.amount.toLocaleString('en-IN')}
                                 </span>
                             </div>
                             {donation.amountInWords && (
-                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginBottom: '0.5rem' }}>
-                                    In Words: {donation.amountInWords}
+                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginBottom: '0.6rem' }}>
+                                    In Words: <strong>{donation.amountInWords}</strong>
                                 </div>
                             )}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
-                                <span>Payment Mode: <strong>{donation.paymentMode}</strong></span>
-                                <span>Purpose: <strong>{donation.purpose || 'General Charity'}</strong></span>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', fontSize: '0.85rem', background: '#f8fafc', padding: '10px 12px', borderRadius: 6 }}>
+                                <div>Payment Mode: <strong style={{ color: '#0f172a' }}>{donation.paymentMode}</strong></div>
+                                <div>Purpose: <strong style={{ color: '#0f172a' }}>{donation.purpose || 'General Charity'}</strong></div>
                             </div>
                             {donation.materialDetails && (
-                                <div style={{ fontSize: '0.85rem', marginTop: '0.4rem', color: 'var(--text-secondary)' }}>
-                                    Material Item: {donation.materialDetails}
+                                <div style={{ fontSize: '0.85rem', marginTop: '0.5rem', color: 'var(--text-secondary)' }}>
+                                    Material Item / Description: <strong>{donation.materialDetails}</strong>
                                 </div>
                             )}
                         </div>
 
                         {/* Occasion & Remarks */}
                         {donation.occasionName && (
-                            <div style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>
-                                <span style={{ color: 'var(--text-secondary)' }}>Occasion / Memorial: </span>
-                                <strong>{donation.occasionName}</strong>
+                            <div style={{ marginBottom: '1rem', fontSize: '0.85rem', background: '#fffbeb', padding: '8px 12px', borderRadius: 6, border: '1px solid #fde68a' }}>
+                                <span style={{ color: '#92400e' }}>Occasion / Memorial Dedication: </span>
+                                <strong style={{ color: '#78350f' }}>{donation.occasionName}</strong>
                             </div>
                         )}
 

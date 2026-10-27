@@ -7,8 +7,11 @@ export function getApiBaseUrl(): string {
 	}
 	if (typeof window !== 'undefined') {
 		const host = window.location.hostname
-		if (host.includes('render.com') || (host !== 'localhost' && host !== '127.0.0.1')) {
+		if (host.includes('render.com')) {
 			return 'https://erp-uec-backend.onrender.com/api/v1'
+		}
+		if (host !== 'localhost' && host !== '127.0.0.1') {
+			return 'https://6r4nhvfx-4000.inc1.devtunnels.ms/api/v1'
 		}
 	}
 	return 'http://127.0.0.1:4000/api/v1'

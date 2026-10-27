@@ -1042,13 +1042,13 @@ export function PurchasesProcurementTab() {
                                     <table className="inv-table">
                                         <thead>
                                             <tr>
-                                                <th>PO Number</th>
-                                                <th>Supplier / Vendor</th>
-                                                <th>Order Date</th>
-                                                <th>Expected Delivery</th>
-                                                <th>Line Items</th>
-                                                <th>Status</th>
-                                                <th style={{ textAlign: 'right' }}>Actions</th>
+                                                <th style={{ width: '16%' }}>PO Number</th>
+                                                <th style={{ width: '22%' }}>Supplier / Vendor</th>
+                                                <th style={{ width: '12%', textAlign: 'center' }}>Order Date</th>
+                                                <th style={{ width: '14%', textAlign: 'center' }}>Expected Delivery</th>
+                                                <th style={{ width: '16%' }}>Line Items</th>
+                                                <th style={{ width: '10%', textAlign: 'center' }}>Status</th>
+                                                <th style={{ width: '10%', textAlign: 'right' }}>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1061,21 +1061,21 @@ export function PurchasesProcurementTab() {
                                                         <td>
                                                             <strong>{po.orderNumber}</strong>
                                                             {po.notes && (
-                                                                <span className="inv-subtext" title={po.notes}>
-                                                                    {po.notes.length > 30 ? `${po.notes.slice(0, 30)}...` : po.notes}
+                                                                <span className="inv-subtext" title={po.notes} style={{ display: 'block', maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                                    {po.notes}
                                                                 </span>
                                                             )}
                                                         </td>
                                                         <td>
                                                             <strong>{po.vendor?.name || 'Unknown Supplier'}</strong>
                                                             {po.vendor?.code && (
-                                                                <span className="inv-subtext">Code: {po.vendor.code}</span>
+                                                                <span className="inv-subtext" style={{ display: 'block' }}>Code: {po.vendor.code}</span>
                                                             )}
                                                         </td>
-                                                        <td>
+                                                        <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                                             {new Date(po.orderDate).toLocaleDateString()}
                                                         </td>
-                                                        <td>
+                                                        <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                                             {po.expectedDeliveryDate ? (
                                                                 new Date(po.expectedDeliveryDate).toLocaleDateString()
                                                             ) : (
@@ -1083,14 +1083,14 @@ export function PurchasesProcurementTab() {
                                                             )}
                                                         </td>
                                                         <td>
-                                                            <span>
+                                                            <div>
                                                                 <strong>{(po.items || []).length}</strong> product lines
-                                                            </span>
-                                                            <span className="inv-subtext">
+                                                            </div>
+                                                            <span className="inv-subtext" style={{ display: 'block' }}>
                                                                 ({totalReceivedUnits} / {totalOrderedUnits} units received)
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        <td style={{ textAlign: 'center' }}>
                                                             {renderStatusBadge(po.status)}
                                                         </td>
                                                         <td style={{ textAlign: 'right' }}>

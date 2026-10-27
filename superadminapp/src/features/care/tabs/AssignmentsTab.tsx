@@ -197,13 +197,13 @@ export function AssignmentsTab({
                 <table className="adm-table">
                     <thead>
                         <tr>
-                            <th>Staff Member</th>
-                            <th>Resident / Patient</th>
-                            <th>Duty Type</th>
-                            <th>Priority</th>
-                            <th>Shift Start</th>
-                            <th>Status</th>
-                            <th style={{ textAlign: 'right' }}>Actions</th>
+                            <th style={{ width: '22%' }}>Staff Member</th>
+                            <th style={{ width: '22%' }}>Resident / Patient</th>
+                            <th style={{ width: '16%' }}>Duty Type</th>
+                            <th style={{ width: '10%', textAlign: 'center' }}>Priority</th>
+                            <th style={{ width: '12%', textAlign: 'center' }}>Shift Start</th>
+                            <th style={{ width: '10%', textAlign: 'center' }}>Status</th>
+                            <th style={{ width: '8%', textAlign: 'right' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -243,9 +243,9 @@ export function AssignmentsTab({
                                             {row.dutyType?.replace(/_/g, ' ')}
                                         </div>
                                     </td>
-                                    <td>{getPriorityBadge(row.priority)}</td>
-                                    <td>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#475569' }}>
+                                    <td style={{ textAlign: 'center' }}>{getPriorityBadge(row.priority)}</td>
+                                    <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
+                                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#475569' }}>
                                             <Calendar size={13} color="#94a3b8" />
                                             {row.startAt
                                                 ? new Date(row.startAt).toLocaleDateString([], {
@@ -257,7 +257,7 @@ export function AssignmentsTab({
                                                 : '-'}
                                         </div>
                                     </td>
-                                    <td>{getStatusBadge(row.status)}</td>
+                                    <td style={{ textAlign: 'center' }}>{getStatusBadge(row.status)}</td>
                                     <td style={{ textAlign: 'right' }}>
                                         <div style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
                                             {/* Launch duty execution modal */}

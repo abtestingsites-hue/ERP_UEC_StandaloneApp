@@ -111,13 +111,13 @@ export function EnquiriesTab({ onOpenNewEnquiry, activeUnitId }: EnquiriesTabPro
                     <table className="adm-table">
                         <thead>
                             <tr>
-                                <th>Ref / Client</th>
-                                <th>Patient Name</th>
-                                <th>Contact Number</th>
-                                <th>Intake Channel</th>
-                                <th>Status</th>
-                                <th>Care Requirements</th>
-                                <th>Actions</th>
+                                <th style={{ width: '18%' }}>Ref / Client</th>
+                                <th style={{ width: '18%' }}>Patient Name</th>
+                                <th style={{ width: '15%' }}>Contact Number</th>
+                                <th style={{ width: '12%' }}>Intake Channel</th>
+                                <th style={{ width: '12%', textAlign: 'center' }}>Status</th>
+                                <th style={{ width: '15%' }}>Care Requirements</th>
+                                <th style={{ width: '10%', textAlign: 'right' }}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -156,7 +156,7 @@ export function EnquiriesTab({ onOpenNewEnquiry, activeUnitId }: EnquiriesTabPro
                                                 {enq.mode || 'Call'}
                                             </span>
                                         </td>
-                                        <td>
+                                        <td style={{ textAlign: 'center' }}>
                                             <span
                                                 className={`adm-badge ${
                                                     enq.status === 'Converted'
@@ -180,11 +180,11 @@ export function EnquiriesTab({ onOpenNewEnquiry, activeUnitId }: EnquiriesTabPro
                                                 <span style={{ color: '#94a3b8' }}>General enquiry</span>
                                             )}
                                         </td>
-                                        <td>
+                                        <td style={{ textAlign: 'right' }}>
                                             <button
                                                 type="button"
                                                 className="adm-btn adm-btn--secondary"
-                                                style={{ fontSize: 11, padding: '3px 8px' }}
+                                                style={{ fontSize: 11, padding: '4px 10px', display: 'inline-flex', alignItems: 'center', gap: 4 }}
                                                 onClick={() => setSelectedEnquiry(enq)}
                                             >
                                                 <Eye size={12} /> Inspect

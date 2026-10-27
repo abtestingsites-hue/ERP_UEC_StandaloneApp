@@ -225,16 +225,16 @@ export function FundingProjectsTab({
                         No charitable projects recorded. Click Register Project to create one.
                     </div>
                 ) : (
-                    <div style={{ overflowX: 'auto' }}>
+                    <div className="erp-table-responsive">
                         <table className="erp-table" style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr style={{ borderBottom: '1px solid var(--border-color)', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                                    <th style={{ padding: '0.75rem 1rem' }}>PROJECT INITIATIVE</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>TARGET BUDGET</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>FUNDS ALLOCATED</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>FULFILLMENT</th>
-                                    <th style={{ padding: '0.75rem 1rem' }}>STATUS</th>
-                                    <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>DATE CREATED</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '28%' }}>PROJECT INITIATIVE</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '15%', textAlign: 'right' }}>TARGET BUDGET</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '15%', textAlign: 'right' }}>FUNDS ALLOCATED</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '18%' }}>FULFILLMENT</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '12%', textAlign: 'center' }}>STATUS</th>
+                                    <th style={{ padding: '0.75rem 1rem', width: '12%', textAlign: 'right' }}>DATE CREATED</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -253,13 +253,13 @@ export function FundingProjectsTab({
                                                     </div>
                                                 )}
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem', fontWeight: 700 }}>
+                                            <td style={{ padding: '0.75rem 1rem', fontWeight: 700, textAlign: 'right', whiteSpace: 'nowrap' }}>
                                                 ₹{proj.totalBudget.toLocaleString('en-IN')}
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem', color: '#10b981', fontWeight: 600 }}>
+                                            <td style={{ padding: '0.75rem 1rem', color: '#10b981', fontWeight: 600, textAlign: 'right', whiteSpace: 'nowrap' }}>
                                                 ₹{projAllocated.toLocaleString('en-IN')}
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem', minWidth: 160 }}>
+                                            <td style={{ padding: '0.75rem 1rem', minWidth: 140 }}>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '0.2rem' }}>
                                                     <span>{pct}% Fulfilled</span>
                                                 </div>
@@ -267,7 +267,7 @@ export function FundingProjectsTab({
                                                     <div style={{ width: `${pct}%`, height: '100%', background: '#10b981', borderRadius: 3 }} />
                                                 </div>
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem' }}>
+                                            <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
                                                 <span
                                                     style={{
                                                         fontSize: '0.75rem',
@@ -275,13 +275,14 @@ export function FundingProjectsTab({
                                                         padding: '2px 8px',
                                                         borderRadius: 999,
                                                         background: isActive ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
-                                                        color: isActive ? '#10b981' : '#f59e0b'
+                                                        color: isActive ? '#10b981' : '#f59e0b',
+                                                        whiteSpace: 'nowrap'
                                                     }}
                                                 >
                                                     {proj.status}
                                                 </span>
                                             </td>
-                                            <td style={{ padding: '0.75rem 1rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'right' }}>
+                                            <td style={{ padding: '0.75rem 1rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'right', whiteSpace: 'nowrap' }}>
                                                 {proj.createdAt ? new Date(proj.createdAt).toLocaleDateString('en-IN', { dateStyle: 'short' }) : '—'}
                                             </td>
                                         </tr>

@@ -237,12 +237,12 @@ export function IncidentsTab({ activeUnitId, isManager = false }: IncidentsTabPr
                 <table className="adm-table">
                     <thead>
                         <tr>
-                            <th>Incident Type</th>
-                            <th>Resident</th>
-                            <th>Severity</th>
-                            <th>Description & Action Taken</th>
-                            <th>Status</th>
-                            <th>Reported At</th>
+                            <th style={{ width: '20%' }}>Incident Type</th>
+                            <th style={{ width: '18%' }}>Resident</th>
+                            <th style={{ width: '10%', textAlign: 'center' }}>Severity</th>
+                            <th style={{ width: '32%' }}>Description & Action Taken</th>
+                            <th style={{ width: '10%', textAlign: 'center' }}>Status</th>
+                            <th style={{ width: '10%', textAlign: 'right' }}>Reported At</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -269,7 +269,7 @@ export function IncidentsTab({ activeUnitId, isManager = false }: IncidentsTabPr
                                     <td>
                                         <span style={{ fontWeight: 500 }}>{row.patientName || 'Facility'}</span>
                                     </td>
-                                    <td>
+                                    <td style={{ textAlign: 'center' }}>
                                         <span className={`adm-badge ${
                                             row.severity === 'CRITICAL'
                                                 ? 'adm-badge--danger'
@@ -288,12 +288,12 @@ export function IncidentsTab({ activeUnitId, isManager = false }: IncidentsTabPr
                                             </div>
                                         )}
                                     </td>
-                                    <td>
+                                    <td style={{ textAlign: 'center' }}>
                                         <span className={`adm-badge ${row.status === 'RESOLVED' || row.status === 'CLOSED' ? 'adm-badge--success' : 'adm-badge--warning'}`}>
                                             {row.status || 'OPEN'}
                                         </span>
                                     </td>
-                                    <td>
+                                    <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
                                         {(row.date || row.reportedAt || (row as unknown as { createdAt?: string }).createdAt)
                                             ? new Date((row.date || row.reportedAt || (row as unknown as { createdAt?: string }).createdAt)!).toLocaleDateString([], {
                                                     month: 'short',

@@ -364,14 +364,14 @@ export function StockIssueRequestsTab() {
                         <table className="inv-table">
                             <thead>
                                 <tr>
-                                    <th>Requisition No</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Usage Type</th>
-                                    <th>Requested By</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th className="text-right">Actions</th>
+                                    <th style={{ width: '16%' }}>Requisition No</th>
+                                    <th style={{ width: '22%' }}>Product Name</th>
+                                    <th style={{ width: '10%', textAlign: 'center' }}>Quantity</th>
+                                    <th style={{ width: '14%' }}>Usage Type</th>
+                                    <th style={{ width: '14%' }}>Requested By</th>
+                                    <th style={{ width: '10%', textAlign: 'center' }}>Date</th>
+                                    <th style={{ width: '8%', textAlign: 'center' }}>Status</th>
+                                    <th style={{ width: '6%', textAlign: 'right' }} className="text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -379,7 +379,7 @@ export function StockIssueRequestsTab() {
                                     const isPending = r.status === 'PENDING';
                                     return (
                                         <tr key={r.id}>
-                                            <td style={{ fontWeight: 600, fontFamily: 'monospace', color: '#0f766e' }}>
+                                            <td style={{ fontWeight: 600, fontFamily: 'monospace', color: '#0f766e', whiteSpace: 'nowrap' }}>
                                                 {formatStockRequisitionNumber(r.requestNumber, r.id)}
                                             </td>
                                             <td>
@@ -388,7 +388,7 @@ export function StockIssueRequestsTab() {
                                                     {r.issuedTo && <span className="inv-subtext">Issued To: {r.issuedTo}</span>}
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td style={{ textAlign: 'center' }}>
                                                 <strong>{r.quantity}</strong> units
                                             </td>
                                             <td>
@@ -397,12 +397,12 @@ export function StockIssueRequestsTab() {
                                             <td>
                                                 <div>{r.requestedBy || 'Staff'}</div>
                                             </td>
-                                            <td>
+                                            <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                                 <span className="inv-subtext">
                                                     {new Date(r.requestedAt || r.createdAt).toLocaleDateString()}
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td style={{ textAlign: 'center' }}>
                                                 <span className={`inv-badge inv-badge--${
                                                     r.status === 'APPROVED' ? 'success' :
                                                     r.status === 'PENDING' ? 'warning' : 'danger'
