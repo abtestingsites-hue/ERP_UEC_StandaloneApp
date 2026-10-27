@@ -113,7 +113,6 @@ const SETTINGS_NAV = [
   }
 ];
 
-
 // ==========================================
 // 2. GENERIC ENTERPRISE WORKSPACE LAYOUTS
 // ==========================================
@@ -121,53 +120,53 @@ const SETTINGS_NAV = [
 const EnterpriseTableWorkspace = ({ columns, data, primaryAction, onPrimaryAction, searchPlaceholder, emptyMessage }: any) => {
   return (
     <div className="space-y-4 animate-in fade-in">
-      <div className="flex justify-between items-center mb-4 bg-[#101010] p-4 border border-[#1e1e1e] rounded-xl shadow-lg">
+      <div className="flex justify-between items-center mb-4 bg-white p-4 border border-[#E1E6E1] rounded-xl shadow-xs">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#8E9A91] absolute left-3 top-1/2 -translate-y-1/2" />
           <input aria-label="Search system settings" 
             type="text" 
             placeholder={searchPlaceholder || "Search records..."}
-            className="bg-[#141414] border border-[#222] rounded-lg pl-9 pr-4 py-2 text-xs text-white outline-none focus:border-orange-500 w-72 transition-colors"
+            className="bg-[#FAFCFA] border border-[#D5DDD5] rounded-lg pl-9 pr-4 py-2 text-xs text-[#202020] placeholder:text-[#8E9A91] outline-none focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] w-72 transition-colors"
           />
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#141414] border border-[#262626] text-white hover:bg-[#202020] rounded-lg text-xs font-semibold transition-colors">
-            <Filter className="w-3.5 h-3.5" /> Filters
+          <button className="flex items-center gap-1.5 px-3 py-2 bg-white border border-[#D5DDD5] text-[#3B443F] hover:bg-[#F5F7F5] rounded-lg text-xs font-semibold transition-colors">
+            <Filter className="w-3.5 h-3.5 text-[#5F6962]" /> Filters
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#141414] border border-[#262626] text-white hover:bg-[#202020] rounded-lg text-xs font-semibold transition-colors">
-            <Download className="w-3.5 h-3.5" /> Export
+          <button className="flex items-center gap-1.5 px-3 py-2 bg-white border border-[#D5DDD5] text-[#3B443F] hover:bg-[#F5F7F5] rounded-lg text-xs font-semibold transition-colors">
+            <Download className="w-3.5 h-3.5 text-[#5F6962]" /> Export
           </button>
           {primaryAction && (
-            <button onClick={onPrimaryAction} className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all shadow-[0_0_15px_rgba(234,88,12,0.1)]">
+            <button onClick={onPrimaryAction} className="flex items-center gap-1.5 px-4 py-2 bg-[#039A01] hover:bg-[#028001] text-white rounded-lg text-xs font-bold transition-all shadow-xs">
               <Plus className="w-3.5 h-3.5" /> {primaryAction}
             </button>
           )}
         </div>
       </div>
 
-      <div className="border border-[#1e1e1e] rounded-xl overflow-hidden bg-[#0c0c0c] shadow-2xl">
+      <div className="border border-[#E1E6E1] rounded-xl overflow-hidden bg-white shadow-xs">
         <table aria-label="Settings configuration table 1" className="w-full text-left text-xs">
-          <thead className="bg-[#121212] border-b border-[#1e1e1e]">
+          <thead className="bg-[#FAFCFA] border-b border-[#E1E6E1]">
             <tr>
               {columns.map((col: string, idx: number) => (
-                <th key={idx} className={`px-5 py-3 font-bold text-slate-400 uppercase tracking-wider ${idx === columns.length - 1 ? 'text-right' : ''}`}>
+                <th key={idx} className={`px-5 py-3 font-bold text-[#5F6962] uppercase tracking-wider ${idx === columns.length - 1 ? 'text-right' : ''}`}>
                   {col}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1e1e1e]">
+          <tbody className="divide-y divide-[#E1E6E1]">
             {data.length > 0 ? data.map((row: any, idx: number) => (
-              <tr key={idx} className="hover:bg-[#141414] transition-colors">
+              <tr key={idx} className="hover:bg-[#F5F7F5] transition-colors">
                 {row.map((cell: any, cellIdx: number) => (
-                  <td key={cellIdx} className={`px-5 py-4 ${cellIdx === row.length - 1 ? 'text-right' : 'text-slate-300 font-medium'}`}>
+                  <td key={cellIdx} className={`px-5 py-4 ${cellIdx === row.length - 1 ? 'text-right' : 'text-[#202020] font-medium'}`}>
                     {cell}
                   </td>
                 ))}
               </tr>
             )) : (
               <tr>
-                <td colSpan={columns.length} className="px-5 py-12 text-center text-slate-500 font-medium border-dashed">
+                <td colSpan={columns.length} className="px-5 py-12 text-center text-[#8E9A91] font-medium border-dashed">
                   {emptyMessage || "No data records found."}
                 </td>
               </tr>
@@ -181,19 +180,19 @@ const EnterpriseTableWorkspace = ({ columns, data, primaryAction, onPrimaryActio
 
 const EnterpriseFormWorkspace = ({ children, saveText, testText }: any) => {
   return (
-    <div className="max-w-3xl bg-[#0c0c0c] border border-[#1e1e1e] rounded-xl overflow-hidden shadow-2xl animate-in fade-in">
+    <div className="max-w-3xl bg-white border border-[#E1E6E1] rounded-xl overflow-hidden shadow-xs animate-in fade-in">
       <div className="p-6 space-y-6">
         {children}
       </div>
-      <div className="p-5 bg-[#101010] border-t border-[#1e1e1e] flex items-center justify-between">
-        <button type="button" className="text-xs text-slate-400 hover:text-white transition-colors">Discard Changes</button>
+      <div className="p-5 bg-[#FAFCFA] border-t border-[#E1E6E1] flex items-center justify-between">
+        <button type="button" className="text-xs text-[#5F6962] hover:text-[#202020] transition-colors">Discard Changes</button>
         <div className="flex items-center gap-3">
           {testText && (
-            <button type="button" className="px-4 py-2.5 bg-[#1a1a1a] border border-[#333] hover:border-orange-500 text-white rounded-lg text-xs font-bold transition-all">
+            <button type="button" className="px-4 py-2.5 bg-white border border-[#D5DDD5] hover:border-[#039A01] text-[#202020] rounded-lg text-xs font-bold transition-all">
               {testText}
             </button>
           )}
-          <button type="button" className="px-5 py-2.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all shadow-[0_0_15px_rgba(234,88,12,0.1)]">
+          <button type="button" className="px-5 py-2.5 bg-[#039A01] hover:bg-[#028001] text-white rounded-lg text-xs font-bold transition-all shadow-xs">
             {saveText || "Save Configuration"}
           </button>
         </div>
@@ -201,7 +200,6 @@ const EnterpriseFormWorkspace = ({ children, saveText, testText }: any) => {
     </div>
   );
 };
-
 
 // ==========================================
 // 3. MAIN COMPONENT
@@ -330,34 +328,34 @@ export default function SettingsPage() {
       case 'org-company':
         return (
           <EnterpriseFormWorkspace saveText="Update Company Profile">
-            <div className="flex items-center gap-6 pb-6 border-b border-[#1e1e1e]">
-              <div className="w-20 h-20 bg-white rounded-xl flex items-center justify-center shadow-lg border border-[#333] overflow-hidden">
-                <div className="text-3xl font-black text-orange-600">EC</div>
+            <div className="flex items-center gap-6 pb-6 border-b border-[#E1E6E1]">
+              <div className="w-20 h-20 bg-white rounded-xl flex items-center justify-center shadow-xs border border-[#D5DDD5] overflow-hidden">
+                <div className="text-3xl font-black text-[#039A01]">EC</div>
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white">ElderCare CRM Corporation</h3>
-                <p className="text-xs text-slate-500 mb-2">Corporate Identity Logo</p>
-                <button type="button" className="px-3.5 py-1.5 bg-[#141414] border border-[#262626] text-white text-xs font-semibold rounded-lg hover:bg-[#202020] transition-colors">
+                <h3 className="text-sm font-bold text-[#202020]">ElderCare CRM Corporation</h3>
+                <p className="text-xs text-[#5F6962] mb-2">Corporate Identity Logo</p>
+                <button type="button" className="px-3.5 py-1.5 bg-white border border-[#D5DDD5] text-[#202020] text-xs font-semibold rounded-lg hover:bg-[#F5F7F5] transition-colors">
                   Upload New Logo
                 </button>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-5">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Company Name</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="text" defaultValue="ElderCare CRM" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Company Name</label>
+                <input aria-label="Company Name" type="text" defaultValue="ElderCare CRM" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tax Registration (GST/VAT)</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="text" defaultValue="29ABCDE1234F1Z5" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Tax Registration (GST/VAT)</label>
+                <input aria-label="Tax Registration" type="text" defaultValue="29ABCDE1234F1Z5" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
               <div className="space-y-1.5 col-span-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Corporate Website</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="url" defaultValue="https://www.eldercarecrm.com" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Corporate Website</label>
+                <input aria-label="Corporate Website" type="url" defaultValue="https://www.eldercarecrm.com" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
               <div className="space-y-1.5 col-span-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Registered Address</label>
-                <textarea aria-label="Setting description" rows={2} defaultValue="Plot 45, Sector 44, Institutional Area, Gurugram, Haryana 122003" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none custom-scrollbar" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Registered Address</label>
+                <textarea aria-label="Setting description" rows={2} defaultValue="Plot 45, Sector 44, Institutional Area, Gurugram, Haryana 122003" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none custom-scrollbar transition-colors" />
               </div>
             </div>
           </EnterpriseFormWorkspace>
@@ -367,38 +365,38 @@ export default function SettingsPage() {
         return (
           <div className="space-y-4">
             {isAddDeptOpen && (
-              <div className="bg-[#101010] border border-orange-500/30 p-5 rounded-xl shadow-xl space-y-4 animate-in fade-in">
+              <div className="bg-white border border-emerald-500/30 p-5 rounded-xl shadow-md space-y-4 animate-in fade-in">
                 <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-white text-sm">Add New Department</h3>
-                  <button onClick={() => setIsAddDeptOpen(false)} className="text-slate-400 hover:text-white">&times;</button>
+                  <h3 className="font-bold text-[#202020] text-sm">Add New Department</h3>
+                  <button onClick={() => setIsAddDeptOpen(false)} className="text-[#5F6962] hover:text-[#202020]">&times;</button>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase">Department Name</label>
+                    <label className="text-[10px] font-bold text-[#5F6962] uppercase">Department Name</label>
                     <input 
                       aria-label="Department Name" 
                       type="text" 
                       value={newDeptName} 
                       onChange={(e) => setNewDeptName(e.target.value)} 
                       placeholder="e.g. Tele-Health Services" 
-                      className="w-full bg-[#141414] border border-[#222] focus:border-orange-500 rounded-lg px-3 py-1.5 text-xs text-white outline-none"
+                      className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none transition-colors"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase">Description</label>
+                    <label className="text-[10px] font-bold text-[#5F6962] uppercase">Description</label>
                     <input 
                       aria-label="Department Description" 
                       type="text" 
                       value={newDeptDesc} 
                       onChange={(e) => setNewDeptDesc(e.target.value)} 
                       placeholder="Department responsibility" 
-                      className="w-full bg-[#141414] border border-[#222] focus:border-orange-500 rounded-lg px-3 py-1.5 text-xs text-white outline-none"
+                      className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-3 py-1.5 text-xs text-[#202020] outline-none transition-colors"
                     />
                   </div>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <button onClick={() => setIsAddDeptOpen(false)} className="px-3 py-1.5 bg-[#141414] border border-[#262626] text-white hover:bg-[#202020] rounded-lg text-xs font-semibold">Cancel</button>
-                  <button onClick={handleAddDepartment} disabled={deptLoading} className="px-4 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all disabled:opacity-50">
+                  <button onClick={() => setIsAddDeptOpen(false)} className="px-3 py-1.5 bg-white border border-[#D5DDD5] text-[#202020] hover:bg-[#F5F7F5] rounded-lg text-xs font-semibold">Cancel</button>
+                  <button onClick={handleAddDepartment} disabled={deptLoading} className="px-4 py-1.5 bg-[#039A01] hover:bg-[#028001] text-white rounded-lg text-xs font-bold transition-all shadow-xs disabled:opacity-50">
                     {deptLoading ? 'Saving...' : 'Create Department'}
                   </button>
                 </div>
@@ -407,11 +405,11 @@ export default function SettingsPage() {
             <EnterpriseTableWorkspace 
               columns={['Department Name', 'Description', 'Employee Count', 'Status', 'Actions']}
               data={departments.map((dept) => [
-                <span key="name" className="font-bold text-white">{dept.name}</span>,
+                <span key="name" className="font-bold text-[#202020]">{dept.name}</span>,
                 dept.description || 'General',
                 `${dept.agents?.length || dept.agentCount || 0} Agents`,
-                <span key="status" className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">{dept.status || 'Active'}</span>,
-                <button key="del" onClick={() => handleDeleteDepartment(dept.id)} className="text-rose-500 hover:underline">Delete</button>
+                <span key="status" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">{dept.status || 'Active'}</span>,
+                <button key="del" onClick={() => handleDeleteDepartment(dept.id)} className="text-rose-600 hover:underline">Delete</button>
               ])}
               primaryAction="Add Department"
               onPrimaryAction={() => setIsAddDeptOpen(true)}
@@ -425,9 +423,9 @@ export default function SettingsPage() {
           <EnterpriseTableWorkspace 
             columns={['Team Name', 'Department', 'Team Lead', 'Members', 'Actions']}
             data={[
-              [<span className="font-bold text-white">North Region Sales</span>, 'Sales & Conversions', 'Raghav', '12 Members', <button className="text-orange-500 hover:underline">Edit</button>],
-              [<span className="font-bold text-white">South Region Sales</span>, 'Sales & Conversions', 'Barani', '8 Members', <button className="text-orange-500 hover:underline">Edit</button>],
-              [<span className="font-bold text-white">L1 Technical Support</span>, 'Customer Support', 'Mani', '25 Members', <button className="text-orange-500 hover:underline">Edit</button>],
+              [<span key="1" className="font-bold text-[#202020]">North Region Sales</span>, 'Sales & Conversions', 'Raghav', '12 Members', <button key="a1" className="text-[#039A01] hover:underline">Edit</button>],
+              [<span key="2" className="font-bold text-[#202020]">South Region Sales</span>, 'Sales & Conversions', 'Barani', '8 Members', <button key="a2" className="text-[#039A01] hover:underline">Edit</button>],
+              [<span key="3" className="font-bold text-[#202020]">L1 Technical Support</span>, 'Customer Support', 'Mani', '25 Members', <button key="a3" className="text-[#039A01] hover:underline">Edit</button>],
             ]}
             primaryAction="Create Team"
           />
@@ -439,9 +437,9 @@ export default function SettingsPage() {
           <EnterpriseTableWorkspace 
             columns={['Agent Profile', 'Department', 'Extension', 'Role', 'Status', 'Actions']}
             data={[
-              [<div className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-[#1a1a1a] flex items-center justify-center font-bold text-slate-300">R</div><div><span className="font-bold text-white block">Raghav</span><span className="text-[10px] text-slate-500">raghav@eldercare.com</span></div></div>, 'Sales', 'Ext 101', 'Super Admin', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Active</span>, <button className="text-orange-500 hover:underline">Manage</button>],
-              [<div className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-[#1a1a1a] flex items-center justify-center font-bold text-slate-300">M</div><div><span className="font-bold text-white block">Mani</span><span className="text-[10px] text-slate-500">mani@eldercare.com</span></div></div>, 'Support', 'Ext 102', 'Manager', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Active</span>, <button className="text-orange-500 hover:underline">Manage</button>],
-              [<div className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-[#1a1a1a] flex items-center justify-center font-bold text-slate-300">B</div><div><span className="font-bold text-white block">Barani</span><span className="text-[10px] text-slate-500">barani@eldercare.com</span></div></div>, 'Field Ops', 'Ext 105', 'Agent', <span className="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[9px] font-bold uppercase">Away</span>, <button className="text-orange-500 hover:underline">Manage</button>],
+              [<div key="1" className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-[#E7F4E8] border border-[#C8E6CA] flex items-center justify-center font-bold text-[#026601]">R</div><div><span className="font-bold text-[#202020] block">Raghav</span><span className="text-[10px] text-[#5F6962]">raghav@eldercare.com</span></div></div>, 'Sales', 'Ext 101', 'Super Admin', <span key="s1" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Active</span>, <button key="a1" className="text-[#039A01] hover:underline">Manage</button>],
+              [<div key="2" className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-[#E7F4E8] border border-[#C8E6CA] flex items-center justify-center font-bold text-[#026601]">M</div><div><span className="font-bold text-[#202020] block">Mani</span><span className="text-[10px] text-[#5F6962]">mani@eldercare.com</span></div></div>, 'Support', 'Ext 102', 'Manager', <span key="s2" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Active</span>, <button key="a2" className="text-[#039A01] hover:underline">Manage</button>],
+              [<div key="3" className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-[#E7F4E8] border border-[#C8E6CA] flex items-center justify-center font-bold text-[#026601]">B</div><div><span className="font-bold text-[#202020] block">Barani</span><span className="text-[10px] text-[#5F6962]">barani@eldercare.com</span></div></div>, 'Field Ops', 'Ext 105', 'Agent', <span key="s3" className="px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-[9px] font-bold uppercase">Away</span>, <button key="a3" className="text-[#039A01] hover:underline">Manage</button>],
             ]}
             primaryAction="Invite Users"
             searchPlaceholder="Search directory by name, email, extension..."
@@ -453,47 +451,47 @@ export default function SettingsPage() {
           <div className="space-y-6 animate-in fade-in">
             <div className="flex justify-between items-center mb-2">
               <div className="flex gap-2">
-                <button className="px-4 py-2 bg-orange-600/10 text-orange-500 border border-orange-500/30 rounded-lg text-xs font-bold">Super Admin</button>
-                <button className="px-4 py-2 bg-[#141414] text-slate-400 border border-[#222] hover:bg-[#202020] rounded-lg text-xs font-bold">Manager</button>
-                <button className="px-4 py-2 bg-[#141414] text-slate-400 border border-[#222] hover:bg-[#202020] rounded-lg text-xs font-bold">Agent Level 1</button>
+                <button className="px-4 py-2 bg-[#E7F4E8] text-[#026601] border border-[#C8E6CA] rounded-lg text-xs font-bold">Super Admin</button>
+                <button className="px-4 py-2 bg-white text-[#5F6962] border border-[#D5DDD5] hover:bg-[#F5F7F5] rounded-lg text-xs font-bold transition-colors">Manager</button>
+                <button className="px-4 py-2 bg-white text-[#5F6962] border border-[#D5DDD5] hover:bg-[#F5F7F5] rounded-lg text-xs font-bold transition-colors">Agent Level 1</button>
               </div>
-              <button className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold shadow-[0_0_15px_rgba(234,88,12,0.1)]">
+              <button className="flex items-center gap-1.5 px-4 py-2 bg-[#039A01] hover:bg-[#028001] text-white rounded-lg text-xs font-bold shadow-xs transition-colors">
                 <Plus className="w-3.5 h-3.5" /> Clone Role
               </button>
             </div>
             
-            <div className="border border-[#1e1e1e] rounded-xl overflow-hidden bg-[#0c0c0c] shadow-2xl">
+            <div className="border border-[#E1E6E1] rounded-xl overflow-hidden bg-white shadow-xs">
               <table aria-label="Settings configuration table 2" className="w-full text-left text-xs">
-                <thead className="bg-[#121212] border-b border-[#1e1e1e]">
+                <thead className="bg-[#FAFCFA] border-b border-[#E1E6E1]">
                   <tr>
-                    <th scope="col" className="px-5 py-3 font-bold text-slate-400 uppercase tracking-wider">Module Resource</th>
-                    <th scope="col" className="px-5 py-3 font-bold text-slate-400 uppercase tracking-wider text-center">View</th>
-                    <th scope="col" className="px-5 py-3 font-bold text-slate-400 uppercase tracking-wider text-center">Create</th>
-                    <th scope="col" className="px-5 py-3 font-bold text-slate-400 uppercase tracking-wider text-center">Edit</th>
-                    <th scope="col" className="px-5 py-3 font-bold text-slate-400 uppercase tracking-wider text-center">Delete</th>
+                    <th scope="col" className="px-5 py-3 font-bold text-[#5F6962] uppercase tracking-wider">Module Resource</th>
+                    <th scope="col" className="px-5 py-3 font-bold text-[#5F6962] uppercase tracking-wider text-center">View</th>
+                    <th scope="col" className="px-5 py-3 font-bold text-[#5F6962] uppercase tracking-wider text-center">Create</th>
+                    <th scope="col" className="px-5 py-3 font-bold text-[#5F6962] uppercase tracking-wider text-center">Edit</th>
+                    <th scope="col" className="px-5 py-3 font-bold text-[#5F6962] uppercase tracking-wider text-center">Delete</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1e1e1e]">
+                <tbody className="divide-y divide-[#E1E6E1]">
                   {['Leads Management', 'Customer Accounts', 'Ticketing & Cases', 'Reports & Dashboards', 'Target Management'].map((mod, idx) => (
-                    <tr key={idx} className="hover:bg-[#141414]">
-                      <td className="px-5 py-4 font-bold text-white">{mod}</td>
-                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-500 mx-auto" /></td>
+                    <tr key={idx} className="hover:bg-[#F5F7F5] transition-colors">
+                      <td className="px-5 py-4 font-bold text-[#202020]">{mod}</td>
+                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                      <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                     </tr>
                   ))}
-                  <tr className="hover:bg-[#141414]">
-                    <td className="px-5 py-4 font-bold text-white">System Settings</td>
-                    <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                    <td className="px-5 py-4 text-center"><X className="w-4 h-4 text-slate-600 mx-auto" /></td>
-                    <td className="px-5 py-4 text-center"><X className="w-4 h-4 text-slate-600 mx-auto" /></td>
-                    <td className="px-5 py-4 text-center"><X className="w-4 h-4 text-slate-600 mx-auto" /></td>
+                  <tr className="hover:bg-[#F5F7F5] transition-colors">
+                    <td className="px-5 py-4 font-bold text-[#202020]">System Settings</td>
+                    <td className="px-5 py-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                    <td className="px-5 py-4 text-center"><X className="w-4 h-4 text-[#8E9A91] mx-auto" /></td>
+                    <td className="px-5 py-4 text-center"><X className="w-4 h-4 text-[#8E9A91] mx-auto" /></td>
+                    <td className="px-5 py-4 text-center"><X className="w-4 h-4 text-[#8E9A91] mx-auto" /></td>
                   </tr>
                 </tbody>
               </table>
-              <div className="p-4 bg-[#101010] border-t border-[#1e1e1e] text-right">
-                <button className="px-5 py-2 bg-orange-600 text-white font-bold rounded-lg text-xs">Save Permissions</button>
+              <div className="p-4 bg-[#FAFCFA] border-t border-[#E1E6E1] text-right">
+                <button className="px-5 py-2 bg-[#039A01] hover:bg-[#028001] text-white font-bold rounded-lg text-xs shadow-xs transition-colors">Save Permissions</button>
               </div>
             </div>
           </div>
@@ -503,33 +501,33 @@ export default function SettingsPage() {
       case 'comm-email':
         return (
           <EnterpriseFormWorkspace saveText="Save SMTP Config" testText="Test Connection">
-            <h3 className="text-sm font-bold text-white mb-2">SMTP Server Configuration</h3>
-            <p className="text-xs text-slate-500 mb-6">Configure outbound email delivery for workflows and alerts via your corporate mail server.</p>
+            <h3 className="text-sm font-bold text-[#202020] mb-2">SMTP Server Configuration</h3>
+            <p className="text-xs text-[#5F6962] mb-6">Configure outbound email delivery for workflows and alerts via your corporate mail server.</p>
             
             <div className="grid grid-cols-2 gap-5">
               <div className="space-y-1.5 col-span-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">SMTP Host</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="text" defaultValue="smtp.office365.com" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">SMTP Host</label>
+                <input aria-label="SMTP Host" type="text" defaultValue="smtp.office365.com" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">SMTP Port</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="number" defaultValue={587} className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">SMTP Port</label>
+                <input aria-label="SMTP Port" type="number" defaultValue={587} className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Encryption Protocol</label>
-                <select aria-label="System setting option" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Encryption Protocol</label>
+                <select aria-label="System setting option" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-3 py-2 text-sm text-[#202020] outline-none transition-colors">
                   <option>TLS / STARTTLS</option>
                   <option>SSL</option>
                   <option>Unencrypted (Not Recommended)</option>
                 </select>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Username / Email Auth</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="text" defaultValue="alerts@eldercarecrm.com" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Username / Email Auth</label>
+                <input aria-label="Username / Email Auth" type="text" defaultValue="alerts@eldercarecrm.com" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Password / App Password</label>
-                <input aria-label="W full bg 101010 border border 222 focusborder orange 500 rounded lg px 4 py 2 text sm text white outline none" type="password" defaultValue="********" className="w-full bg-[#101010] border border-[#222] focus:border-orange-500 rounded-lg px-4 py-2 text-sm text-white outline-none" />
+                <label className="text-[10px] font-bold text-[#5F6962] uppercase tracking-wider">Password / App Password</label>
+                <input aria-label="Password / App Password" type="password" defaultValue="********" className="w-full bg-[#FAFCFA] border border-[#D5DDD5] focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] rounded-lg px-4 py-2 text-sm text-[#202020] outline-none transition-colors" />
               </div>
             </div>
           </EnterpriseFormWorkspace>
@@ -542,8 +540,8 @@ export default function SettingsPage() {
           <EnterpriseTableWorkspace 
             columns={['Integration Key Name', 'Environment', 'Prefix', 'Created Date', 'Last Used', 'Status', 'Actions']}
             data={[
-              [<span className="font-bold text-white">Production Gateway</span>, 'Production', 'sk_prod_...', 'Oct 12, 2025', '2 mins ago', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Active</span>, <button className="text-red-500 hover:underline">Revoke</button>],
-              [<span className="font-bold text-white">Staging Integration</span>, 'Staging', 'sk_test_...', 'Dec 05, 2025', '14 days ago', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Active</span>, <button className="text-red-500 hover:underline">Revoke</button>],
+              [<span key="1" className="font-bold text-[#202020]">Production Gateway</span>, 'Production', 'sk_prod_...', 'Oct 12, 2025', '2 mins ago', <span key="s1" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Active</span>, <button key="a1" className="text-rose-600 hover:underline">Revoke</button>],
+              [<span key="2" className="font-bold text-[#202020]">Staging Integration</span>, 'Staging', 'sk_test_...', 'Dec 05, 2025', '14 days ago', <span key="s2" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Active</span>, <button key="a2" className="text-rose-600 hover:underline">Revoke</button>],
             ]}
             primaryAction="Generate New Key"
             searchPlaceholder="Search API keys and credentials..."
@@ -559,9 +557,9 @@ export default function SettingsPage() {
           <EnterpriseTableWorkspace 
             columns={['Template Name', 'Module', 'Last Modified By', 'Last Modified Date', 'Status', 'Actions']}
             data={[
-              [<span className="font-bold text-white">Welcome Lead Sequence 1</span>, 'Leads', 'Raghav', 'Today, 14:30', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Published</span>, <button className="text-orange-500 hover:underline">Edit Builder</button>],
-              [<span className="font-bold text-white">Invoice Follow-up</span>, 'Customers', 'System', 'Yesterday, 09:15', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Published</span>, <button className="text-orange-500 hover:underline">Edit Builder</button>],
-              [<span className="font-bold text-white">Ticket Resolution Survey</span>, 'Tickets', 'Mani', 'Oct 10, 2025', <span className="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[9px] font-bold uppercase">Draft</span>, <button className="text-orange-500 hover:underline">Edit Builder</button>],
+              [<span key="1" className="font-bold text-[#202020]">Welcome Lead Sequence 1</span>, 'Leads', 'Raghav', 'Today, 14:30', <span key="s1" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Published</span>, <button key="a1" className="text-[#039A01] hover:underline">Edit Builder</button>],
+              [<span key="2" className="font-bold text-[#202020]">Invoice Follow-up</span>, 'Customers', 'System', 'Yesterday, 09:15', <span key="s2" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Published</span>, <button key="a2" className="text-[#039A01] hover:underline">Edit Builder</button>],
+              [<span key="3" className="font-bold text-[#202020]">Ticket Resolution Survey</span>, 'Tickets', 'Mani', 'Oct 10, 2025', <span key="s3" className="px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-[9px] font-bold uppercase">Draft</span>, <button key="a3" className="text-[#039A01] hover:underline">Edit Builder</button>],
             ]}
             primaryAction="Create Template"
           />
@@ -571,37 +569,37 @@ export default function SettingsPage() {
       case 'sys-security':
         return (
           <EnterpriseFormWorkspace saveText="Save Security Policies">
-            <h3 className="text-sm font-bold text-white mb-2">Authentication & Security Policies</h3>
-            <p className="text-xs text-slate-500 mb-6">Enforce global password strength and multi-factor authentication requirements.</p>
+            <h3 className="text-sm font-bold text-[#202020] mb-2">Authentication & Security Policies</h3>
+            <p className="text-xs text-[#5F6962] mb-6">Enforce global password strength and multi-factor authentication requirements.</p>
             
             <div className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-[#141414] border border-[#222] rounded-xl">
+              <div className="flex items-center justify-between p-4 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl">
                 <div>
-                  <h4 className="text-sm font-bold text-white flex items-center gap-2"><Shield className="w-4 h-4 text-emerald-500"/> Enforce Multi-Factor Auth (MFA)</h4>
-                  <p className="text-xs text-slate-500 mt-1">Require all agents to use Authenticator Apps upon login.</p>
+                  <h4 className="text-sm font-bold text-[#202020] flex items-center gap-2"><Shield className="w-4 h-4 text-emerald-600"/> Enforce Multi-Factor Auth (MFA)</h4>
+                  <p className="text-xs text-[#5F6962] mt-1">Require all agents to use Authenticator Apps upon login.</p>
                 </div>
-                <div className="w-12 h-6 bg-orange-600 rounded-full relative cursor-pointer">
-                  <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 shadow-sm"></div>
+                <div className="w-12 h-6 bg-[#039A01] rounded-full relative cursor-pointer">
+                  <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 shadow-xs"></div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[#141414] border border-[#222] rounded-xl">
+              <div className="flex items-center justify-between p-4 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl">
                 <div>
-                  <h4 className="text-sm font-bold text-white flex items-center gap-2"><Key className="w-4 h-4 text-slate-400"/> Password Expiry Policy</h4>
-                  <p className="text-xs text-slate-500 mt-1">Force users to reset passwords every 90 days.</p>
+                  <h4 className="text-sm font-bold text-[#202020] flex items-center gap-2"><Key className="w-4 h-4 text-[#5F6962]"/> Password Expiry Policy</h4>
+                  <p className="text-xs text-[#5F6962] mt-1">Force users to reset passwords every 90 days.</p>
                 </div>
-                <div className="w-12 h-6 bg-[#222] border border-[#333] rounded-full relative cursor-pointer">
-                  <div className="w-5 h-5 bg-slate-500 rounded-full absolute top-0.5 left-0.5 shadow-sm"></div>
+                <div className="w-12 h-6 bg-[#D5DDD5] rounded-full relative cursor-pointer">
+                  <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 shadow-xs"></div>
                 </div>
               </div>
               
-              <div className="flex items-center justify-between p-4 bg-[#141414] border border-[#222] rounded-xl">
+              <div className="flex items-center justify-between p-4 bg-[#FAFCFA] border border-[#E1E6E1] rounded-xl">
                 <div>
-                  <h4 className="text-sm font-bold text-white flex items-center gap-2"><Activity className="w-4 h-4 text-slate-400"/> Session Timeout</h4>
-                  <p className="text-xs text-slate-500 mt-1">Automatically log out idle web sessions after 30 minutes.</p>
+                  <h4 className="text-sm font-bold text-[#202020] flex items-center gap-2"><Activity className="w-4 h-4 text-[#5F6962]"/> Session Timeout</h4>
+                  <p className="text-xs text-[#5F6962] mt-1">Automatically log out idle web sessions after 30 minutes.</p>
                 </div>
-                <div className="w-12 h-6 bg-orange-600 rounded-full relative cursor-pointer">
-                  <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 shadow-sm"></div>
+                <div className="w-12 h-6 bg-[#039A01] rounded-full relative cursor-pointer">
+                  <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 shadow-xs"></div>
                 </div>
               </div>
             </div>
@@ -614,8 +612,8 @@ export default function SettingsPage() {
           <EnterpriseTableWorkspace 
             columns={['Record Name', 'Module', 'Created By', 'Status', 'Actions']}
             data={[
-              [<span className="font-bold text-white">Sample Config 1</span>, 'System', 'Admin', <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[9px] font-bold uppercase">Active</span>, <button className="text-orange-500 hover:underline">Edit</button>],
-              [<span className="font-bold text-white">Sample Config 2</span>, 'System', 'Admin', <span className="px-2 py-0.5 bg-[#222] text-slate-400 border border-[#333] rounded-full text-[9px] font-bold uppercase">Inactive</span>, <button className="text-orange-500 hover:underline">Edit</button>],
+              [<span key="1" className="font-bold text-[#202020]">Sample Config 1</span>, 'System', 'Admin', <span key="s1" className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-bold uppercase">Active</span>, <button key="a1" className="text-[#039A01] hover:underline">Edit</button>],
+              [<span key="2" className="font-bold text-[#202020]">Sample Config 2</span>, 'System', 'Admin', <span key="s2" className="px-2 py-0.5 bg-slate-100 text-slate-600 border border-slate-200 rounded-full text-[9px] font-bold uppercase">Inactive</span>, <button key="a2" className="text-[#039A01] hover:underline">Edit</button>],
             ]}
             primaryAction={`Create ${activeInfo.label}`}
           />
@@ -624,24 +622,24 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex-1 h-full flex flex-col bg-[#050505] text-white overflow-hidden p-4">
+    <div className="flex-1 h-full flex flex-col bg-[#F5F7F5] text-[#202020] overflow-hidden p-4">
       {/* Centralized Workspace Container */}
-      <div className="flex-1 flex border border-[#1e1e1e] rounded-2xl bg-[#090909] overflow-hidden shadow-2xl">
+      <div className="flex-1 flex border border-[#E1E6E1] rounded-2xl bg-white overflow-hidden shadow-xs">
         
         {/* LEFT NAV PANEL */}
-        <div className="w-[280px] bg-[#0c0c0c] border-r border-[#1e1e1e] flex flex-col shrink-0">
-          <div className="p-4 border-b border-[#1e1e1e]">
-            <h1 className="text-base font-black text-white flex items-center gap-2 tracking-wide">
-              <SettingsIcon className="text-orange-500 w-5 h-5" /> SYSTEM SETUP
+        <div className="w-[280px] bg-[#FAFCFA] border-r border-[#E1E6E1] flex flex-col shrink-0">
+          <div className="p-4 border-b border-[#E1E6E1]">
+            <h1 className="text-base font-black text-[#202020] flex items-center gap-2 tracking-wide">
+              <SettingsIcon className="text-[#039A01] w-5 h-5" /> SYSTEM SETUP
             </h1>
             <div className="relative mt-4">
-              <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-[#8E9A91] absolute left-3 top-1/2 -translate-y-1/2" />
               <input aria-label="Search configuration options" 
                 type="text" 
                 placeholder="Search settings..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#141414] border border-[#222] rounded-lg pl-9 pr-3 py-2 text-xs text-white outline-none focus:border-orange-500 transition-colors"
+                className="w-full bg-white border border-[#D5DDD5] rounded-lg pl-9 pr-3 py-2 text-xs text-[#202020] placeholder:text-[#8E9A91] outline-none focus:border-[#039A01] focus:ring-1 focus:ring-[#039A01] transition-colors"
               />
             </div>
           </div>
@@ -650,13 +648,15 @@ export default function SettingsPage() {
             <button
               onClick={() => setActiveSetting('my-profile')}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all text-left ${
-                activeSetting === 'my-profile' ? 'bg-orange-600/15 text-orange-500' : 'text-slate-400 hover:text-white hover:bg-[#141414]'
+                activeSetting === 'my-profile' 
+                  ? 'bg-[#E7F4E8] text-[#026601] font-bold border border-[#C8E6CA]' 
+                  : 'text-[#5F6962] hover:text-[#202020] hover:bg-[#F0F5F0]'
               }`}
             >
-              <User className="w-4 h-4" /> My Profile
+              <User className="w-4 h-4 text-[#5F6962]" /> My Profile
             </button>
 
-            <div className="my-2 border-b border-[#1c1c1c]"></div>
+            <div className="my-2 border-b border-[#E1E6E1]"></div>
 
             {SETTINGS_NAV.map((group) => {
               const isExpanded = expandedGroups[group.id];
@@ -670,17 +670,17 @@ export default function SettingsPage() {
                 <div key={group.id} className="mb-1">
                   <button
                     onClick={() => toggleGroup(group.id)}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold text-slate-300 hover:bg-[#141414] transition-all group"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold text-[#3B443F] hover:bg-[#F0F5F0] transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <group.icon className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                      <group.icon className="w-4 h-4 text-[#5F6962] group-hover:text-[#039A01] transition-colors" />
                       {group.group}
                     </div>
-                    {isExpanded ? <ChevronDown className="w-3.5 h-3.5 text-slate-500" /> : <ChevronRight className="w-3.5 h-3.5 text-slate-500" />}
+                    {isExpanded ? <ChevronDown className="w-3.5 h-3.5 text-[#5F6962]" /> : <ChevronRight className="w-3.5 h-3.5 text-[#5F6962]" />}
                   </button>
 
                   {isExpanded && (
-                    <div className="mt-0.5 ml-3 pl-3 border-l border-[#222] space-y-0.5">
+                    <div className="mt-0.5 ml-3 pl-3 border-l border-[#E1E6E1] space-y-0.5">
                       {group.items.map((item) => {
                         if (searchQuery !== '' && !item.label.toLowerCase().includes(searchQuery.toLowerCase())) return null;
                         return (
@@ -689,8 +689,8 @@ export default function SettingsPage() {
                             onClick={() => setActiveSetting(item.id)}
                             className={`w-full text-left px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${
                               activeSetting === item.id 
-                                ? 'bg-orange-600/10 text-orange-500 font-bold' 
-                                : 'text-slate-400 hover:text-white hover:bg-[#141414]'
+                                ? 'bg-[#E7F4E8] text-[#026601] font-bold border border-[#C8E6CA]' 
+                                : 'text-[#5F6962] hover:text-[#202020] hover:bg-[#F0F5F0]'
                             }`}
                           >
                             {item.label}
@@ -706,20 +706,20 @@ export default function SettingsPage() {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="flex-1 flex flex-col min-w-0 bg-[#090909]">
+        <div className="flex-1 flex flex-col min-w-0 bg-[#F5F7F5]">
           
-          <div className="h-20 border-b border-[#1e1e1e] p-6 shrink-0 flex items-center justify-between bg-[#0a0a0a]">
+          <div className="h-20 border-b border-[#E1E6E1] p-6 shrink-0 flex items-center justify-between bg-white">
             <div>
-              <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+              <div className="flex items-center gap-2 text-[10px] font-bold text-[#5F6962] uppercase tracking-wider mb-1">
                 <span>Setup</span>
                 <ChevronRight className="w-3 h-3" />
                 <span>{activeInfo.group}</span>
               </div>
-              <h2 className="text-xl font-bold text-white tracking-tight">{activeInfo.label}</h2>
+              <h2 className="text-xl font-bold text-[#202020] tracking-tight">{activeInfo.label}</h2>
             </div>
             
             <div className="flex items-center gap-3">
-              <p className="text-xs text-slate-500">{activeInfo.desc}</p>
+              <p className="text-xs text-[#5F6962]">{activeInfo.desc}</p>
             </div>
           </div>
 
