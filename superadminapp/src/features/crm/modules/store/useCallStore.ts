@@ -71,8 +71,20 @@ export const useCallStore = create<CallState>((set) => ({
   missedCalls: [],
   setStatus: (status) => set({ status }),
   setBaseStatus: (baseStatus) => set({ baseStatus }),
-  setIncomingCall: (call) => set({ incomingCall: call }),
-  setActiveCall: (call) => set({ activeCall: call, connectedAt: null }), // reset timer on new call
+  setIncomingCall: (call) => set((state) => {
+    if (!call) return { incomingCall: null };
+    // If agent is already on an active call or the call is outbound, do not set incomingCall
+    if (state.activeCall || call.direction === 'OUTBOUND' || call.category === 'Outbound' || call.isCaller) {
+      return {};
+    }
+    return { incomingCall: call };
+  }),
+  setActiveCall: (call) => set((state) => ({ 
+    activeCall: call, 
+    connectedAt: null,
+    incomingCall: call ? null : state.incomingCall,
+    status: call ? 'ON_CALL' : state.status
+  })),
   updateActiveCallStatus: (status) => set((state) => ({
     activeCall: state.activeCall ? { ...state.activeCall, status } : null,
     connectedAt: status === 'CONNECTED' && !state.connectedAt ? Date.now() : state.connectedAt

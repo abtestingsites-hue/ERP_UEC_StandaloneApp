@@ -8,13 +8,22 @@ import { Phone, PhoneOff, AlertTriangle, User, Clock, PhoneForwarded } from 'luc
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const IncomingCallModal = () => {
-  const { incomingCall, setIncomingCall, setActiveCall, setStatus } = useCallStore();
+  const { incomingCall, activeCall, setIncomingCall, setActiveCall, setStatus } = useCallStore();
   const { telephonySocket, mediaSocket } = useSocket();
   const { user } = useAuthStore();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // If there is an active ongoing call (e.g., outbound dialing/connected) or the call is outbound, do not ring/display modal
+  const shouldDisplay = Boolean(
+    incomingCall &&
+    !activeCall &&
+    incomingCall.direction !== 'OUTBOUND' &&
+    incomingCall.category !== 'Outbound' &&
+    !incomingCall.isCaller
+  );
+
   useEffect(() => {
-    if (incomingCall) {
+    if (shouldDisplay) {
       if (!audioRef.current) {
         audioRef.current = new Audio('/sounds/ringtone.mp3');
         audioRef.current.loop = true;
@@ -75,7 +84,7 @@ export const IncomingCallModal = () => {
 
   return (
     <AnimatePresence>
-      {incomingCall && (
+      {shouldDisplay && incomingCall && (
         <motion.div 
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}

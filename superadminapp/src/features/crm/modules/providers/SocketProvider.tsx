@@ -221,8 +221,19 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
         }
       }
 
-      const { status, fetchDashboardCalls } = useCallStore.getState();
+      // Ignore outbound calls from triggering an incoming call modal
+      if (data.direction === 'OUTBOUND' || data.category === 'Outbound' || data.isCaller) {
+        console.log(`[INBOUND-CALL] Ignoring incoming_call event for OUTBOUND call (${data.callSid || data.callId})`);
+        return;
+      }
+
+      const { status, activeCall, fetchDashboardCalls } = useCallStore.getState();
       fetchDashboardCalls();
+
+      if (activeCall) {
+        console.log(`[INBOUND-CALL] Agent already has active call (${activeCall.callSid || activeCall.roomName}), ignoring incoming call.`);
+        return;
+      }
 
       if (status === 'AVAILABLE' || data.isTransfer) {
         console.log(
@@ -460,11 +471,11 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Isolated HTTP Presence Polling (kept strictly separate from socket creation)
     const pollInterval = setInterval(async () => {
-      const { status, incomingCall, setIncomingCall } = useCallStore.getState();
+      const { status, activeCall, incomingCall, setIncomingCall } = useCallStore.getState();
       const token = getStoredToken();
       if (!token) return;
       const targetAgentId = user?.agentId || user?.id;
-      if (status === 'AVAILABLE' && !incomingCall && targetAgentId) {
+      if (status === 'AVAILABLE' && !activeCall && !incomingCall && targetAgentId) {
         try {
           let baseUrl = process.env.NEXT_PUBLIC_API_URL || `${API_BASE_URL}`;
           if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
@@ -473,7 +484,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
           const res = await apiFetch(apiUrl);
           if (res.ok) {
             const data = await res.json();
-            if (data.call) {
+            if (data.call && data.call.direction !== 'OUTBOUND' && data.call.category !== 'Outbound' && !data.call.isCaller) {
               console.log('Polling found incoming call:', data.call);
               setIncomingCall(data.call);
             }
